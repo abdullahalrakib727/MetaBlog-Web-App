@@ -23,46 +23,58 @@ function Nav() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   if (loading) {
-    return <></>;
+    return <span className="loading loading-spinner loading-lg"></span>;
   }
-    console.log(user);
+  // console.log(user);
 
   const navLinks = (
     <>
       <MenuItem>
         <NavLink to="/">Home</NavLink>
       </MenuItem>
-      <MenuItem>
-        <NavLink to="/add">Add Blog</NavLink>
-      </MenuItem>
+     {
+      user &&  <MenuItem>
+      <NavLink to="/add">Add Blog</NavLink>
+    </MenuItem>
+     }
       <MenuItem>
         <NavLink to="/all">All Blogs</NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="/featured">Featured Blogs</NavLink>
       </MenuItem>
-      <MenuItem>
+      {
+        user && <MenuItem>
         <NavLink to="/wishlist">Wishlist</NavLink>
       </MenuItem>
+      }
     </>
   );
 
   const settings = (
     <>
-      <MenuItem>
-        <Link to="/profile">Profile</Link>
-      </MenuItem>
       {/* conditional log in and logout */}
       {user ? (
-        <MenuItem>
-          <Link to="/login" onClick={() => logOutUser()}>
-            Logout
-          </Link>
-        </MenuItem>
+        <>
+          <MenuItem>
+            <Link to="/profile">Profile</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="/" onClick={() => logOutUser()}>
+              Logout
+            </Link>
+          </MenuItem>
+        </>
       ) : (
-        <MenuItem>
-          <Link to="/login">Login</Link>
-        </MenuItem>
+        <>
+          {" "}
+          <MenuItem>
+            <Link to="/login">Login</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="/register">Register</Link>
+          </MenuItem>
+        </>
       )}
     </>
   );
@@ -168,9 +180,7 @@ function Nav() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* conditional User avatar */}
                 {!user && <Avatar src="/broken-image.jpg" />}
-                {user && (
-                  <Avatar src={user?.photoURL} />
-                )}
+                {user && <Avatar src={user?.photoURL} />}
               </IconButton>
               {/* conditional  User Name */}
               {user && <p>{user?.displayName}</p>}
