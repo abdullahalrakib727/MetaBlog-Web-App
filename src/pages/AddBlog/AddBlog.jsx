@@ -1,11 +1,14 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const AddBlog = () => {
     const {user} = useContext(AuthContext);
     console.log(user)
  const handleSubmit = (e)=>{
     e.preventDefault();
+    const form = e.target;
     const title = e.target.title.value;
     const photoUrl = e.target.photo.value;
     const category = e.target.category.value;
@@ -15,6 +18,21 @@ const AddBlog = () => {
     const authorEmail = user?.email;
     const authorName = user?.displayName;
     console.log({shortDescription,longDescription, published, authorEmail,authorName})
+    axios({
+        method: 'post',
+        url: 'http://localhost:5000/all',
+        data: {
+          title,photoUrl,category,shortDescription,longDescription,published,authorEmail,authorName
+        }
+      }).then(res=>{
+        if(res.data.insertedId){
+            Swal.fire({
+                title: "Blog Has been Added!",
+                icon: "success"
+              });
+              form.reset();
+        }
+      });
 
  }
   return (
