@@ -1,4 +1,5 @@
 
+import RecentBlog from "../Recent Blog/RecentBlog";
 import Banner from "./Components/Banner";
 import Marque from "./Components/Marque";
 
@@ -11,7 +12,7 @@ const Home = () => {
             <Banner></Banner>
             <h3 className="text-4xl text-center font-bold mt-5 mb-5">Recent Blogs</h3>
             <div>
-
+               <RecentBlog></RecentBlog>
             </div>
         </div>
     );
