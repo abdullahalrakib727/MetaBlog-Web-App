@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+// import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 
@@ -11,12 +11,7 @@ const Blog = ({ blog }) => {
 
   return (
     <Card>
-      <CardMedia
-        component="img"
-        alt={`image of ${title}`}
-        height="140"
-        image={photoUrl}
-      />
+      <img src={photoUrl} className="p-2" alt="" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           <div className="font-bold">{title}</div>
@@ -25,7 +20,9 @@ const Blog = ({ blog }) => {
           {shortDescription}
         </Typography>
         <p className="mt-4 font-semibold">
-          <span className="text-white p-2 bg-[#1976D2]">Category : {category}</span>
+          <span className="text-white p-2 bg-[#1976D2]">
+            Category : {category}
+          </span>
         </p>
       </CardContent>
       <CardActions className="flex justify-around">

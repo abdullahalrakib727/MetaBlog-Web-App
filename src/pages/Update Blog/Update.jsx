@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 
 
 import { useLoaderData } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Update = () => {
   const { _id, title, photoUrl, category, shortDescription, longDescription } =
@@ -41,6 +42,9 @@ const Update = () => {
   };
   return (
     <div className="container mx-auto">
+       <Helmet>
+        <title>Blog-Zone || Update</title>
+      </Helmet>
       <div className="min-h-screen flex justify-center items-center mt-10">
         <div className="card w-full shadow-2xl bg-base-100">
           <h3 className="text-center text-3xl mb-5 font-bold mt-5">

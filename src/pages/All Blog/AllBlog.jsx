@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { useLoaderData } from "react-router-dom";
 import Blog from "./Blog";
 
@@ -14,7 +15,10 @@ const AllBlog = () => {
   );
 
   return (
-    <div className="container mx-auto mb-10">
+    <div className="container min-h-screen mx-auto mb-10">
+      <Helmet>
+        <title>Blog-Zone || All Blog</title>
+      </Helmet>
       <div className="w-3/4 mx-auto  justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
         <input
           onChange={(e) => setQuery(e.target.value)}

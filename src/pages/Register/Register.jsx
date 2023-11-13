@@ -1,6 +1,9 @@
 import { useContext } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const { registerUser, updateUserProfile } = useContext(AuthContext);
@@ -12,17 +15,33 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log({ name, photoUrl, email, password });
-    registerUser(email,password).then(result=>{
-        alert('user created successfully')
-        updateUserProfile(name,photoUrl)
-        console.log(result)
-    }).catch(error=>{
-        console.log(error)
-    })
+    registerUser(email, password)
+      .then((result) => {
+        updateUserProfile(name, photoUrl);
+        console.log(result);
+        if(result.user){
+          toast.success('Registration successful!', {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <div className="hero min-h-screen bg-base-200">
+      <Helmet>
+        <title>Blog-Zone || Register</title>
+      </Helmet>
       <div className="hero-content flex-col lg:flex-row">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register Here!</h1>
@@ -92,6 +111,18 @@ const Register = () => {
           </p>
         </div>
       </div>
+      <ToastContainer
+position="bottom-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
     </div>
   );
 };

@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { Button } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
-import { Button } from "@mui/material";
+import Comment from "./Comments/Comment";
 
 const BlogDetail = () => {
-    const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+
   const data = useLoaderData();
   const {
     _id,
@@ -14,43 +17,87 @@ const BlogDetail = () => {
     longDescription,
     authorImg,
     authorName,
-    published, 
-    authorEmail
+    published,
+    authorEmail,
   } = data;
-//   console.log(data);
-
 
   const timestamp = published;
 
-    const date = new Date(timestamp);
-    
+  const date = new Date(timestamp);
 
-    const monthNames = [
-      'January', 'February', 'March', 'April',
-      'May', 'June', 'July', 'August',
-      'September', 'October', 'November', 'December'
-    ];
-    
- 
-    const year = date.getFullYear();
-    const month = monthNames[date.getMonth()];
-    const day = String(date.getDate()).padStart(2, '0');
-    let hours = date.getHours();
-    const minutes = String(date.getMinutes()).padStart(2, '0');
- 
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
-    hours = hours % 12;
-    hours = hours ? hours : 12; 
-    
-    
-    const formattedTime = `${day}-${month}-${year} ${hours}:${minutes} ${ampm}`;
+  const year = date.getFullYear();
+  const month = monthNames[date.getMonth()];
+  const day = String(date.getDate()).padStart(2, "0");
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, "0");
 
+  const ampm = hours >= 12 ? "PM" : "AM";
 
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+
+  const formattedTime = `${day}-${month}-${year} ${hours}:${minutes} ${ampm}`;
+
+  const handleAddComment = (e) => {
+    e.preventDefault();
+    const commenter = user?.displayName;
+    const commenterImg = user?.photoURL;
+    const commenterEmail = user?.email;
+    const comment = e.target.comment.value;
+    const commentData = {
+      blog_id: _id,
+
+      commenter,
+      commenterImg,
+      comment,
+      commenterEmail,
+    };
+    console.log(comment);
+    fetch("http://localhost:5000/comments", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(commentData),
+    })
+      .then((res) => res.json())
+      .then(() => {});
+  };
+
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/comments")
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        setComments(data);
+      });
+  }, []);
+
+  const filteredComments = comments.filter((comment) => comment.blog_id == _id);
+  // console.log(filteredComments)
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mb-10">
+      <Helmet>
+        <title>Blog-Zone || Details</title>
+      </Helmet>
       <h2 className="text-center mt-10 mb-7 lg:mb-20 text-3xl lg:text-6xl font-bold">
         {" "}
         "{title}"
@@ -73,15 +120,41 @@ const BlogDetail = () => {
             <p className="text-xl font-medium">{authorName}</p>
           </div>
         </div>
-        <p className="font-medium mb-5 p-5">Published on: {formattedTime }</p>
+        <p className="font-medium mb-5 p-5">Published on: {formattedTime}</p>
       </div>
       <p className="md:text-2xl p-2 md:p-5 font-medium mb-10">
         {longDescription}
       </p>
-      <div  className="mb-10 text-center">
-        {
-            authorEmail === user?.email && <Link to={`/update/${_id}`}><Button variant="contained">Update</Button></Link>
-        }
+      <div className="mb-10 text-center">
+        {authorEmail === user?.email && (
+          <Link to={`/update/${_id}`}>
+            <Button variant="contained">Update</Button>
+          </Link>
+        )}
+      </div>
+      {user && (
+        <div>
+          {authorEmail !== user?.email && (
+            <form onSubmit={handleAddComment}>
+              <textarea
+                name="comment"
+                className="textarea textarea-info"
+                placeholder="Add a comment"
+              ></textarea>
+              <br />
+              <input
+                type="submit"
+                className="btn register-btn"
+                value="Comment"
+              />
+            </form>
+          )}
+        </div>
+      )}
+      <div className="grid grid-cols-4 mx-auto mt-10 gap-5">
+        {filteredComments.map((c) => (
+          <Comment key={c._id} c={c}></Comment>
+        ))}
       </div>
     </div>
   );

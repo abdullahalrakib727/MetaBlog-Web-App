@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext } from "react";
+import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 
@@ -52,6 +53,9 @@ const AddBlog = () => {
   };
   return (
     <div className="container mx-auto">
+      <Helmet>
+        <title>Blog-Zone || Add Blog</title>
+      </Helmet>
       <div className="min-h-screen flex justify-center items-center">
         <div className="card w-full shadow-2xl bg-base-100">
           <form className="card-body" onSubmit={handleSubmit}>
