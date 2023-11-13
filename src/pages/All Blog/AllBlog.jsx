@@ -15,12 +15,12 @@ const AllBlog = () => {
 
   return (
     <div className="container mx-auto mb-10">
-      <div className=" mt-10 mb-10 text-center">
+      <div className="w-3/4 mx-auto  justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
         <input
           onChange={(e) => setQuery(e.target.value)}
           type="text"
           placeholder="Search..."
-          className="input input-bordered input-info w-full max-w-xs mr-5"
+          className="input input-bordered input-info w-full max-w-xs lg:mr-5"
         />
         <select
           value={selectedCategory}
@@ -34,7 +34,7 @@ const AllBlog = () => {
           <option value="Tech">Tech</option>
         </select>
       </div>
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
+      <div className=" grid grid-cols-1 md:grid-cols-2 gap-5 ">
         {filteredBlogs.map((blog) => (
           <Blog key={blog._id} blog={blog}></Blog>
         ))}

@@ -7,27 +7,31 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 
 const Blog = ({ blog }) => {
-  const { _id, title, photUrl, shortDescription, category } = blog;
+  const { _id, title, photoUrl, shortDescription, category } = blog;
 
   return (
     <Card>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt={`image of ${title}`}
         height="140"
-        image={photUrl}
+        image={photoUrl}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {title}
+          <div className="font-bold">{title}</div>
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {shortDescription}
         </Typography>
-        <p>Category: {category}</p>
+        <p className="mt-4 font-semibold">
+          <span className="text-white p-2 bg-[#1976D2]">Category : {category}</span>
+        </p>
       </CardContent>
-      <CardActions>
-        <Link to={`/all/${_id}`}><Button size="small">Details</Button></Link>
+      <CardActions className="flex justify-around">
+        <Link to={`/all/${_id}`}>
+          <Button size="small">Details</Button>
+        </Link>
         <Button size="small">Wishlist</Button>
       </CardActions>
     </Card>

@@ -60,7 +60,7 @@ function Nav() {
             <Link to="/profile">Profile</Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/" onClick={() => logOutUser()}>
+            <Link  onClick={() => logOutUser()}>
               Logout
             </Link>
           </MenuItem>
