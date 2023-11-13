@@ -9,7 +9,7 @@ const RecentBlog = () => {
     const [blogs,setBlogs] = useState([]);
     useEffect(()=>{
         axios.get('http://localhost:5000/all').then(result=>{
-            console.log(result.data)
+            // console.log(result.data)
             setBlogs(result.data)
         })
     },[])

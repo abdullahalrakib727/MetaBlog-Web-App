@@ -55,39 +55,48 @@ const BlogDetail = () => {
 
   const handleAddComment = (e) => {
     e.preventDefault();
+    const form = e.target;
     const commenter = user?.displayName;
     const commenterImg = user?.photoURL;
     const commenterEmail = user?.email;
     const comment = e.target.comment.value;
-    const commentData = {
-      blog_id: _id,
+    if (comment) {
+      const commentData = {
+        blog_id: _id,
 
-      commenter,
-      commenterImg,
-      comment,
-      commenterEmail,
-    };
-    console.log(comment);
-    fetch("http://localhost:5000/comments", {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(commentData),
-    })
-      .then((res) => res.json())
-      .then(() => {});
+        commenter,
+        commenterImg,
+        comment,
+        commenterEmail,
+      };
+      console.log(comment);
+      fetch("http://localhost:5000/comments", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(commentData),
+      })
+        .then((res) => res.json())
+        .then(() => {
+          form.reset();
+          fetchComments();
+        });
+    }
   };
 
   const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/comments")
+  const fetchComments = () => {
+    fetch(`http://localhost:5000/comments?blog_id=${_id}`)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data)
         setComments(data);
       });
+  };
+
+  useEffect(() => {
+    fetchComments();
   }, []);
 
   const filteredComments = comments.filter((comment) => comment.blog_id == _id);
@@ -132,29 +141,32 @@ const BlogDetail = () => {
           </Link>
         )}
       </div>
-      {user && (
-        <div>
-          {authorEmail !== user?.email && (
-            <form onSubmit={handleAddComment}>
-              <textarea
-                name="comment"
-                className="textarea textarea-info"
-                placeholder="Add a comment"
-              ></textarea>
-              <br />
-              <input
+      <div className="bg-blue-400">
+        {user && (
+          <div className="">
+            {authorEmail !== user?.email && (
+              <form className="pt-5 pl-10" onSubmit={handleAddComment}>
+                <textarea
+                  name="comment"
+                  className="textarea textarea-info"
+                  placeholder="Add a comment"
+                ></textarea>
+                <br />
+                <Button
                 type="submit"
-                className="btn register-btn"
-                value="Comment"
-              />
-            </form>
-          )}
+                  variant="contained"
+                >
+                  Comment
+                </Button>
+              </form>
+            )}
+          </div>
+        )}
+        <div className="grid pt-5 md:grid-cols-2 lg:grid-cols-3">
+          {filteredComments.map((c) => (
+            <Comment key={c._id} c={c}></Comment>
+          ))}
         </div>
-      )}
-      <div className="grid grid-cols-4 mx-auto mt-10 gap-5">
-        {filteredComments.map((c) => (
-          <Comment key={c._id} c={c}></Comment>
-        ))}
       </div>
     </div>
   );

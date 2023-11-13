@@ -9,6 +9,7 @@ import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import Root from "./Root";
 import Update from "../pages/Update Blog/Update";
+import Wishlist from "../pages/Wishlist/Wishlist";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,9 @@ const router = createBrowserRouter([
         loader: () => fetch("http://localhost:5000/all"),
       },
       { path: "/featured", element: <Register></Register> },
-      { path: "/wishlist", element: <Register></Register> },
+      { path: "/wishlist", element: <PrivateRoute>
+        <Wishlist></Wishlist>
+      </PrivateRoute> },
       {
         path: "/all/:id",
         element: <BlogDetail></BlogDetail>,

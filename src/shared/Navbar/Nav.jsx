@@ -18,13 +18,13 @@ import { AuthContext } from "../../Providers/AuthProvider";
 // const pages = ['Products', 'Pricing', 'Blog'];
 
 function Nav() {
-  const { user, logOutUser, loading } = React.useContext(AuthContext);
+  const { user, logOutUser } = React.useContext(AuthContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  if (loading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
-  }
+  // if (loading) {
+  //   return <span className="loading loading-spinner loading-lg"></span>;
+  // }
   // console.log(user);
 
   const navLinks = (
