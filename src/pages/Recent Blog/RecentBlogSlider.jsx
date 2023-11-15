@@ -22,7 +22,7 @@ const RecentBlogSlider = ({blog}) => {
           category,
           email,
         };
-    console.log(data)
+    // console.log(data)
        if(user){
         fetch("http://localhost:5000/wishlist", {
           method: "post",
