@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Register = () => {
   const { registerUser, updateUserProfile } = useContext(AuthContext);
@@ -15,12 +16,33 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log({ name, photoUrl, email, password });
+
+    const hasNoCapital = /^(?:(?![A-Z]).)*$/.test(password);
+
+    const hasNoSpecialChar = /^[^!@#$%^&*(),.?":{}|<>]*$/.test(password);
+
+    const hasNoNumericChar = /^[^\d]*$/.test(password);
+
+    if (password.length < 6) {
+      Swal.fire("Your password is less than 6 character!");
+      return;
+    } else if (hasNoCapital) {
+      Swal.fire("Your password has no capital letter!");
+      return;
+    } else if (hasNoSpecialChar) {
+      Swal.fire("Your password has no special character!");
+      return;
+    } else if (hasNoNumericChar) {
+      Swal.fire("Your password doesn't contain a number!");
+      return;
+    }
+
     registerUser(email, password)
       .then((result) => {
         updateUserProfile(name, photoUrl);
         console.log(result);
-        if(result.user){
-          toast.success('Registration successful!', {
+        if (result.user) {
+          toast.success("Registration successful!", {
             position: "bottom-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -29,7 +51,7 @@ const Register = () => {
             draggable: true,
             progress: undefined,
             theme: "light",
-            });
+          });
         }
       })
       .catch((error) => {
@@ -112,17 +134,17 @@ const Register = () => {
         </div>
       </div>
       <ToastContainer
-position="bottom-center"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

@@ -9,9 +9,9 @@ const Home = () => {
       <Helmet>
         <title>Blog-Zone</title>
       </Helmet>
-      <div className="flex items-center mt-5">
+      <div className="flex items-center justify-center mt-5 ">
         <p className="p-2 text-white text-2xl bg-[#1976D2]">Recent</p>
-        <div>
+        <div className="w-3/4">
           <Marque></Marque>
         </div>
       </div>

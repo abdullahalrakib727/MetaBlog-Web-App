@@ -1,20 +1,17 @@
-
-import Recent from "./Recent";
-
 import LimitedBlog from "../../function/LimitedBlog";
 
+import RecentBlogSlider from "./RecentBlogSlider";
 
 const RecentBlog = () => {
-    
-    const limitedBlogs = LimitedBlog();
+  const limitedBlogs = LimitedBlog();
 
-    return (
-        <div className="grid grid-cols-2 gap-4">
-            {
-                limitedBlogs.map(r=><Recent key={r._id} blog={r}></Recent>)
-            }
-        </div>
-    );
+  return (
+    <div className="grid md:grid-cols-2 gap-5">
+      {limitedBlogs.map((blog) => (
+        <RecentBlogSlider key={blog._id} blog={blog}></RecentBlogSlider>
+      ))}
+    </div>
+  );
 };
 
 export default RecentBlog;

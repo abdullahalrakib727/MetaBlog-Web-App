@@ -8,7 +8,7 @@ import Footer from "../shared/Footer/Footer";
 
 const Root = () => {
     return (
-    <div className="max-2xl">
+    <div>
         <Nav></Nav>
         <Outlet></Outlet>
         <Footer></Footer>

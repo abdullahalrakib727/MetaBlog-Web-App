@@ -9,11 +9,13 @@ import { SkeletonTheme } from 'react-loading-skeleton'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+     <div className="max-w-screen-2xl mx-auto">
     <SkeletonTheme baseColor="#FFE7B1" highlightColor="#1976D2">
     <AuthProvider>
       <RouterProvider router={router} />
       </AuthProvider>
     </SkeletonTheme>
+    </div>
       
   </React.StrictMode>,
 )
