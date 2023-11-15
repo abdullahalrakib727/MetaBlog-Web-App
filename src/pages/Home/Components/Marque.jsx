@@ -1,11 +1,16 @@
+
 import Marquee from "react-fast-marquee";
+import LimitedBlog from "../../../function/LimitedBlog";
 
 const Marque = () => {
+const limitedBlogs = LimitedBlog();
     return (
-        <Marquee className="mt-5">
-    <h3 className="mr-5">THis is 1</h3>
-    <h3 className="mr-5">THis is 1</h3>
-    <h3 className="mr-5">THis is 1</h3>
+        <Marquee>
+   {
+    limitedBlogs.map(blog=><div key={blog._id}>
+      <h2 className="mr-10 text-2xl">{blog.title}</h2>
+    </div>)
+   }
   </Marquee>
     );
 };

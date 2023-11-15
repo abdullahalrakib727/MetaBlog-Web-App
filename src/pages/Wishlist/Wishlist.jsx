@@ -16,7 +16,7 @@ const Wishlist = () => {
             setWishlist(data)
         })
     },[])
-    console.log(wishlist)
+    // console.log(wishlist)
 
 
     return (

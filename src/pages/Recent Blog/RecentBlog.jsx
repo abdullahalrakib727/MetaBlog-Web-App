@@ -1,23 +1,12 @@
 
 import Recent from "./Recent";
-import { useEffect, useState } from "react";
-import axios from "axios";
+
+import LimitedBlog from "../../function/LimitedBlog";
 
 
 const RecentBlog = () => {
     
-    const [blogs,setBlogs] = useState([]);
-    useEffect(()=>{
-        axios.get('http://localhost:5000/all').then(result=>{
-            // console.log(result.data)
-            setBlogs(result.data)
-        })
-    },[])
-  
-    const recentBlogs = blogs.sort((a, b) => new Date(b.published) - new Date(a.published));
-    
-    
-    const limitedBlogs = recentBlogs.slice(0,6)
+    const limitedBlogs = LimitedBlog();
 
     return (
         <div className="grid grid-cols-2 gap-4">
