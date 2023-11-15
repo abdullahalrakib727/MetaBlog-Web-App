@@ -17,7 +17,7 @@ const AllBlog = () => {
   return (
     <div className="container min-h-screen mx-auto mb-10">
       <Helmet>
-        <title>Blog-Zone || All Blog</title>
+        <title>Blog-Zone || All Blogs</title>
       </Helmet>
       <div className="w-3/4 mx-auto  justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
         <input

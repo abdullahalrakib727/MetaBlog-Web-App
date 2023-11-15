@@ -6,7 +6,7 @@ const RecentBlog = () => {
   const limitedBlogs = LimitedBlog();
 
   return (
-    <div className="grid md:grid-cols-2 gap-5">
+    <div className="grid md:grid-cols-2 gap-5" >
       {limitedBlogs.map((blog) => (
         <RecentBlogSlider key={blog._id} blog={blog}></RecentBlogSlider>
       ))}

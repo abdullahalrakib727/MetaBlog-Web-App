@@ -10,13 +10,6 @@ import Comment from "./Comments/Comment";
 
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth', 
-    });
-  }
-    scrollToTop();
 
   const data = useLoaderData();
   const {

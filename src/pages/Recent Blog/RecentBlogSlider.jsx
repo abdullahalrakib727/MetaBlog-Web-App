@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import Swal from "sweetalert2";
 
+import 'aos/dist/aos.css'
+
 const RecentBlogSlider = ({blog}) => {
     const {user} = useContext(AuthContext);
     const { _id, title, photoUrl, shortDescription, category, published } = blog;
@@ -51,12 +53,12 @@ const RecentBlogSlider = ({blog}) => {
       };
     
     return (
-   <div className="border px-4 py-4">
+   <div className="border px-4 py-4" >
        <div className="w-1/2 mx-auto mb-2">
         <img src={blog.photoUrl} alt="" />
       </div>
-      <h2 className="text-xl mb-2 p-4 md:p-0 text-center ">{blog.title}</h2>
-      <p className="mb-4 text-center">Category : {blog.category}</p>
+      <h2 className="text-xl mb-2 p-4 md:p-0 text-center font-bold ">{blog.title}</h2>
+      <p className="mb-4 text-center font-semibold">Category : {blog.category}</p>
       <p className="text-sm  px-14">{blog.shortDescription}</p>
       <p className="mt-5 text-sm text-center">Published On : {formattedTime}</p>
       <div className=" flex text-center gap-5 mt-8 justify-center">
