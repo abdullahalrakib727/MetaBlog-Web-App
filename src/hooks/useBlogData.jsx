@@ -16,8 +16,7 @@ const useBlogData = () => {
     (a, b) => new Date(b.published) - new Date(a.published)
   );
 
-  const limitedBlogs = recentBlogs.slice(0, 6);
-  return [blogs, isLoaded, limitedBlogs];
+  return [blogs, isLoaded, recentBlogs];
 };
 
 export default useBlogData;

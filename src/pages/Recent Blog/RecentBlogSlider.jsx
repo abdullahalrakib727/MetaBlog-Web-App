@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+
 import { useContext } from "react";
 import "react-photo-view/dist/react-photo-view.css";
 import { Link } from "react-router-dom";
@@ -8,6 +8,8 @@ import TimeFormat from "../../function/TimeFormat";
 
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
+import { Button } from "antd";
+import { ButtonGroup, Card, CardBody, CardFooter,  Divider, Heading, Image, Stack, Text } from "@chakra-ui/react";
 
 const RecentBlogSlider = ({ blog }) => {
   const { user } = useContext(AuthContext);
@@ -53,31 +55,43 @@ const RecentBlogSlider = ({ blog }) => {
   };
 
   return (
-    <div className="border px-4 py-4">
-      <div className="w-1/2 mx-auto mb-2">
+  
+  <Card maxW="sm" className=" shadow-lg">
+      <CardBody>
         <PhotoProvider>
           <PhotoView src={photoUrl}>
-            <img src={photoUrl} alt="" />
+            <Image src={photoUrl} alt="" />
           </PhotoView>
         </PhotoProvider>
-      </div>
-      <h2 className="text-xl mb-2 p-4 md:p-0 text-center font-bold ">
-        {title}
-      </h2>
-      <p className="mb-4 text-center font-semibold">
-        Category : {category}
-      </p>
-      <p className="text-sm  px-14">{shortDescription}</p>
-      <p className="mt-5 text-sm text-center">Published On : {formattedTime}</p>
-      <div className=" flex text-center gap-5 mt-8 justify-center">
-        <Link to={`/all/${_id}`}>
-          <Button size="small">Details</Button>
-        </Link>
-        <Button size="small" onClick={() => handleWishlist()}>
-          Wishlist
-        </Button>
-      </div>
-    </div>
+        <Stack mt="6" spacing="3">
+          <Heading className="text-2xl mb-3" size="md">
+            {title}
+          </Heading>
+          <Text className="mb-3">{shortDescription}</Text>
+          <Text color="blue.600" className="mb-2 " fontSize="2xl">
+            Category: {category}
+          </Text>
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter className="mt-auto">
+        <ButtonGroup spacing="2">
+          <Link to={`/all/${_id}`}>
+            <Button className="register-btn" colorScheme="blue">
+              Details
+            </Button>
+          </Link>
+
+          <Button
+            onClick={() => handleWishlist()}
+            variant="ghost"
+            colorScheme="blue"
+          >
+            Wishlist
+          </Button>
+        </ButtonGroup>
+      </CardFooter>
+    </Card>
   );
 };
 

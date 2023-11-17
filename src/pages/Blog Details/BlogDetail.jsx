@@ -14,7 +14,7 @@ import Paragraph from "antd/es/typography/Paragraph";
 
 const { Text } = Typography;
 const { Title } = Typography;
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import { Skeleton } from '@chakra-ui/react'
 
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);

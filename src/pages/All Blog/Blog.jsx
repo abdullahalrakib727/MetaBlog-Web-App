@@ -74,7 +74,7 @@ const Blog = ({ blog }) => {
             {title}
           </Heading>
           <Text className="mb-3">{shortDescription}</Text>
-          <Text color="blue.600" className="mb-2" fontSize="2xl">
+          <Text color="blue.600" className="mb-2 " fontSize="2xl">
             Category: {category}
           </Text>
         </Stack>
