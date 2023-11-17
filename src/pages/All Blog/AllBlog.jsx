@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
-import { useLoaderData } from "react-router-dom";
-import Blog from "./Blog";
 
+import { Helmet } from "react-helmet";
+import Blog from "./Blog";
+import { Input } from 'antd';
+import useBlogData from "../../hooks/useBlogData";
 const AllBlog = () => {
-  const blogs = useLoaderData();
+  const [blogs,isLoaded] = useBlogData()
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -20,12 +21,17 @@ const AllBlog = () => {
         <title>Blog-Zone || All Blogs</title>
       </Helmet>
       <div className="w-3/4 mx-auto  justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
-        <input
-          onChange={(e) => setQuery(e.target.value)}
-          type="text"
-          placeholder="Search..."
-          className="input input-bordered input-info w-full max-w-xs lg:mr-5"
-        />
+
+
+        <Input placeholder="Search..." className="w-1/2" onChange={(e) => {
+          const search = e.target.value;
+          const searchLower = search.toLowerCase()
+          setQuery(searchLower)
+        }}  />
+ 
+
+
+
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -38,9 +44,9 @@ const AllBlog = () => {
           <option value="Tech">Tech</option>
         </select>
       </div>
-      <div className=" grid grid-cols-1 md:grid-cols-2 gap-5 ">
+      <div className=" grid grid-cols-1 md:grid-cols-2 mx-2 lg:grid-cols-3 gap-5 ">
         {filteredBlogs.map((blog) => (
-          <Blog key={blog._id} blog={blog}></Blog>
+          <Blog key={blog._id} isLoaded={isLoaded} blog={blog}></Blog>
         ))}
       </div>
     </div>

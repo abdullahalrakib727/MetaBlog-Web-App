@@ -1,9 +1,9 @@
 import Marquee from "react-fast-marquee";
 import { Link } from "react-router-dom";
-import LimitedBlog from "../../../function/LimitedBlog";
+import useBlogData from "../../../hooks/useBlogData";
 
 const Marque = () => {
-  const limitedBlogs = LimitedBlog();
+  const [limitedBlogs, isLoaded] = useBlogData();
   return (
     <Marquee pauseOnHover>
       {limitedBlogs.map((blog) => (

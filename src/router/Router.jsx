@@ -3,21 +3,22 @@ import AddBlog from "../pages/AddBlog/AddBlog";
 
 import AllBlog from "../pages/All Blog/AllBlog";
 import BlogDetail from "../pages/Blog Details/BlogDetail";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import FeaturedBlog from "../pages/Featured Blog/FeaturedBlog";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
+import Profile from "../pages/Profile/Profile";
 import Register from "../pages/Register/Register";
 import Update from "../pages/Update Blog/Update";
 import Wishlist from "../pages/Wishlist/Wishlist";
 import PrivateRoute from "./PrivateRoute";
 import Root from "./Root";
-import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
-    errorElement:<ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       { path: "/", element: <Home></Home> },
       { path: "/login", element: <Login></Login> },
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
       {
         path: "/all",
         element: <AllBlog></AllBlog>,
-        loader: () => fetch("http://localhost:5000/all"),
+        
       },
       {
         path: "/wishlist",
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
         path: "/featured",
         element: <FeaturedBlog></FeaturedBlog>,
         loader: () => fetch("http://localhost:5000/all"),
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>,
       },
     ],
   },

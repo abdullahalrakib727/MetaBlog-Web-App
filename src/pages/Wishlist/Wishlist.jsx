@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 
 const Wishlist = () => {
   const { user } = useContext(AuthContext);
-
+  
   // Each blog should have a title, image, short description, category, details button and
   // remove wishlist button
-  const [wishlists, setWishlists] = useState([]);
-
+ const [wishlists, setWishlists] = useState([]);
+  
   const url = `http://localhost:5000/wishlist?email=${user?.email}`;
 
   const fetchData = () => {
@@ -69,7 +70,12 @@ const Wishlist = () => {
             {wishlist.title}
           </h2>
           <div className="w-1/2 lg:w-2/6 py-5">
+          <PhotoProvider>
+          <PhotoView src={wishlist.photoUrl}>
             <img src={wishlist.photoUrl} alt="" />
+          </PhotoView>
+        </PhotoProvider>
+            
           </div>
           <p className="py-5 px-10">{wishlist.shortDescription}</p>
           <button
