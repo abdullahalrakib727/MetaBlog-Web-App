@@ -118,7 +118,7 @@ const BlogDetail = () => {
         </div>
         <div>
           <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="p-5 flex gap-5 items-center">
+            <div className="p-1 flex gap-5 items-center">
               <Text className="text-base" code>
                 Author:
               </Text>

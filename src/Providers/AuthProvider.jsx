@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase/firebase.config";
 export const  AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -56,6 +56,14 @@ const handleGoogleSignIn =()=>{
     return signOut(auth);
   };
 
+// send verification email to user 
+const sendVerificationEmail = ()=>{
+   
+return sendEmailVerification(auth.currentUser);
+ 
+}
+
+
 
 
     const authInfo = {
@@ -64,7 +72,8 @@ const handleGoogleSignIn =()=>{
         user,signInUser,
         logOutUser,
         loading,
-        handleGoogleSignIn
+        handleGoogleSignIn,
+        sendVerificationEmail 
     }
 
     return (
