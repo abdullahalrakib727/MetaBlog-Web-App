@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
@@ -8,14 +8,15 @@ import { AuthContext } from "../../Providers/AuthProvider";
 
 const Register = () => {
   const { registerUser, updateUserProfile } = useContext(AuthContext);
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const photoUrl = e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log({ name, photoUrl, email, password });
+    // console.log({ name, photoUrl, email, password });
 
     const hasNoCapital = /^(?:(?![A-Z]).)*$/.test(password);
 
@@ -40,10 +41,10 @@ const Register = () => {
     registerUser(email, password)
       .then((result) => {
         updateUserProfile(name, photoUrl);
-        console.log(result);
+
         if (result.user) {
           toast.success("Registration successful!", {
-            position: "bottom-center",
+            position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -52,10 +53,17 @@ const Register = () => {
             progress: undefined,
             theme: "light",
           });
+          setTimeout(() => {
+            navigate(location?.state ? location.state : "/");
+          }, 2000);
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        Swal.fire({
+          title: "User Already Exits!!!!",
+          text: "User with this email already has an account on this website",
+          icon: "error",
+        });
       });
   };
 

@@ -16,7 +16,7 @@ const Marque = () => {
             {limitedBlogs.map((blog) => (
               <div key={blog._id}>
                 <Link to={`/all/${blog._id}`}>
-                  <h2 className="mr-10 text-2xl">{blog.title}</h2>
+                  <h2 className="mr-10 font-semibold text-2xl">{blog.title}</h2>
                 </Link>
               </div>
             ))}

@@ -1,27 +1,53 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import './login.scss'
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
     const {signInUser, handleGoogleSignIn} = useContext(AuthContext);
     const handleLogin = (e) =>{
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         // console.log({email,password})
-        signInUser(email,password).then(result=>{
-            console.log(result.user)
-            alert('login successful')
-        }).catch(error=>{
-            console.log(error)
+        signInUser(email,password).then(()=>{
+            // console.log(result.user)
+            Swal.fire({
+              title: "Log in Successful!",
+              icon: "success"
+            });
+
+            setTimeout(() => {
+              navigate(location?.state ? location.state : "/");
+            }, 2000);
+
+        }).catch(()=>{
+         
+          Swal.fire({
+            title: "Email or Password incorrect!",
+            text: "Please check your email and password again",
+            icon: "error"
+          });
         })
 
     }
 
     const handleGoogle = ()=>{
-      handleGoogleSignIn();
+      handleGoogleSignIn().then(()=>{
+        Swal.fire({
+          title: "Log in Successful!",
+          icon: "success"
+        });
+  
+        setTimeout(() => {
+          navigate(location?.state ? location.state : "/");
+        }, 2000);
+      });
+      
     }
 
     return (

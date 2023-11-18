@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import TimeFormat from "../../function/TimeFormat";
 const Profile = () => {
-  const { user, sendVerificationEmail  } = useContext(AuthContext);
+  const { user, sendVerificationEmail } = useContext(AuthContext);
 
   const utcTimestamp = user?.metadata.creationTime;
 
@@ -14,6 +14,7 @@ const Profile = () => {
       console.log(result)
     })
   }
+
 
   return (
     <ChakraProvider>
@@ -32,9 +33,6 @@ const Profile = () => {
         <p>Account created at : {formattedTime}</p>
        {
         !user?.emailVerified &&  <Button onClick={handleVerification} className='mt-10' colorScheme='blue'>Send Email Verification</Button>
-       }
-       {
-        user &&  <Button colorScheme='red' className='mt-10'>Delete Account</Button>
        }
       </div>
     </div>
