@@ -4,7 +4,6 @@ import "react-photo-view/dist/react-photo-view.css";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
-import TimeFormat from "../../function/TimeFormat";
 
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -13,8 +12,7 @@ import { ButtonGroup, Card, CardBody, CardFooter,  Divider, Heading, Image, Stac
 
 const RecentBlogSlider = ({ blog }) => {
   const { user } = useContext(AuthContext);
-  const { _id, title, photoUrl, shortDescription, category, published } = blog;
-  const formattedTime = TimeFormat(published);
+  const { _id, title, photoUrl, shortDescription, category } = blog;
   const handleWishlist = () => {
     const email = user?.email;
 
@@ -56,42 +54,48 @@ const RecentBlogSlider = ({ blog }) => {
 
   return (
   
-  <Card maxW="sm" className=" shadow-lg">
-      <CardBody>
-        <PhotoProvider>
-          <PhotoView src={photoUrl}>
-            <Image src={photoUrl} alt="" />
-          </PhotoView>
-        </PhotoProvider>
-        <Stack mt="6" spacing="3">
-          <Heading className="text-2xl mb-3" size="md">
-            {title}
-          </Heading>
+    <Card maxW="sm" className="shadow-lg">
+  <CardBody className="flex flex-col justify-between h-full">
+    <div>
+      <div className="max-h-[199px] max-w-[344px]">
+      <PhotoProvider>
+        <PhotoView src={photoUrl}>
+          <Image src={photoUrl} alt="" />
+        </PhotoView>
+      </PhotoProvider>
+      </div>
+      <Stack mt="6" spacing="3">
+        <Heading className="text-2xl mb-3" size="md">
+          {title}
+        </Heading>
+        <div className="text-sm">
           <Text className="mb-3">{shortDescription}</Text>
-          <Text color="blue.600" className="mb-2 " fontSize="2xl">
-            Category: {category}
-          </Text>
-        </Stack>
-      </CardBody>
-      <Divider />
-      <CardFooter className="mt-auto">
-        <ButtonGroup spacing="2">
-          <Link to={`/all/${_id}`}>
-            <Button className="register-btn" colorScheme="blue">
-              Details
-            </Button>
-          </Link>
+        </div>
+      </Stack>
+    </div>
+    <Text color="blue.600" className="mb-2" fontSize="2xl">
+      Category: {category}
+    </Text>
+  </CardBody>
+  <Divider />
+  <CardFooter className="mt-auto">
+    <ButtonGroup spacing="2">
+      <Link to={`/all/${_id}`}>
+        <Button className="register-btn" colorScheme="blue">
+          Details
+        </Button>
+      </Link>
+      <Button
+        onClick={() => handleWishlist()}
+        variant="ghost"
+        colorScheme="blue"
+      >
+        Wishlist
+      </Button>
+    </ButtonGroup>
+  </CardFooter>
+</Card>
 
-          <Button
-            onClick={() => handleWishlist()}
-            variant="ghost"
-            colorScheme="blue"
-          >
-            Wishlist
-          </Button>
-        </ButtonGroup>
-      </CardFooter>
-    </Card>
   );
 };
 

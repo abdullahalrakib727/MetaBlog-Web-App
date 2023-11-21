@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -15,6 +15,8 @@ import Paragraph from "antd/es/typography/Paragraph";
 const { Text } = Typography;
 const { Title } = Typography;
 import { Skeleton } from '@chakra-ui/react'
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
@@ -34,7 +36,19 @@ const BlogDetail = () => {
 
   const formattedTime = TimeFormat(published);
 
+  //  show comment on site
+  const {data:comments=[],refetch} =useQuery({
+    queryKey: ["comments"],
+    queryFn: async ()=>{
+     const res = await axios.get(`http://localhost:5000/comments?blog_id=${_id}`);
+    return res.data;
+    }
+  });
+
+
   //  add a comment
+
+
 
   const handleAddComment = (e) => {
     e.preventDefault();
@@ -65,26 +79,13 @@ const BlogDetail = () => {
         .then((res) => res.json())
         .then(() => {
           form.reset();
-          fetchComments();
+          refetch();
         });
     }
   };
 
-  //  show comment on site
 
-  const [comments, setComments] = useState([]);
 
-  const fetchComments = () => {
-    fetch(`http://localhost:5000/comments?blog_id=${_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setComments(data);
-      });
-  };
-
-  useEffect(() => {
-    fetchComments();
-  }, []);
 
   const filteredComments = comments
     .filter((comment) => comment.blog_id == _id)
