@@ -27,7 +27,7 @@ const Wishlist = () => {
               refetch();
               Swal.fire({
                 title: "Deleted!",
-                text: "Your bloghas been deleted.",
+                text: "Your blog has been deleted.",
                 icon: "success",
               });
             }

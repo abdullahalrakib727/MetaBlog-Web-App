@@ -166,7 +166,7 @@ const BlogDetail = () => {
           )}
           <div className="pb-5 pt-5">
             {filteredComments.map((c) => (
-              <Comment key={c._id} c={c}></Comment>
+              <Comment refetch={refetch} key={c._id} c={c}></Comment>
             ))}
           </div>
         </div>
