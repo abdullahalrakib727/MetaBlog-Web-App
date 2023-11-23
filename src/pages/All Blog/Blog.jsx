@@ -22,8 +22,7 @@ const Blog = ({ blog }) => {
 
   const handleWishlist = () => {
     const email = user?.email;
-    // Each blog should have a title, image, short description, category, details button and
-    // remove wishlist button
+  
 
     const data = {
       blog_id: _id,

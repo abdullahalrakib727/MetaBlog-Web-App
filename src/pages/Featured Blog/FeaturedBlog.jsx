@@ -33,11 +33,13 @@ const FeaturedBlog = () => {
   ];
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div >
       <Helmet>
         <title>Blog-Zone || Featured Blog</title>
       </Helmet>
-      <DataTable responsive columns={columns} data={topBlogs} />
+     <div className="w-3/4 my-20 mx-auto">
+     <DataTable responsive columns={columns} data={topBlogs} />
+     </div>
     </div>
   );
 };

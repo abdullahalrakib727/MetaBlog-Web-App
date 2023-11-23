@@ -2,12 +2,24 @@
 import Swal from "sweetalert2";
 
 
-import { useLoaderData } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Update = () => {
+const params = useParams();
+  const {data:item=[]} = useQuery({
+    queryKey: ['item'],
+    queryFn : async()=>{
+      const res = await axios.get(`http://localhost:5000/all/${params.id}`,{withCredentials:true})
+      return res.data;
+    }
+  })
+
   const { _id, title, photoUrl, category, shortDescription, longDescription } =
-    useLoaderData();
+    item;
+
   const handleUpdate = (e) => {
     e.preventDefault();
     const title = e.target.title.value;
@@ -23,22 +35,50 @@ const Update = () => {
       longDescription,
     };
 
-    fetch(`http://localhost:5000/all/${_id}`, {
-      method: "put",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedBlog),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          Swal.fire({
-            title: "Blog Has been Updated!",
-            icon: "success",
-          });
-        }
-      });
+
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios.patch(`http://localhost:5000/all/${_id}`,updatedBlog,{withCredentials:true}).then(res=>{
+          console.log(res.data)
+          if (res.data.modifiedCount > 0) {
+            Swal.fire({
+              title: "Blog Has been Updated!",
+              icon: "success",
+            });
+          }
+        })
+
+    //     fetch(`http://localhost:5000/all/${_id}`, {
+    //   method: "put",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(updatedBlog),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.modifiedCount > 0) {
+    //       Swal.fire({
+    //         title: "Blog Has been Updated!",
+    //         icon: "success",
+    //       });
+    //     }
+    //   });
+
+
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+
+   
   };
   return (
     <div className="container mx-auto">

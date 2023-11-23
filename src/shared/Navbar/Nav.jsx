@@ -7,20 +7,24 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
+
 // import Button from '@mui/material/Button';
 // import AdbIcon from "@mui/icons-material/Adb";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { useContext } from "react";
+import { useState } from "react";
 
 // const pages = ['Products', 'Pricing', 'Blog'];
 
 function Nav() {
-  const { user, logOutUser } = React.useContext(AuthContext);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { user, logOutUser } = useContext(AuthContext);
+  const [anchorElNav, setAnchorElNav] =   useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+console.log(user)
 
   // if (loading) {
   //   return <span className="loading loading-spinner loading-lg"></span>;
@@ -179,8 +183,8 @@ function Nav() {
             >
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/* conditional User avatar */}
-                {!user && <Avatar src="/broken-image.jpg" />}
-                {user && <Avatar src={user?.photoURL} />}
+               
+                {user ? <Avatar src={user.photoURL} />:<Avatar src="/broken-image.jpg" />}
               </IconButton>
               {/* conditional  User Name */}
               {user && <p>{user?.displayName}</p>}

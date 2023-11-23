@@ -12,7 +12,7 @@ const useWIshlist = () => {
     const {data:wishlists=[], refetch} = useQuery({
       queryKey: ['wishlists'],
       queryFn: async() =>{
-        const res=await axios.get(url);
+        const res=await axios.get(url,{withCredentials:true});
        return res.data;
   
       }

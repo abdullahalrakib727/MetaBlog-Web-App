@@ -1,7 +1,9 @@
 import { Helmet } from "react-helmet";
-import RecentBlog from "../Recent Blog/RecentBlog";
-import Banner from "./Components/Banner";
-import Marque from "./Components/Marque";
+import RecentBlog from "../../Recent Blog/RecentBlog";
+import Banner from "../Components/Banner";
+import Marque from "../Components/Marque";
+import NewSletter from "../Components/New Sletter/NewSletter";
+import Reviews from "../Reviews/Reviews";
 
 const Home = () => {
   return (
@@ -22,6 +24,8 @@ const Home = () => {
       <h3 className="text-4xl text-center font-bold mt-5 mb-5">Recent Blogs</h3>
       <div className="mb-10">
         <RecentBlog></RecentBlog>
+        <NewSletter></NewSletter>
+        <Reviews></Reviews>
       </div>
     </div>
   );

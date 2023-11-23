@@ -19,29 +19,19 @@ const AddBlog = () => {
     const authorEmail = user?.email;
     const authorName = user?.displayName;
     const authorImg = user?.photoURL;
-    console.log({
+    const data = {
+      title,
+      photoUrl,
+      category,
       shortDescription,
       longDescription,
       published,
       authorEmail,
       authorName,
       authorImg,
-    });
-    axios({
-      method: "post",
-      url: "http://localhost:5000/all",
-      data: {
-        title,
-        photoUrl,
-        category,
-        shortDescription,
-        longDescription,
-        published,
-        authorEmail,
-        authorName,
-        authorImg,
-      },
-    }).then((res) => {
+    };
+    const url = "http://localhost:5000/all";
+    axios.post(url, data, { withCredentials: true }).then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
           title: "Blog Has been Added!",

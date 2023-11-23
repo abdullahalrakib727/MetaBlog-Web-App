@@ -43,6 +43,7 @@ const Login = () => {
           icon: "success"
         });
   
+        
         setTimeout(() => {
           navigate(location?.state ? location.state : "/");
         }, 2000);

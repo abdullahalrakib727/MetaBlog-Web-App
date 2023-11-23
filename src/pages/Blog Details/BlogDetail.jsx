@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import TimeFormat from "../../function/TimeFormat";
 import Comment from "./Comments/Comment";
@@ -18,10 +18,20 @@ import { Skeleton } from '@chakra-ui/react'
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
 
-  const data = useLoaderData();
+  const params = useParams();
+
+  const {data=[]} = useQuery({
+    queryKey: ['data'],
+    queryFn: async()=>{
+      const res = await  axios.get(`http://localhost:5000/all/${params.id}`,{withCredentials:true})
+      return res.data;
+    }
+  })
+
   const {
     _id,
     title,
@@ -94,13 +104,14 @@ const BlogDetail = () => {
 
   return (
     <div className="container mx-auto mb-10">
+      <div className="max-w-5xl mx-auto bg-white mt-10 p-2 lg:p-10">
       <Helmet>
         <title>Blog-Zone || Details</title>
       </Helmet>
       
       <Typography>
         {title ? (
-          <Title className="font-bold p-2 lg:p-0 mt-5 lg:mt-8" level={1}>
+          <Title className="font-bold p-2 lg:p-0 lg:mt-8 text-center" level={2}>
             {title}
           </Title>
         ) : (
@@ -113,7 +124,7 @@ const BlogDetail = () => {
               <img src={photoUrl} alt="" />
             </PhotoView>
           </PhotoProvider>
-          <Paragraph className="mt-5 text-xl mb-5 p-2 lg:p-0">
+          <Paragraph className="mt-5 text-lg font-semibold ">
             {shortDescription ? shortDescription : <Skeleton></Skeleton>}
           </Paragraph>
         </div>
@@ -137,7 +148,7 @@ const BlogDetail = () => {
             )}
           </div>
         </div>
-        <Paragraph className=" text-base p-2 md:p-5 font-medium mb-10">
+        <Paragraph className=" text-base mt-10 font-medium mb-10">
           {longDescription || <Skeleton></Skeleton>}
         </Paragraph>
         <div className="mb-10 text-center">
@@ -171,6 +182,7 @@ const BlogDetail = () => {
           </div>
         </div>
       </Typography>
+      </div>
     </div>
   );
 };

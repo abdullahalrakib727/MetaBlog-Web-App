@@ -15,7 +15,7 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <div className="max-w-screen-2xl mx-auto">
+    <div className="max-w-screen-2xl mx-auto bg-slate-100">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <RouterProvider router={router} />

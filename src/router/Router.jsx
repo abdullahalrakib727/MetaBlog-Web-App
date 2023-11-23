@@ -5,7 +5,7 @@ import AllBlog from "../pages/All Blog/AllBlog";
 import BlogDetail from "../pages/Blog Details/BlogDetail";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import FeaturedBlog from "../pages/Featured Blog/FeaturedBlog";
-import Home from "../pages/Home/Home";
+import Home from "../pages/Home/Home/Home";
 import Login from "../pages/Login/Login";
 import Profile from "../pages/Profile/Profile";
 import Register from "../pages/Register/Register";
@@ -49,7 +49,6 @@ const router = createBrowserRouter([
         element: <PrivateRoute>
           <BlogDetail></BlogDetail>
         </PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/all/${params.id}`),
       },
       {
         path: "/update/:id",
@@ -58,7 +57,6 @@ const router = createBrowserRouter([
             <Update></Update>
           </PrivateRoute>
         ),
-        loader: ({ params }) => fetch(`http://localhost:5000/all/${params.id}`),
       },
       {
         path: "/featured",
@@ -67,7 +65,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile></Profile>,
+        element: <PrivateRoute>
+          <Profile></Profile>
+        </PrivateRoute>,
       },
     ],
   },

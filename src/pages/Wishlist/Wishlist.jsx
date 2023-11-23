@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import useWIshlist from "../../hooks/useWIshlist";
+import axios from "axios";
 
 const Wishlist = () => {
   const [wishlists, refetch] = useWIshlist();
@@ -18,20 +19,20 @@ const Wishlist = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/wishlist/${id}`, {
-          method: "delete",
+
+        axios.delete(`http://localhost:5000/wishlist/${id}`,{withCredentials:true}).then(res=>{
+         
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your blog has been deleted.",
+              icon: "success",
+            });
+          }
         })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              refetch();
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your blog has been deleted.",
-                icon: "success",
-              });
-            }
-          });
+        
+      
       }
     });
   };
