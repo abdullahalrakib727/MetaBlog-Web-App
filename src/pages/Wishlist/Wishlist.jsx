@@ -2,11 +2,13 @@ import Swal from "sweetalert2";
 
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { PhotoProvider, PhotoView } from "react-photo-view";
+import { Link } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useWIshlist from "../../hooks/useWIshlist";
-import axios from "axios";
 
 const Wishlist = () => {
   const [wishlists, refetch] = useWIshlist();
+  const axiosSecure = useAxiosSecure();
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -19,20 +21,16 @@ const Wishlist = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-
-        axios.delete(`http://localhost:5000/wishlist/${id}`,{withCredentials:true}).then(res=>{
-         
+        axiosSecure.delete(`/wishlist/${id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
               title: "Deleted!",
-              text: "Your blog has been deleted.",
+              text: "Blog has been deleted from your wishlist.",
               icon: "success",
             });
           }
-        })
-        
-      
+        });
       }
     });
   };
@@ -55,7 +53,10 @@ const Wishlist = () => {
             </PhotoProvider>
           </div>
           <p className="py-5 px-10">{wishlist.shortDescription}</p>
-          <div>
+          <div className="flex gap-5">
+            <Link to={`/all/${wishlist.blog_id}`}>
+              <button className="btn hover:btn-ghost btn-primary">Details</button>
+            </Link>
             <button
               onClick={() => handleDelete(wishlist._id)}
               className="btn text-base btn-outline normal-case hover:bg-red-500"

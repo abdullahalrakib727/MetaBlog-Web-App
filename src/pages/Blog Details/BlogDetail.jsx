@@ -104,7 +104,7 @@ const BlogDetail = () => {
 
   return (
     <div className="container mx-auto mb-10">
-      <div className="max-w-5xl mx-auto bg-white mt-10 p-2 lg:p-10">
+      <div className="max-w-5xl mx-auto shadow-xl bg-white mt-10 p-2 lg:p-10">
       <Helmet>
         <title>Blog-Zone || Details</title>
       </Helmet>
@@ -121,7 +121,7 @@ const BlogDetail = () => {
         <div className=" mb-10 px-2">
           <PhotoProvider className="px-2 lg:px-0">
             <PhotoView src={photoUrl}>
-              <img src={photoUrl} alt="" />
+              <img className="hover:cursor-zoom-in" src={photoUrl} alt="" />
             </PhotoView>
           </PhotoProvider>
           <Paragraph className="mt-5 text-lg font-semibold ">

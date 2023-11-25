@@ -60,7 +60,7 @@ const RecentBlogSlider = ({ blog }) => {
       <div className="max-h-[199px] max-w-[344px]">
       <PhotoProvider>
         <PhotoView src={photoUrl}>
-          <Image src={photoUrl} alt="" />
+          <Image className="hover:cursor-zoom-in" src={photoUrl} alt="" />
         </PhotoView>
       </PhotoProvider>
       </div>

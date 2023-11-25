@@ -4,6 +4,7 @@ import Banner from "../Components/Banner";
 import Marque from "../Components/Marque";
 import NewSletter from "../Components/New Sletter/NewSletter";
 import Reviews from "../Reviews/Reviews";
+import Contact from "../Components/Contact.jsx/Contact";
 
 const Home = () => {
   return (
@@ -25,7 +26,10 @@ const Home = () => {
       <div className="mb-10">
         <RecentBlog></RecentBlog>
         <NewSletter></NewSletter>
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
+        <h1 className="text-4xl text-center font-bold mt-5 mb-5">See what's our reviewer says</h1>
         <Reviews></Reviews>
+        <Contact></Contact>
       </div>
     </div>
   );

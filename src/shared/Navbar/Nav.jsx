@@ -8,8 +8,7 @@ import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-// import Button from '@mui/material/Button';
-// import AdbIcon from "@mui/icons-material/Adb";
+
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import { Link, NavLink } from "react-router-dom";
@@ -23,13 +22,6 @@ function Nav() {
   const { user, logOutUser } = useContext(AuthContext);
   const [anchorElNav, setAnchorElNav] =   useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
-console.log(user)
-
-  // if (loading) {
-  //   return <span className="loading loading-spinner loading-lg"></span>;
-  // }
-  // console.log(user);
 
   const navLinks = (
     <>
