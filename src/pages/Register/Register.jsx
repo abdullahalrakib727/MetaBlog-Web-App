@@ -5,11 +5,26 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { FaGoogle } from "react-icons/fa";
 
 const Register = () => {
-  const { registerUser, updateUserProfile } = useContext(AuthContext);
+  const { registerUser, updateUserProfile ,handleGoogleSignIn} = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const handleGoogle = ()=>{
+    handleGoogleSignIn().then(()=>{
+      Swal.fire({
+        title: "Log in Successful!",
+        icon: "success"
+      });
+
+      
+      setTimeout(() => {
+        navigate(location?.state ? location.state : "/");
+      }, 2000);
+    });
+    
+  }
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -130,7 +145,7 @@ const Register = () => {
               <button className="btn register-btn normal-case">Register</button>
             </div>
           </form>
-          <p className="text-center mb-10">
+          <div className="text-center mb-10">
             Already Have Account ?{" "}
             <Link
               className="hover:text-white p-1 hover:bg-[#1976D2]"
@@ -138,7 +153,9 @@ const Register = () => {
             >
               Login
             </Link>
-          </p>
+      <p className="text-center mb-2">or</p>
+      <button className="btn mb-10" onClick={()=>handleGoogle()}><FaGoogle/> Register</button>
+          </div>
         </div>
       </div>
       <ToastContainer

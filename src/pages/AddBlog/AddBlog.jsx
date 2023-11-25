@@ -78,8 +78,8 @@ const AddBlog = () => {
               <label className="label">
                 <span className="label-text">Choose a Category</span>
               </label>
-              <select name="category" className="select select-bordered w-full">
-                <option disabled selected>
+              <select defaultValue='disabled' name="category" className="select select-bordered w-full">
+                <option value='disabled' disabled>
                   Select a Category
                 </option>
                 <option>Food</option>

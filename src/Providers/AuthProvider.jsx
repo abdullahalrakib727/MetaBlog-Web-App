@@ -46,15 +46,20 @@ const AuthProvider = ({ children }) => {
   //  current user
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      // console.log(currentUser)
+      const userEmail = currentUser?.email || user?.email;
+      const user = {email: userEmail}
       setUser(currentUser);
       setLoading(false);
-
-      const user = {email: currentUser.email}
     if(currentUser){
       // post use to backend
-      axios.post('http://localhost:5000/jwt',user,{withCredentials:true}).then(res=>{
-        console.log(res.data)
+      axios.post('http://localhost:5000/jwt',user,{withCredentials:true}).then(()=>{
+        // console.log(res.data)
       })
+    }else{
+      axios.post('http://localhost:5000/logout',user,{withCredentials:true}).then(res=>{
+      console.log(res.data)
+    })
     }
     });
     return () => {
@@ -65,6 +70,10 @@ const AuthProvider = ({ children }) => {
   // logout user
   const logOutUser = () => {
     setLoading(true);
+    setUser(null);
+    axios.post('http://localhost:5000/logout',user,{withCredentials:true}).then(res=>{
+      console.log(res.data)
+    })
     return signOut(auth);
   };
 

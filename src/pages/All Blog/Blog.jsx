@@ -87,14 +87,14 @@ const Blog = ({ blog }) => {
       <CardFooter className="mt-auto">
         <ButtonGroup spacing="2">
           <Link to={`/all/${_id}`}>
-            <Button className="register-btn" colorScheme="blue">
+            <Button className="register-btn" >
               Details
             </Button>
           </Link>
           <Button
             onClick={() => handleWishlist()}
             variant="ghost"
-            colorScheme="blue"
+           
           >
             Wishlist
           </Button>

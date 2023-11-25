@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
   const location = useLocation();
@@ -78,9 +79,9 @@ const Login = () => {
           <button className="btn register-btn normal-case">Login</button>
         </div>
       </form>
-      <p className="text-center mb-10">New here? <Link className="hover:text-white p-1 hover:bg-[#1976D2]" to='/register'>Register</Link></p>
-      <p>or</p>
-      <button className="btn btn-primary" onClick={()=>handleGoogle()}>Google sign In</button>
+      <p className="text-center mb-3">New here? <Link className="hover:text-white p-1 hover:bg-[#1976D2]" to='/register'>Register</Link></p>
+      <p className="text-center mb-2">or</p>
+      <button className="btn mb-10" onClick={()=>handleGoogle()}><FaGoogle/> sign In</button>
     </div>
   </div>
 </div>

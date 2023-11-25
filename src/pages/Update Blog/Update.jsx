@@ -54,25 +54,6 @@ const params = useParams();
             });
           }
         })
-
-    //     fetch(`http://localhost:5000/all/${_id}`, {
-    //   method: "put",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(updatedBlog),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.modifiedCount > 0) {
-    //       Swal.fire({
-    //         title: "Blog Has been Updated!",
-    //         icon: "success",
-    //       });
-    //     }
-    //   });
-
-
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
@@ -127,9 +108,6 @@ const params = useParams();
                 name="category"
                 className="select select-bordered w-full"
               >
-                <option disabled selected>
-                  Select a Category
-                </option>
                 <option>Food</option>
                 <option>Health</option>
                 <option>Entertainment</option>

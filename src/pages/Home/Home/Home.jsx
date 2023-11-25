@@ -5,8 +5,10 @@ import Marque from "../Components/Marque";
 import NewSletter from "../Components/New Sletter/NewSletter";
 import Reviews from "../Reviews/Reviews";
 import Contact from "../Components/Contact.jsx/Contact";
+import useAuth from '../../../hooks/useAuth'
 
 const Home = () => {
+  const {user} =useAuth();
   return (
     <div className="container mx-auto">
       <Helmet>
@@ -29,7 +31,9 @@ const Home = () => {
         {/* eslint-disable-next-line react/no-unescaped-entities */}
         <h1 className="text-4xl text-center font-bold mt-5 mb-5">See what's our reviewer says</h1>
         <Reviews></Reviews>
-        <Contact></Contact>
+        {
+          user && <Contact></Contact>
+        }
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ const Profile = () => {
         </p>
         <p>Account created at : {formattedTime}</p>
        {
-        !user?.emailVerified &&  <Button onClick={handleVerification} className='mt-10' colorScheme='blue'>Send Email Verification</Button>
+        !user?.emailVerified &&  <Button onClick={handleVerification} className='mt-10' >Send Email Verification</Button>
        }
       </div>
     </div>

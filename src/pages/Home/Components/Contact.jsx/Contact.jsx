@@ -34,7 +34,7 @@ const handleSubmit = e=>{
             size="lg"
           />
           <br />
-          <Button  type="submit" colorScheme='blue'>Send</Button>
+          <Button  type="submit" >Send</Button>
         </form>
       </div>
     </ChakraProvider>
