@@ -16,11 +16,18 @@ import "react-photo-view/dist/react-photo-view.css";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+
+
+
 const Blog = ({ blog }) => {
   const { user } = useContext(AuthContext);
   const { _id, title, photoUrl, shortDescription, category } = blog;
+  const axiosSecure = useAxiosSecure();
 
-  const handleWishlist = () => {
+  const handleWishlist = async() => {
+
+    
     const email = user?.email;
 
     const data = {
@@ -33,23 +40,31 @@ const Blog = ({ blog }) => {
     };
 
     if (user) {
-      fetch("http://localhost:5000/wishlist", {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data)
-          if (data.insertedId) {
-            Swal.fire({
-              title: "Added to Wishlist!",
-              icon: "success",
-            });
-          }
-        });
+      const res = await  axiosSecure.post('/wishlist',data);
+      if(res.data.insertedId){
+        Swal.fire({
+                  title: "Added to Wishlist!",
+                  icon: "success",
+                });
+      }
+
+      // fetch("https://blog-website-server-theta.vercel.app/wishlist", {
+      //   method: "post",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     // console.log(data)
+      //     if (data.insertedId) {
+      //       Swal.fire({
+      //         title: "Added to Wishlist!",
+      //         icon: "success",
+      //       });
+      //     }
+      //   });
     } else {
       Swal.fire({
         title: "Please Log in first !",
@@ -64,7 +79,7 @@ const Blog = ({ blog }) => {
       <CardBody className="flex flex-col justify-between h-full">
         <div>
           <div className="max-h-[199px] max-w-[344px]">
-            <PhotoProvider >
+            <PhotoProvider>
               <PhotoView src={photoUrl}>
                 <Image className="hover:cursor-zoom-in" src={photoUrl} alt="" />
               </PhotoView>
@@ -87,15 +102,9 @@ const Blog = ({ blog }) => {
       <CardFooter className="mt-auto">
         <ButtonGroup spacing="2">
           <Link to={`/all/${_id}`}>
-            <Button className="register-btn" >
-              Details
-            </Button>
+            <Button className="register-btn">Details</Button>
           </Link>
-          <Button
-            onClick={() => handleWishlist()}
-            variant="ghost"
-           
-          >
+          <Button onClick={() => handleWishlist()} variant="ghost">
             Wishlist
           </Button>
         </ButtonGroup>

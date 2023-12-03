@@ -1,21 +1,22 @@
-
 import Swal from "sweetalert2";
 
-
-import {  useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
 
 const Update = () => {
-const params = useParams();
-  const {data:item=[]} = useQuery({
-    queryKey: ['item'],
-    queryFn : async()=>{
-      const res = await axios.get(`http://localhost:5000/all/${params.id}`,{withCredentials:true})
+  const params = useParams();
+  const { data: item = [] } = useQuery({
+    queryKey: ["item"],
+    queryFn: async () => {
+      const res = await axios.get(
+        `https://blog-website-server-theta.vercel.app/all/${params.id}`,
+        { withCredentials: true }
+      );
       return res.data;
-    }
-  })
+    },
+  });
 
   const { _id, title, photoUrl, category, shortDescription, longDescription } =
     item;
@@ -35,35 +36,38 @@ const params = useParams();
       longDescription,
     };
 
-
     Swal.fire({
       title: "Do you want to save the changes?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Save",
-      denyButtonText: `Don't save`
+      denyButtonText: `Don't save`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        axios.patch(`http://localhost:5000/all/${_id}`,updatedBlog,{withCredentials:true}).then(res=>{
-          console.log(res.data)
-          if (res.data.modifiedCount > 0) {
-            Swal.fire({
-              title: "Blog Has been Updated!",
-              icon: "success",
-            });
-          }
-        })
+        axios
+          .patch(
+            `https://blog-website-server-theta.vercel.app/all/${_id}`,
+            updatedBlog,
+            { withCredentials: true }
+          )
+          .then((res) => {
+            // console.log(res.data);
+            if (res.data.modifiedCount > 0) {
+              Swal.fire({
+                title: "Blog Has been Updated!",
+                icon: "success",
+              });
+            }
+          });
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
     });
-
-   
   };
   return (
     <div className="container mx-auto">
-       <Helmet>
+      <Helmet>
         <title>Blog-Zone || Update</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center mt-10">

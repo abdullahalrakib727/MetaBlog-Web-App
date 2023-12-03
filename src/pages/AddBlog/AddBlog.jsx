@@ -1,13 +1,17 @@
-import axios from "axios";
+
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+// import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddBlog = () => {
   const { user } = useContext(AuthContext);
+  // const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const form = e.target;
     const title = e.target.title.value;
@@ -30,8 +34,8 @@ const AddBlog = () => {
       authorName,
       authorImg,
     };
-    const url = "http://localhost:5000/all";
-    axios.post(url, data, { withCredentials: true }).then((res) => {
+   const res = await axiosSecure.post('/all',data)
+  
       if (res.data.insertedId) {
         Swal.fire({
           title: "Blog Has been Added!",
@@ -39,7 +43,7 @@ const AddBlog = () => {
         });
         form.reset();
       }
-    });
+  
   };
   return (
     <div className="container mx-auto">
@@ -78,8 +82,12 @@ const AddBlog = () => {
               <label className="label">
                 <span className="label-text">Choose a Category</span>
               </label>
-              <select defaultValue='disabled' name="category" className="select select-bordered w-full">
-                <option value='disabled' disabled>
+              <select
+                defaultValue="disabled"
+                name="category"
+                className="select select-bordered w-full"
+              >
+                <option value="disabled" disabled>
                   Select a Category
                 </option>
                 <option>Food</option>

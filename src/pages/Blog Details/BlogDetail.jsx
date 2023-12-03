@@ -9,28 +9,34 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import TimeFormat from "../../function/TimeFormat";
 import Comment from "./Comments/Comment";
 
+import { Skeleton } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { Typography } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
-
-const { Text } = Typography;
-const { Title } = Typography;
-import { Skeleton } from '@chakra-ui/react'
-import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
 
 
+const { Text } = Typography;
+const { Title } = Typography;
+
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
+  // const axiosPublic = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
   const params = useParams();
 
-  const {data=[]} = useQuery({
-    queryKey: ['data'],
-    queryFn: async()=>{
-      const res = await  axios.get(`http://localhost:5000/all/${params.id}`,{withCredentials:true})
+  const { data = [] } = useQuery({
+    queryKey: ["data"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/all/${params.id}`,
+       
+      );
       return res.data;
-    }
-  })
+    },
+  });
 
   const {
     _id,
@@ -47,20 +53,20 @@ const BlogDetail = () => {
   const formattedTime = TimeFormat(published);
 
   //  show comment on site
-  const {data:comments=[],refetch} =useQuery({
+  const { data: comments = [], refetch } = useQuery({
     queryKey: ["comments"],
-    queryFn: async ()=>{
-     const res = await axios.get(`http://localhost:5000/comments?blog_id=${_id}`);
-    return res.data;
-    }
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `https://blog-website-server-theta.vercel.app/comments?blog_id=${_id}`,
+        {withCredentials:true}
+      );
+      return res.data;
+    },
   });
-
 
   //  add a comment
 
-
-
-  const handleAddComment = (e) => {
+  const handleAddComment = async(e) => {
     e.preventDefault();
     const form = e.target;
     const commenter = user?.displayName;
@@ -78,24 +84,29 @@ const BlogDetail = () => {
         commenterEmail,
         published,
       };
-      console.log(comment);
-      fetch("http://localhost:5000/comments", {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(commentData),
-      })
-        .then((res) => res.json())
-        .then(() => {
-          form.reset();
+    
+      const url = "https://blog-website-server-theta.vercel.app/comments";
+
+     const res = await  axios.post(url,commentData,{withCredentials:true})
+      if(res.data.insertedId){
+        form.reset();
           refetch();
-        });
+      }
+
+      // fetch("https://blog-website-server-theta.vercel.app/comments", {
+      //   method: "post",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify(commentData),
+      // })
+      //   .then((res) => res.json())
+      //   .then(() => {
+      //     form.reset();
+      //     refetch();
+      //   });
     }
   };
-
-
-
 
   const filteredComments = comments
     .filter((comment) => comment.blog_id == _id)
@@ -105,83 +116,95 @@ const BlogDetail = () => {
   return (
     <div className="container mx-auto mb-10">
       <div className="max-w-5xl mx-auto shadow-xl bg-white mt-10 p-2 lg:p-10">
-      <Helmet>
-        <title>Blog-Zone || Details</title>
-      </Helmet>
-      
-      <Typography>
-        {title ? (
-          <Title className="font-bold p-2 lg:p-0 lg:mt-8 text-center" level={2}>
-            {title}
-          </Title>
-        ) : (
-          <Skeleton count={2}></Skeleton>
-        )}
+        <Helmet>
+          <title>Blog-Zone || Details</title>
+        </Helmet>
 
-        <div className=" mb-10 px-2">
-          <PhotoProvider className="px-2 lg:px-0">
-            <PhotoView src={photoUrl}>
-              <img className="hover:cursor-zoom-in" src={photoUrl} alt="" />
-            </PhotoView>
-          </PhotoProvider>
-          <Paragraph className="mt-5 text-lg font-semibold ">
-            {shortDescription ? shortDescription : <Skeleton></Skeleton>}
-          </Paragraph>
-        </div>
-        <div>
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="p-1 flex gap-5 items-center">
-              <Text className="text-base" code>
-                Author:
-              </Text>
-              <div className="flex justify-center gap-2 items-center">
-                <img src={authorImg} alt="" className="w-10" />
-                <Text strong className="text-lg">
-                  {authorName}
+        <Typography>
+          {title ? (
+            <Title
+              className="font-bold p-2 lg:p-0 lg:mt-8 text-center"
+              level={2}
+            >
+              {title}
+            </Title>
+          ) : (
+            <Skeleton count={2}></Skeleton>
+          )}
+
+          <div className=" mb-10 px-2">
+            <PhotoProvider className="px-2 lg:px-0">
+              <PhotoView src={photoUrl}>
+                <img className="hover:cursor-zoom-in" src={photoUrl} alt="" />
+              </PhotoView>
+            </PhotoProvider>
+            <Paragraph className="mt-5 text-lg font-semibold ">
+              {shortDescription ? shortDescription : <Skeleton></Skeleton>}
+            </Paragraph>
+          </div>
+          <div>
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="p-1 flex gap-5 items-center">
+                <Text className="text-base" code>
+                  Author:
                 </Text>
+                <div className="flex justify-center gap-2 items-center">
+                  <img src={authorImg} alt="" className="w-10" />
+                  <Text strong className="text-lg">
+                    {authorName}
+                  </Text>
+                </div>
               </div>
+              {formattedTime ? (
+                <Text keyboard>Published on: {formattedTime}</Text>
+              ) : (
+                <Skeleton></Skeleton>
+              )}
             </div>
-            {formattedTime ? (
-              <Text keyboard>Published on: {formattedTime}</Text>
-            ) : (
-              <Skeleton></Skeleton>
+          </div>
+          <Paragraph className=" text-base mt-10 font-medium mb-10">
+            {longDescription || <Skeleton></Skeleton>}
+          </Paragraph>
+          <div className="mb-10 text-center">
+            {authorEmail === user?.email && (
+              <Link to={`/update/${_id}`}>
+                <Button variant="contained">Update</Button>
+              </Link>
             )}
           </div>
-        </div>
-        <Paragraph className=" text-base mt-10 font-medium mb-10">
-          {longDescription || <Skeleton></Skeleton>}
-        </Paragraph>
-        <div className="mb-10 text-center">
-          {authorEmail === user?.email && (
-            <Link to={`/update/${_id}`}>
-              <Button variant="contained">Update</Button>
-            </Link>
-          )}
-        </div>
-        <h1 className="text-3xl font-bold mb-5">Comments :</h1>
-        <div className="bg-blue-400">
-          {user && (
-            <div className="">
-              { authorEmail === user?.email ? <p className="bg-white text-center text-red-500 pb-5 font-semibold text-lg" type="warning">Can not comment to your own blog</p> : <form className="pt-5 pl-10" onSubmit={handleAddComment}>
-                  <textarea
-                    name="comment"
-                    className="textarea textarea-info"
-                    placeholder="Add a comment"
-                  ></textarea>
-                  <br />
-                  <Button type="submit" variant="contained">
-                    Comment
-                  </Button>
-                </form> }
+          <h1 className="text-3xl font-bold mb-5">Comments :</h1>
+          <div className="bg-blue-400">
+            {user && (
+              <div className="">
+                {authorEmail === user?.email ? (
+                  <p
+                    className="bg-white text-center text-red-500 pb-5 font-semibold text-lg"
+                    type="warning"
+                  >
+                    Can not comment to your own blog
+                  </p>
+                ) : (
+                  <form className="pt-5 pl-10" onSubmit={handleAddComment}>
+                    <textarea
+                      name="comment"
+                      className="textarea textarea-info"
+                      placeholder="Add a comment"
+                    ></textarea>
+                    <br />
+                    <Button type="submit" variant="contained">
+                      Comment
+                    </Button>
+                  </form>
+                )}
+              </div>
+            )}
+            <div className="pb-5 pt-5">
+              {filteredComments.map((c) => (
+                <Comment refetch={refetch} key={c._id} c={c}></Comment>
+              ))}
             </div>
-          )}
-          <div className="pb-5 pt-5">
-            {filteredComments.map((c) => (
-              <Comment refetch={refetch} key={c._id} c={c}></Comment>
-            ))}
           </div>
-        </div>
-      </Typography>
+        </Typography>
       </div>
     </div>
   );

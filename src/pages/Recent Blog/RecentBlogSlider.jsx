@@ -35,7 +35,7 @@ const RecentBlogSlider = ({ blog }) => {
     };
 
     if (user) {
-      fetch("http://localhost:5000/wishlist", {
+      fetch("https://blog-website-server-theta.vercel.app/wishlist", {
         method: "post",
         headers: {
           "content-type": "application/json",

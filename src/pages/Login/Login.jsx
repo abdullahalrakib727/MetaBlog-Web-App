@@ -9,6 +9,8 @@ import { FaGoogle } from "react-icons/fa";
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  let from = location.state?.from?.pathname || "/";
+
     const {signInUser, handleGoogleSignIn} = useContext(AuthContext);
     const handleLogin = (e) =>{
         e.preventDefault();
@@ -23,7 +25,7 @@ const Login = () => {
             });
 
             setTimeout(() => {
-              navigate(location?.state ? location.state : "/");
+              navigate(from, { replace: true });
             }, 2000);
 
         }).catch(()=>{
@@ -46,7 +48,7 @@ const Login = () => {
   
         
         setTimeout(() => {
-          navigate(location?.state ? location.state : "/");
+          navigate(from, { replace: true });
         }, 2000);
       });
       

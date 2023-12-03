@@ -8,9 +8,17 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
 
 const Register = () => {
+
+
+
+ 
   const { registerUser, updateUserProfile ,handleGoogleSignIn} = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  let from = location.state?.from?.pathname || "/";
+
+
+
   const handleGoogle = ()=>{
     handleGoogleSignIn().then(()=>{
       Swal.fire({
@@ -20,7 +28,7 @@ const Register = () => {
 
       
       setTimeout(() => {
-        navigate(location?.state ? location.state : "/");
+        navigate(from, { replace: true });
       }, 2000);
     });
     
@@ -69,7 +77,7 @@ const Register = () => {
             theme: "light",
           });
           setTimeout(() => {
-            navigate(location?.state ? location.state : "/");
+            navigate(from, { replace: true });
           }, 2000);
         }
       })

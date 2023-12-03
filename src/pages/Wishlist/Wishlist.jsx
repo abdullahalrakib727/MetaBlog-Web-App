@@ -3,12 +3,14 @@ import Swal from "sweetalert2";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { Link } from "react-router-dom";
+// import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useWIshlist from "../../hooks/useWIshlist";
 
 const Wishlist = () => {
   const [wishlists, refetch] = useWIshlist();
   const axiosSecure = useAxiosSecure();
+  // const axiosPublic = useAxiosPublic();
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -55,7 +57,9 @@ const Wishlist = () => {
           <p className="py-5 px-10">{wishlist.shortDescription}</p>
           <div className="flex gap-5">
             <Link to={`/all/${wishlist.blog_id}`}>
-              <button className="btn hover:btn-ghost btn-primary">Details</button>
+              <button className="btn hover:btn-ghost btn-primary">
+                Details
+              </button>
             </Link>
             <button
               onClick={() => handleDelete(wishlist._id)}

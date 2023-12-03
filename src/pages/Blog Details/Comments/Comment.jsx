@@ -47,17 +47,21 @@ const Comment = ({ c, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/comments/${_id}`).then((res) => {
-          console.log(res.data);
-          if (res.data.deletedCount > 0) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your comment has been deleted.",
-              icon: "success",
-            });
-            refetch();
-          }
-        });
+        axios
+          .delete(
+            `https://blog-website-server-theta.vercel.app/comments/${_id}`, {withCredentials:true}
+          )
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your comment has been deleted.",
+                icon: "success",
+              });
+              refetch();
+            }
+          });
       }
     });
   };
@@ -78,7 +82,10 @@ const Comment = ({ c, refetch }) => {
 
     if (c.commenterEmail === user.email) {
       axios
-        .patch(`http://localhost:5000/comments/${_id}`, updatedComment)
+        .patch(
+          `https://blog-website-server-theta.vercel.app/comments/${_id}`,
+          updatedComment,{withCredentials:true}
+        )
         .then((res) => {
           if (res.data.modifiedCount > 0) {
             refetch();
@@ -122,7 +129,7 @@ const Comment = ({ c, refetch }) => {
           )}
         </div>
       </div>
-      {showMenu &&c.commenterEmail === user.email && (
+      {showMenu && c.commenterEmail === user.email && (
         <button onClick={handleOpenMenu}>
           <CiMenuKebab />
         </button>
