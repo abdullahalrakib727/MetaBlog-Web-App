@@ -47,6 +47,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
+      if(currentUser === null){
+        setLoading(false);
+      }
       const userEmail = currentUser?.email || user?.email;
       const user = { email: userEmail };
       setUser(currentUser);
@@ -59,6 +62,7 @@ const AuthProvider = ({ children }) => {
             // console.log(res.data)
           });
       } else {
+     
         axios
           .post("https://blog-website-server-theta.vercel.app/logout", user, {
             withCredentials: true,
@@ -75,7 +79,7 @@ const AuthProvider = ({ children }) => {
 
   // logout user
   const logOutUser = () => {
-    setLoading(false);
+    // setLoading(false);
     setUser(null);
     return signOut(auth);
   };

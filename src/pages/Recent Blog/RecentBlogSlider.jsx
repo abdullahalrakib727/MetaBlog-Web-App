@@ -18,11 +18,15 @@ import {
 import { Button } from "antd";
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const RecentBlogSlider = ({ blog }) => {
+  const axiosSecure = useAxiosSecure();
+
   const { user } = useContext(AuthContext);
   const { _id, title, photoUrl, shortDescription, category } = blog;
-  const handleWishlist = () => {
+
+  const handleWishlist = async() => {
     const email = user?.email;
 
     const data = {
@@ -35,23 +39,30 @@ const RecentBlogSlider = ({ blog }) => {
     };
 
     if (user) {
-      fetch("https://blog-website-server-theta.vercel.app/wishlist", {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data)
-          if (data.insertedId) {
-            Swal.fire({
-              title: "Added to Wishlist!",
-              icon: "success",
-            });
-          }
-        });
+      const res = await  axiosSecure.post('/wishlist',data);
+      if(res.data.insertedId){
+        Swal.fire({
+                  title: "Added to Wishlist!",
+                  icon: "success",
+                });
+      // fetch("https://blog-website-server-theta.vercel.app/wishlist", {
+      //   method: "post",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     // console.log(data)
+      //     if (data.insertedId) {
+      //       Swal.fire({
+      //         title: "Added to Wishlist!",
+      //         icon: "success",
+      //       });
+      //     }
+        // });
+      }
     } else {
       Swal.fire({
         title: "Please Log in first !",

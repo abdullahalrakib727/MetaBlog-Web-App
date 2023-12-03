@@ -20,7 +20,7 @@ const Profile = () => {
     <ChakraProvider>
       <div className="flex gap-5 px-20 min-h-screen items-center">
       <div>
-        <img src={user?.photoURL} alt="" />
+        <img className='max-w-[150px]' src={user?.photoURL} alt="" />
       </div>
       <div className='space-y-2'>
         <h3>Name: {user?.displayName}</h3>

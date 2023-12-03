@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Typography } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import axios from "axios";
+
 
 
 const { Text } = Typography;
@@ -85,9 +85,9 @@ const BlogDetail = () => {
         published,
       };
     
-      const url = "https://blog-website-server-theta.vercel.app/comments";
+      // const url = "https://blog-website-server-theta.vercel.app/comments";
 
-     const res = await  axios.post(url,commentData,{withCredentials:true})
+     const res = await  axiosSecure.post('/comments',commentData)
       if(res.data.insertedId){
         form.reset();
           refetch();

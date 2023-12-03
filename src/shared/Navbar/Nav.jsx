@@ -84,7 +84,7 @@ function Nav() {
   <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img alt="Tailwind CSS Navbar component" src={user?.photoURL ? user?.photoURL :'https://i.ibb.co/xXQLtfb/user.png'} />
+          <img alt="Tailwind CSS Navbar component" src={user?.photoURL ? user.photoURL :'https://i.ibb.co/xXQLtfb/user.png'} />
         </div>
       </label>
     
