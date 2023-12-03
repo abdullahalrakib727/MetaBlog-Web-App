@@ -3,14 +3,15 @@ import Swal from "sweetalert2";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { Link } from "react-router-dom";
-// import useAxiosPublic from "../../hooks/useAxiosPublic";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useWIshlist from "../../hooks/useWIshlist";
 
 const Wishlist = () => {
   const [wishlists, refetch] = useWIshlist();
-  const axiosSecure = useAxiosSecure();
-  // const axiosPublic = useAxiosPublic();
+  // const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
+  console.log(wishlists)
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -23,7 +24,7 @@ const Wishlist = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/wishlist/${id}`).then((res) => {
+        axiosPublic.delete(`/wishlist/${id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
