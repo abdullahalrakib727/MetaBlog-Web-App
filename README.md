@@ -1,7 +1,7 @@
-## About this project
+# About this project
 -This project has been built with mongodb, express js, node js and react. It's a Mern project. 
 
-# Project feature
+## Project feature
 
 - You can't log in with wrong email and password. It will show a toast containing error meassage.
 - You can't create 2 account with same email.
@@ -14,5 +14,5 @@
 - You can see recent marque under the navbar. if you click on any title, you will go to that blog detail page.
 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live web
+https://blog-zone-web.netlify.app/
