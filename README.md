@@ -1,8 +1,18 @@
-# React + Vite
+## About this project
+-This project has been built with mongodb, express js, node js and react. It's a Mern project. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Project feature
 
-Currently, two official plugins are available:
+- You can't log in with wrong email and password. It will show a toast containing error meassage.
+- You can't create 2 account with same email.
+- You can't comment on you own blog. But others can comment to your blog.
+- You can add comment or edit it or you can even delete the comment.
+- You can't visit blog details without log in.
+- You can add any blog to your wishlist and you can delete them from your wishlist.
+- You can filter blog based on their category and also you can search them by their name.
+- You will be able to see featured blogs containing most top blogs that contains most words.
+- You can see recent marque under the navbar. if you click on any title, you will go to that blog detail page.
+
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
