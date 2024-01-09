@@ -34,21 +34,23 @@ const RecentBlogCard = ({ blog }) => {
         <PhotoProvider>
           <PhotoView src={photoUrl}>
             <img
-              className="hover:cursor-zoom-in h-[170px] md:h-[240px] max-w-[360px] rounded-md"
+              className="h-[170px] md:h-[240px] max-w-[360px] rounded-md"
               src={photoUrl}
               alt=""
             />
           </PhotoView>
         </PhotoProvider>
-        <div className="mt-6">
+        <Link className="mt-6">
           <span
             style={{ backgroundColor: "rgba(75, 107, 251, 0.05)" }}
             className="px-[10px] py-1 text-[#4B6BFB] text-sm font-medium"
           >
             {category}
           </span>
-        </div>
-        <div className="mt-4 text-2xl font-semibold mb-5">{title}</div>
+        </Link>
+        <h2 className="mt-4 text-2xl font-semibold mb-5">{title}</h2>
+
+
         {/* author details */}
         <div className="flex gap-3 items-center mt-auto">
           <img

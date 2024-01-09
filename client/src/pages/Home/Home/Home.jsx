@@ -2,15 +2,11 @@ import { Helmet } from "react-helmet";
 import RecentBlog from "../../Recent Blog/RecentBlog";
 import Banner from "../Components/Banner";
 import Marque from "../Components/Marque";
-import NewSletter from "../Components/New Sletter/NewSletter";
-import Reviews from "../Reviews/Reviews";
-import Contact from "../Components/Contact.jsx/Contact";
-import useAuth from '../../../hooks/useAuth'
+
 
 const Home = () => {
-  const {user} =useAuth();
   return (
-    <div className="container mx-auto">
+    <div className="mb-24 max-w-[1216px] mx-auto">
       <Helmet>
         <title>Blog-Zone</title>
       </Helmet>
@@ -25,15 +21,10 @@ const Home = () => {
       </h3>
       <Banner></Banner>
 
+      <div>
         <RecentBlog></RecentBlog>
-        <NewSletter></NewSletter>
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
-        <h1 className="text-4xl text-center font-bold mt-5 mb-5">See what's our reviewer says</h1>
-        <Reviews></Reviews>
-        {
-          user && <Contact></Contact>
-        }
       </div>
+    </div>
   );
 };
 
