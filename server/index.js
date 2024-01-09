@@ -11,7 +11,12 @@ const port = process.env.PORT || 5000;
 // middleware
 app.use(
   cors({
-   origin: ["https://blog-zone-web.netlify.app", 'http://localhost:5173','http://localhost:5174'],
+    origin: [
+      "https://blog-zone-web.netlify.app",
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://meta-blog-app.vercel.app",
+    ],
     credentials: true,
   })
 );
