@@ -5,15 +5,17 @@ import Nav from "../shared/Navbar/Nav";
 import Footer from "../shared/Footer/Footer";
 // import Navbar from "../shared/Navbar/Navbar";
 
-
 const Root = () => {
-    return (
+  return (
     <div>
-        <Nav></Nav>
+      <Nav></Nav>
+
+      <div className="max-w-[1216px] mx-auto">
         <Outlet></Outlet>
-        <Footer></Footer>
+      </div>
+      <Footer></Footer>
     </div>
-    );
+  );
 };
 
 export default Root;

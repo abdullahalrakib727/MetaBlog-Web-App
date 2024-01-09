@@ -14,8 +14,8 @@ const RecentBlog = () => {
         <Skeleton height="300px"></Skeleton>
       ) : (
         <>
-          <h3 className="text-2xl p-2 font-bold my-5 ">Recent Blogs</h3>
-          <div className="flex justify-center">
+          <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 ">Recent Blogs</h3>
+          <div className="flex justify-center px-4 xl:px-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
               {limitedBlogs.map((blog) => (
                 <RecentBlogCard

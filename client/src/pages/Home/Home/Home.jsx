@@ -2,11 +2,17 @@ import { Helmet } from "react-helmet";
 import RecentBlog from "../../Recent Blog/RecentBlog";
 import Banner from "../Components/Banner";
 import Marque from "../Components/Marque";
-
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/all");
+  };
+
   return (
-    <div className="mb-24 max-w-[1216px] mx-auto">
+    <div className="mb-24">
       <Helmet>
         <title>Blog-Zone</title>
       </Helmet>
@@ -23,6 +29,14 @@ const Home = () => {
 
       <div>
         <RecentBlog></RecentBlog>
+        <div className="mt-8 text-center">
+          <button
+            onClick={handleClick}
+            className="px-5 py-3 border border-[#696A75] rounded-md text-[#696A75] text-base font-medium hover:bg-[#97989F] hover:text-white hover:border-[#97989F] transition-colors delay-200"
+          >
+            View All Post
+          </button>
+        </div>
       </div>
     </div>
   );
