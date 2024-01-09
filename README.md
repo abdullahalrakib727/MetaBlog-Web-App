@@ -14,6 +14,3 @@
 - You will be able to see featured blogs containing most top blogs that contains most words.
 - You can see recent marque under the navbar. if you click on any title, you will go to that blog detail page.
 
-## Live web
-
-https://MetaBlog-web.netlify.app/

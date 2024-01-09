@@ -52,7 +52,7 @@ const BlogDetail = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `http://localhost:5000/comments?blog_id=${_id}`,
+        `https://blog-website-server-theta.vercel.app/comments?blog_id=${_id}`,
         { withCredentials: true }
       );
       return res.data;

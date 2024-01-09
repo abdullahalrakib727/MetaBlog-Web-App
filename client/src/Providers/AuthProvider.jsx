@@ -56,12 +56,14 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       if (currentUser) {
         // post use to backend
-        axios.post("http://localhost:5000/jwt", user).then(() => {
-          // console.log(res.data)
-        });
+        axios
+          .post("https://blog-website-server-theta.vercel.app/jwt", user)
+          .then(() => {
+            // console.log(res.data)
+          });
       } else {
         axios
-          .post("http://localhost:5000/logout", user, {
+          .post("https://blog-website-server-theta.vercel.app/logout", user, {
             withCredentials: true,
           })
           .then((res) => {

@@ -9,7 +9,9 @@ const useBlogData = () => {
   } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/all");
+      const res = await axios.get(
+        "https://blog-website-server-theta.vercel.app/all"
+      );
       return res.data;
     },
   });
