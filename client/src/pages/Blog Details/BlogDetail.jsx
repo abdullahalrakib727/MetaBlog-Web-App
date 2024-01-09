@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -148,7 +148,7 @@ const BlogDetail = () => {
           <div className="mb-10 text-center">
             {authorEmail === user?.email && (
               <Link to={`/update/${_id}`}>
-                <Button variant="contained">Update</Button>
+                <button className="btn">Update</button>
               </Link>
             )}
           </div>
@@ -171,9 +171,7 @@ const BlogDetail = () => {
                       placeholder="Add a comment"
                     ></textarea>
                     <br />
-                    <Button type="submit" variant="contained">
-                      Comment
-                    </Button>
+                   <button className="btn">Comment</button>
                   </form>
                 )}
               </div>
