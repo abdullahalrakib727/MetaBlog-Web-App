@@ -5,7 +5,7 @@ import RecentBlogCard from "./RecentBlogCard";
 
 const RecentBlog = () => {
   const [, isLoaded, recentBlogs] = useBlogData();
-  const limitedBlogs = recentBlogs.slice(0, 6);
+  const limitedBlogs = recentBlogs.slice(0, 9);
   // console.log(limitedBlogs)
 
   return (
