@@ -3,8 +3,8 @@ import "./login.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
-import Swal from "sweetalert2";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const location = useLocation();
@@ -16,45 +16,28 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // console.log({email,password})
+
     signInUser(email, password)
       .then(() => {
-        // console.log(result.user)
-        Swal.fire({
-          title: "Log in Successful!",
-          icon: "success",
-        });
-
-        setTimeout(() => {
-          navigate(from, { replace: true });
-        }, 2000);
+        toast.success("Login Successful!");
+        navigate(from, { replace: true });
       })
-      .catch(() => {
-        Swal.fire({
-          title: "Email or Password incorrect!",
-          text: "Please check your email and password again",
-          icon: "error",
-        });
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
   const handleGoogle = () => {
     handleGoogleSignIn().then(() => {
-      Swal.fire({
-        title: "Log in Successful!",
-        icon: "success",
-      });
-
-      setTimeout(() => {
-        navigate(from, { replace: true });
-      }, 2000);
+      toast.success("Login Successful!");
+      navigate(from, { replace: true });
     });
   };
 
   return (
     <div className="hero min-h-screen bg-base-200">
       <Helmet>
-        <title>MetaBlog | Login</title>
+        <title>Blog-Zone || Login</title>
       </Helmet>
       <div className="hero-content flex-col lg:flex-row">
         <div className="text-center lg:text-left">

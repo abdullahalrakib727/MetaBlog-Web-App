@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { registerUser, updateUserProfile, handleGoogleSignIn } =
@@ -16,14 +15,8 @@ const Register = () => {
 
   const handleGoogle = () => {
     handleGoogleSignIn().then(() => {
-      Swal.fire({
-        title: "Log in Successful!",
-        icon: "success",
-      });
-
-      setTimeout(() => {
-        navigate(from, { replace: true });
-      }, 2000);
+      toast.success("Signup Successful!");
+      navigate(from, { replace: true });
     });
   };
   const handleRegister = (e) => {
@@ -59,27 +52,12 @@ const Register = () => {
         updateUserProfile(name, photoUrl);
 
         if (result.user) {
-          toast.success("Registration successful!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setTimeout(() => {
-            navigate(from, { replace: true });
-          }, 2000);
+          toast.success("Registration Successful!");
+          navigate(from, { replace: true });
         }
       })
-      .catch(() => {
-        Swal.fire({
-          title: "User Already Exits!!!!",
-          text: "User with this email already has an account on this website",
-          icon: "error",
-        });
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
@@ -161,18 +139,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };
