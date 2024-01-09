@@ -23,9 +23,9 @@ const AllBlog = () => {
   );
 
   return (
-    <div className="container min-h-screen mx-auto mb-10">
+    <div className="min-h-screen mx-auto mb-10">
       <Helmet>
-        <title>Blog-Zone || All Blogs</title>
+        <title>MetaBlog | All Blogs</title>
       </Helmet>
       <div className="w-3/4 mx-auto  justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
         <Input
@@ -56,10 +56,14 @@ const AllBlog = () => {
         ) : (
           <div className="flex justify-center">
             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-            {filteredBlogs.map((blog) => (
-              <RecentBlogCard key={blog._id} isLoaded={isLoaded} blog={blog}></RecentBlogCard>
-            ))}
-          </div>
+              {filteredBlogs.map((blog) => (
+                <RecentBlogCard
+                  key={blog._id}
+                  isLoaded={isLoaded}
+                  blog={blog}
+                ></RecentBlogCard>
+              ))}
+            </div>
           </div>
         )}
       </ChakraProvider>

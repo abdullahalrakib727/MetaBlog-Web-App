@@ -33,13 +33,13 @@ const FeaturedBlog = () => {
   ];
 
   return (
-    <div >
+    <div>
       <Helmet>
-        <title>Blog-Zone || Featured Blog</title>
+        <title>MetaBlog | Featured Blog</title>
       </Helmet>
-     <div className="w-3/4 my-20 mx-auto">
-     <DataTable responsive columns={columns} data={topBlogs} />
-     </div>
+      <div className="w-3/4 my-20 mx-auto">
+        <DataTable responsive columns={columns} data={topBlogs} />
+      </div>
     </div>
   );
 };

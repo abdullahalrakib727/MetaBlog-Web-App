@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <div className="mb-24">
       <Helmet>
-        <title>Blog-Zone</title>
+        <title>MetaBlog</title>
       </Helmet>
       <div className="flex items-center justify-center mt-5 ">
         <p className="p-2 text-white text-2xl bg-[#1976D2]">Recent</p>
@@ -23,7 +23,7 @@ const Home = () => {
         </div>
       </div>
       <h3 className="text-4xl text-center font-bold mt-5 mb-5">
-        Welcome to Blog-Zone
+        Welcome to MetaBlog
       </h3>
       <Banner></Banner>
 

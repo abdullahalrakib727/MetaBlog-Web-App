@@ -3,7 +3,7 @@ import image from "../../assets/images/Scarecrow.png"
 import './ErrorPage.css'
 const ErrorPage = () => {
     return (
-        <body className="container  mx-auto">
+        <section className="max-w-[1216px] mx-auto">
         <header>
           <h3 className="font-space-mono font-semibold text-[19px] mt-10 mb-10 ml-10 lg:ml-0">404 not found</h3>
         </header>
@@ -22,7 +22,7 @@ const ErrorPage = () => {
             </div>
           </div>
         </main>
-      </body>
+      </section>
     );
 };
 

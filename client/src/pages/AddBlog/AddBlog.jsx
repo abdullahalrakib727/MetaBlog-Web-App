@@ -1,4 +1,3 @@
-
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
@@ -11,7 +10,7 @@ const AddBlog = () => {
   // const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const title = e.target.title.value;
@@ -34,21 +33,20 @@ const AddBlog = () => {
       authorName,
       authorImg,
     };
-   const res = await axiosSecure.post('/all',data)
-  
-      if (res.data.insertedId) {
-        Swal.fire({
-          title: "Blog Has been Added!",
-          icon: "success",
-        });
-        form.reset();
-      }
-  
+    const res = await axiosSecure.post("/all", data);
+
+    if (res.data.insertedId) {
+      Swal.fire({
+        title: "Blog Has been Added!",
+        icon: "success",
+      });
+      form.reset();
+    }
   };
   return (
-    <div className="container mx-auto">
+    <div >
       <Helmet>
-        <title>Blog-Zone || Add Blog</title>
+        <title>MetaBlog | Add Blog</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
         <div className="card w-full shadow-2xl bg-base-100">

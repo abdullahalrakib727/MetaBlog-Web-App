@@ -8,31 +8,24 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
 
 const Register = () => {
-
-
-
- 
-  const { registerUser, updateUserProfile ,handleGoogleSignIn} = useContext(AuthContext);
+  const { registerUser, updateUserProfile, handleGoogleSignIn } =
+    useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   let from = location.state?.from?.pathname || "/";
 
-
-
-  const handleGoogle = ()=>{
-    handleGoogleSignIn().then(()=>{
+  const handleGoogle = () => {
+    handleGoogleSignIn().then(() => {
       Swal.fire({
         title: "Log in Successful!",
-        icon: "success"
+        icon: "success",
       });
 
-      
       setTimeout(() => {
         navigate(from, { replace: true });
       }, 2000);
     });
-    
-  }
+  };
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -93,7 +86,7 @@ const Register = () => {
   return (
     <div className="hero min-h-screen bg-base-200">
       <Helmet>
-        <title>Blog-Zone || Register</title>
+        <title>MetaBlog | Register</title>
       </Helmet>
       <div className="hero-content flex-col lg:flex-row">
         <div className="text-center lg:text-left">
@@ -161,8 +154,10 @@ const Register = () => {
             >
               Login
             </Link>
-      <p className="text-center mb-2">or</p>
-      <button className="btn mb-10" onClick={()=>handleGoogle()}><FaGoogle/> Register</button>
+            <p className="text-center mb-2">or</p>
+            <button className="btn mb-10" onClick={() => handleGoogle()}>
+              <FaGoogle /> Register
+            </button>
           </div>
         </div>
       </div>

@@ -80,26 +80,11 @@ const BlogDetail = () => {
         published,
       };
 
-      // const url = "http://localhost:5000/comments";
-
       const res = await axiosSecure.post("/comments", commentData);
       if (res.data.insertedId) {
         form.reset();
         refetch();
       }
-
-      // fetch("http://localhost:5000/comments", {
-      //   method: "post",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify(commentData),
-      // })
-      //   .then((res) => res.json())
-      //   .then(() => {
-      //     form.reset();
-      //     refetch();
-      //   });
     }
   };
 
@@ -109,10 +94,10 @@ const BlogDetail = () => {
   // console.log(filteredComments)
 
   return (
-    <div className="container mx-auto mb-10">
+    <div className=" mb-10">
       <div className="max-w-5xl mx-auto shadow-xl bg-white mt-10 p-2 lg:p-10">
         <Helmet>
-          <title>Blog-Zone || Details</title>
+          <title>MetaBlog | Details</title>
         </Helmet>
 
         <Typography>

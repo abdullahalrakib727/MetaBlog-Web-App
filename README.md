@@ -1,5 +1,6 @@
 # About this project
--This project has been built with mongodb, express js, node js and react. It's a Mern project. 
+
+-This project has been built with mongodb, express js, node js and react. It's a Mern project.
 
 ## Project feature
 
@@ -13,6 +14,6 @@
 - You will be able to see featured blogs containing most top blogs that contains most words.
 - You can see recent marque under the navbar. if you click on any title, you will go to that blog detail page.
 
-
 ## Live web
-https://blog-zone-web.netlify.app/
+
+https://MetaBlog-web.netlify.app/

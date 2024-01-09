@@ -12,7 +12,7 @@ const port = process.env.PORT || 5000;
 app.use(
   cors({
     origin: [
-      "https://blog-zone-web.netlify.app",
+      "https://MetaBlog-web.netlify.app",
       "http://localhost:5173",
       "http://localhost:5174",
     ],

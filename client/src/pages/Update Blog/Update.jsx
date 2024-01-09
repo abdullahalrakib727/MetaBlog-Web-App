@@ -63,9 +63,9 @@ const Update = () => {
     });
   };
   return (
-    <div className="container mx-auto">
+    <div >
       <Helmet>
-        <title>Blog-Zone || Update</title>
+        <title>MetaBlog | Update</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center mt-10">
         <div className="card w-full shadow-2xl bg-base-100">
