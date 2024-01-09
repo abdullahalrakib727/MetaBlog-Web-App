@@ -30,11 +30,6 @@ function Nav() {
       <li>
         <NavLink to="/featured">Featured Blogs</NavLink>
       </li>
-      {
-        user && <li>
-        <NavLink to="/wishlist">Wishlist</NavLink>
-      </li>
-      }
        {user ? (
         <>
           <li>
