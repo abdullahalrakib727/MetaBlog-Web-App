@@ -48,9 +48,9 @@ const Comment = ({ c, refetch }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(
-            `https://blog-website-server-theta.vercel.app/comments/${_id}`, {withCredentials:true}
-          )
+          .delete(`http://localhost:5000/comments/${_id}`, {
+            withCredentials: true,
+          })
           .then((res) => {
             console.log(res.data);
             if (res.data.deletedCount > 0) {
@@ -82,10 +82,9 @@ const Comment = ({ c, refetch }) => {
 
     if (c.commenterEmail === user.email) {
       axios
-        .patch(
-          `https://blog-website-server-theta.vercel.app/comments/${_id}`,
-          updatedComment,{withCredentials:true}
-        )
+        .patch(`http://localhost:5000/comments/${_id}`, updatedComment, {
+          withCredentials: true,
+        })
         .then((res) => {
           if (res.data.modifiedCount > 0) {
             refetch();

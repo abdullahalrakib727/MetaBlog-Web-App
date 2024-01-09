@@ -24,8 +24,7 @@ const Home = () => {
         Welcome to Blog-Zone
       </h3>
       <Banner></Banner>
-      <h3 className="text-4xl text-center font-bold mt-5 mb-5">Recent Blogs</h3>
-      <div className="mb-10">
+
         <RecentBlog></RecentBlog>
         <NewSletter></NewSletter>
         {/* eslint-disable-next-line react/no-unescaped-entities */}
@@ -35,7 +34,6 @@ const Home = () => {
           user && <Contact></Contact>
         }
       </div>
-    </div>
   );
 };
 

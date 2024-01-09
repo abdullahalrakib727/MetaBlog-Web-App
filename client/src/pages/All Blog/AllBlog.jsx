@@ -5,7 +5,8 @@ import { Input } from "antd";
 import { Helmet } from "react-helmet";
 import Skeleton from "react-loading-skeleton";
 import useBlogData from "../../hooks/useBlogData";
-import Blog from "./Blog";
+
+import RecentBlogCard from "../Recent Blog/RecentBlogCard";
 const AllBlog = () => {
   const [blogs, isLoaded] = useBlogData();
   const [query, setQuery] = useState("");
@@ -56,7 +57,7 @@ const AllBlog = () => {
           <div className="flex justify-center">
             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
             {filteredBlogs.map((blog) => (
-              <Blog key={blog._id} isLoaded={isLoaded} blog={blog}></Blog>
+              <RecentBlogCard key={blog._id} isLoaded={isLoaded} blog={blog}></RecentBlogCard>
             ))}
           </div>
           </div>

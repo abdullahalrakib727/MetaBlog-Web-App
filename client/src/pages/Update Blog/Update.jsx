@@ -10,10 +10,9 @@ const Update = () => {
   const { data: item = [] } = useQuery({
     queryKey: ["item"],
     queryFn: async () => {
-      const res = await axios.get(
-        `https://blog-website-server-theta.vercel.app/all/${params.id}`,
-        { withCredentials: true }
-      );
+      const res = await axios.get(`http://localhost:5000/all/${params.id}`, {
+        withCredentials: true,
+      });
       return res.data;
     },
   });
@@ -46,11 +45,9 @@ const Update = () => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         axios
-          .patch(
-            `https://blog-website-server-theta.vercel.app/all/${_id}`,
-            updatedBlog,
-            { withCredentials: true }
-          )
+          .patch(`http://localhost:5000/all/${_id}`, updatedBlog, {
+            withCredentials: true,
+          })
           .then((res) => {
             // console.log(res.data);
             if (res.data.modifiedCount > 0) {

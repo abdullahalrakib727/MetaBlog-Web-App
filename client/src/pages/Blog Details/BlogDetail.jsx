@@ -15,8 +15,6 @@ import { Typography } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-
-
 const { Text } = Typography;
 const { Title } = Typography;
 
@@ -30,10 +28,7 @@ const BlogDetail = () => {
   const { data = [] } = useQuery({
     queryKey: ["data"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/all/${params.id}`,
-       
-      );
+      const res = await axiosSecure.get(`/all/${params.id}`);
       return res.data;
     },
   });
@@ -57,8 +52,8 @@ const BlogDetail = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `https://blog-website-server-theta.vercel.app/comments?blog_id=${_id}`,
-        {withCredentials:true}
+        `http://localhost:5000/comments?blog_id=${_id}`,
+        { withCredentials: true }
       );
       return res.data;
     },
@@ -66,7 +61,7 @@ const BlogDetail = () => {
 
   //  add a comment
 
-  const handleAddComment = async(e) => {
+  const handleAddComment = async (e) => {
     e.preventDefault();
     const form = e.target;
     const commenter = user?.displayName;
@@ -84,16 +79,16 @@ const BlogDetail = () => {
         commenterEmail,
         published,
       };
-    
-      // const url = "https://blog-website-server-theta.vercel.app/comments";
 
-     const res = await  axiosSecure.post('/comments',commentData)
-      if(res.data.insertedId){
+      // const url = "http://localhost:5000/comments";
+
+      const res = await axiosSecure.post("/comments", commentData);
+      if (res.data.insertedId) {
         form.reset();
-          refetch();
+        refetch();
       }
 
-      // fetch("https://blog-website-server-theta.vercel.app/comments", {
+      // fetch("http://localhost:5000/comments", {
       //   method: "post",
       //   headers: {
       //     "content-type": "application/json",

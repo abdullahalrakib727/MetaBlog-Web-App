@@ -1,0 +1,35 @@
+import { Skeleton } from "@chakra-ui/skeleton";
+import useBlogData from "../../hooks/useBlogData";
+// import { ChakraProvider } from "@chakra-ui/react";
+import RecentBlogCard from "./RecentBlogCard";
+
+const RecentBlog = () => {
+  const [, isLoaded, recentBlogs] = useBlogData();
+  const limitedBlogs = recentBlogs.slice(0, 6);
+  // console.log(limitedBlogs)
+
+  return (
+    <div>
+      {isLoaded ? (
+        <Skeleton height="300px"></Skeleton>
+      ) : (
+        <>
+          <h3 className="text-2xl p-2 font-bold my-5 ">Recent Blogs</h3>
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
+              {limitedBlogs.map((blog) => (
+                <RecentBlogCard
+                  key={blog._id}
+                  isLoaded={isLoaded}
+                  blog={blog}
+                ></RecentBlogCard>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default RecentBlog;
