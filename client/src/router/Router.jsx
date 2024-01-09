@@ -12,7 +12,7 @@ import Register from "../pages/Register/Register";
 import Update from "../pages/Update Blog/Update";
 
 import PrivateRoute from "./PrivateRoute";
-import Root from "./Root";
+import Root from "../layout/Root";
 
 const router = createBrowserRouter([
   {
