@@ -30,7 +30,7 @@ const RecentBlogCard = ({ blog }) => {
 
   return (
 
-      <Link to={`/all/${_id}`} className="bg-white border border-[#E8E8EA] p-4 rounded-xl max-w-[392px] flex flex-col">
+      <Link to={`/all/${_id}`} className="bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] p-4 rounded-xl max-w-[392px] flex flex-col">
         <PhotoProvider>
           <PhotoView src={photoUrl}>
             <img
@@ -48,11 +48,11 @@ const RecentBlogCard = ({ blog }) => {
             {category}
           </span>
         </Link>
-        <h2 className="mt-4 text-2xl font-semibold mb-5">{title}</h2>
+        <h2 className="mt-4 dark:text-white text-2xl font-semibold mb-5">{title}</h2>
 
 
         {/* author details */}
-        <div className="flex gap-3 items-center mt-auto">
+        <div className="flex gap-3 items-center mt-auto dark:text-[#97989F]">
           <img
             src={authorImg}
             className="max-w-[36px] max-h-[36px] rounded-full"

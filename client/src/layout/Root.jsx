@@ -4,14 +4,17 @@ import Nav from "../shared/Navbar/Nav";
 import Footer from "../shared/Footer/Footer";
 
 import { Toaster } from "react-hot-toast";
+import Container from "../components/Container/Container";
 
 const Root = () => {
   return (
     <>
       <Nav></Nav>
-      <div className="max-w-[1216px] mx-auto">
+      <div>
         <Toaster position="top-center" reverseOrder={false} />
-        <Outlet></Outlet>
+      <Container>
+      <Outlet></Outlet>
+      </Container>
       </div>
       <Footer></Footer>
     </>

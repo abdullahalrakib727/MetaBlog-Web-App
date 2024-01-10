@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Typography } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Container from "../../components/Container/Container";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -94,8 +95,9 @@ const BlogDetail = () => {
   // console.log(filteredComments)
 
   return (
-    <div className=" mb-10">
-      <div className="max-w-5xl mx-auto shadow-xl bg-white mt-10 p-2 lg:p-10">
+    <Container>
+      <div className=" mb-10">
+      <div className=" mt-10 p-2 lg:p-10">
         <Helmet>
           <title>MetaBlog | Details</title>
         </Helmet>
@@ -103,7 +105,7 @@ const BlogDetail = () => {
         <Typography>
           {title ? (
             <Title
-              className="font-bold p-2 lg:p-0 lg:mt-8 text-center"
+              className="font-bold p-2 lg:p-0 dark:text-white lg:mt-8 text-center"
               level={2}
             >
               {title}
@@ -111,38 +113,33 @@ const BlogDetail = () => {
           ) : (
             <Skeleton count={2}></Skeleton>
           )}
-
-          <div className=" mb-10 px-2">
-            <PhotoProvider className="px-2 lg:px-0">
-              <PhotoView src={photoUrl}>
-                <img className="hover:cursor-zoom-in" src={photoUrl} alt="" />
-              </PhotoView>
-            </PhotoProvider>
-            <Paragraph className="mt-5 text-lg font-semibold ">
-              {shortDescription ? shortDescription : <Skeleton></Skeleton>}
-            </Paragraph>
-          </div>
-          <div>
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="p-1 flex gap-5 items-center">
-                <Text className="text-base" code>
-                  Author:
-                </Text>
+           <div className="flex flex-col md:flex-row items-center gap-5 my-5 ">
+              <div className="p-1 ">
                 <div className="flex justify-center gap-2 items-center">
-                  <img src={authorImg} alt="" className="w-10" />
-                  <Text strong className="text-lg">
+                  <img src={authorImg} alt="" className="w-10 rounded-full" />
+                  <Text strong className="text-lg dark:text-[#696A75]">
                     {authorName}
                   </Text>
                 </div>
               </div>
               {formattedTime ? (
-                <Text keyboard>Published on: {formattedTime}</Text>
+                <Text keyboard className="dark:text-[#696A75]">Published on: {formattedTime}</Text>
               ) : (
                 <Skeleton></Skeleton>
               )}
             </div>
+
+          <div className=" mb-10 px-2 w-full">
+            <PhotoProvider className="px-2 lg:px-0">
+              <PhotoView src={photoUrl}>
+                <img className="hover:cursor-zoom-in w-full max-h-[500px]" src={photoUrl} alt="" />
+              </PhotoView>
+            </PhotoProvider>
+            <Paragraph className="mt-5 text-lg font-semibold dark:text-[#BABABF]">
+              {shortDescription ? shortDescription : <Skeleton></Skeleton>}
+            </Paragraph>
           </div>
-          <Paragraph className=" text-base mt-10 font-medium mb-10">
+          <Paragraph className=" text-base mt-10 font-medium mb-10 dark:text-[#BABABF]">
             {longDescription || <Skeleton></Skeleton>}
           </Paragraph>
           <div className="mb-10 text-center">
@@ -185,6 +182,7 @@ const BlogDetail = () => {
         </Typography>
       </div>
     </div>
+    </Container>
   );
 };
 

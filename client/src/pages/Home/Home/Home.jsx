@@ -16,7 +16,7 @@ const Home = () => {
       <Helmet>
         <title>MetaBlog</title>
       </Helmet>
-      <h3 className="text-4xl text-center font-bold mt-5 mb-5">
+      <h3 className="text-4xl text-center dark:text-white font-bold mt-5 mb-5">
         Welcome to MetaBlog
       </h3>
       <Banner></Banner>
@@ -26,7 +26,7 @@ const Home = () => {
         <div className="mt-8 text-center">
           <button
             onClick={handleClick}
-            className="px-5 py-3 border border-[#696A75] rounded-md text-[#696A75] text-base font-medium hover:bg-[#97989F] hover:text-white hover:border-[#97989F] transition-colors delay-200"
+            className="px-5 py-3 border dark:text-white dark:bg-[#181A2A] dark:border-[#242535] border-[#696A75] rounded-md text-[#696A75] text-base font-medium hover:bg-[#97989F] hover:text-white hover:border-[#97989F] transition-colors delay-200"
           >
             View All Post
           </button>
