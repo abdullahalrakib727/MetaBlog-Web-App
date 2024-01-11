@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-
 const ThemeSwitch = () => {
-
-  const [theme, settheme] = useState("light");
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
 
   useEffect(() => {
     if (theme === "dark") {
@@ -11,13 +11,18 @@ const ThemeSwitch = () => {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    // return cleanUp = () => {
-
-    // }
   }, [theme]);
 
+
+useEffect(() => {
+  localStorage.setItem('theme', theme);
+  const localTheme = localStorage.getItem('theme');
+  document.documentElement.classList.add(localTheme)
+
+}, [theme]);
+
   const handleSwitch = () => {
-    settheme(theme == "dark" ? "light" : "dark");
+    setTheme(theme == "dark" ? "light" : "dark");
   };
 
 
