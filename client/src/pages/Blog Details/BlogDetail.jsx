@@ -47,6 +47,7 @@ const BlogDetail = () => {
   } = data;
 
   const formattedTime = TimeFormat(published);
+  console.log(published);
 
   //  show comment on site
   const { data: comments = [], refetch } = useQuery({
@@ -113,7 +114,7 @@ const BlogDetail = () => {
           ) : (
             <Skeleton count={2}></Skeleton>
           )}
-           <div className="flex flex-col md:flex-row items-center gap-5 my-5 ">
+           <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
               <div className="p-1 ">
                 <div className="flex justify-center gap-2 items-center">
                   <img src={authorImg} alt="" className="w-10 rounded-full" />
@@ -123,7 +124,7 @@ const BlogDetail = () => {
                 </div>
               </div>
               {formattedTime ? (
-                <Text keyboard className="dark:text-[#696A75]">Published on: {formattedTime}</Text>
+                <div className="dark:text-[#696A75]">{formattedTime}</div>
               ) : (
                 <Skeleton></Skeleton>
               )}

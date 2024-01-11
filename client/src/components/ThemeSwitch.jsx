@@ -13,26 +13,19 @@ const ThemeSwitch = () => {
     }
   }, [theme]);
 
-
-useEffect(() => {
-  localStorage.setItem('theme', theme);
-  const localTheme = localStorage.getItem('theme');
-  document.documentElement.classList.add(localTheme)
-
-}, [theme]);
-
   const handleSwitch = () => {
-    setTheme(theme == "dark" ? "light" : "dark");
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
-
   return (
-    <button
-      className="bg-yellow-500 dark:bg-blue-500 px-2 py-1"
+    <input
       onClick={handleSwitch}
-    >
-      Switch theme
-    </button>
+      type="checkbox"
+      className="toggle bg-[#E8E8EA] border-[#E8E8EA]"
+      checked={theme === "dark"}
+    />
   );
 };
 

@@ -8,6 +8,8 @@ import "./Nav.css";
 import ThemeSwitch from "../../components/ThemeSwitch";
 import DarkLogoSvg from "../../components/Svgs/DarkLogoSvg";
 
+import logo from "../../assets/Logo.png";
+
 function Nav() {
   const { user, logOutUser } = useContext(AuthContext);
 
@@ -79,7 +81,10 @@ function Nav() {
             {navLinks}
           </ul>
         </div>
-        <div className="relative flex">
+        <Link to="/" className="md:hidden">
+          <img src={logo} alt="" />
+        </Link>
+        <div className="relative w-2/4 hidden md:flex">
           <Link to="/">
             <DarkLogoSvg />
           </Link>
