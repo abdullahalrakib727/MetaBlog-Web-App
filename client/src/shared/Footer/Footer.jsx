@@ -4,40 +4,66 @@ const Footer = () => {
       <footer className="footer p-10 text-base-content max-w-[1216px] mx-auto">
         <div className="grid grid-cols-3 gap-20">
           <nav className="flex flex-col">
-            <header className="text-[#181A2A] text-lg font-semibold">
+            <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
               About
             </header>
-            <p className="mt-2 mb-6 text-[#696A75]">
+            <p className="mt-2 mb-6 text-[#696A75] dark:text-[#97989F]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam
             </p>
-            <p className="text-[#3B3C4A]">
-              <span className="text-[#181A2A] font-normal text-base">
+            <p>
+              <span className="text-[#181A2A] dark:text-white font-normal text-base">
                 Email:{" "}
               </span>
-              info@jstemplate.net
+              <span className="text-[#3B3C4A] dark:text-[#97989F]">
+                {" "}
+                info@jstemplate.net
+              </span>
             </p>
-            <p className="text-[#3B3C4A]">
-              <span className="text-[#181A2A] font-normal text-base">
+            <p>
+              <span className="text-[#181A2A] dark:text-white font-normal text-base">
                 Phone :{" "}
               </span>
-              880 123 456 789
+
+              <span className="text-[#3B3C4A] dark:text-[#97989F]">
+                880 123 456 789
+              </span>
             </p>
           </nav>
           <nav className="flex flex-col">
-            <header className="footer-title">Quick Link</header>
-            <a className="link link-hover">Home</a>
-            <a className="link link-hover">About</a>
-            <a className="link link-hover">Archived</a>
-            <a className="link link-hover">Author</a>
-            <a className="link link-hover">Contact</a>
+            <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
+              Quick Link
+            </header>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Home
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              About
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Archived
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Author
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Contact
+            </a>
           </nav>
           <nav className="flex flex-col">
-            <header className="footer-title">Legal</header>
-            <a className="link link-hover">Terms of use</a>
-            <a className="link link-hover">Privacy policy</a>
-            <a className="link link-hover">Cookie policy</a>
+            <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
+              Legal
+            </header>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Terms of use
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Privacy policy
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Cookie policy
+            </a>
           </nav>
         </div>
         {/* <form>
@@ -53,7 +79,7 @@ const Footer = () => {
       </fieldset>
     </form> */}
       </footer>
-      <footer className="footer px-10 py-4 border-t bg-[#F6F6F7] max-w-[1216px] mx-auto text-base-content border-base-300">
+      <footer className="footer px-10 py-4 border-t bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
         <aside className="items-center grid-flow-col">
           {/* logo */}
           <p>

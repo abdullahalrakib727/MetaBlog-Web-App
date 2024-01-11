@@ -55,7 +55,7 @@ function Nav() {
   );
 
   return (
-    <nav className="navbar bg-white dark:bg-[#141624] dark:text-white  max-w-[1216px] mx-auto">
+    <nav className="navbar bg-white dark:bg-[#181A2A] dark:text-white  max-w-[1216px] mx-auto">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
