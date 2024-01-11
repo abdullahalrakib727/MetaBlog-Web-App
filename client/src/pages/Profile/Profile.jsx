@@ -1,4 +1,4 @@
-import { Button, ChakraProvider } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import TimeFormat from "../../function/TimeFormat";
@@ -17,8 +17,8 @@ const Profile = () => {
 
 
   return (
-    <ChakraProvider>
-      <div className="flex gap-5 px-20 min-h-screen items-center">
+
+      <div className="flex gap-5 px-20 min-h-screen items-center dark:text-white">
       <div>
         <img className='max-w-[150px]' src={user?.photoURL} alt="" />
       </div>
@@ -36,7 +36,6 @@ const Profile = () => {
        }
       </div>
     </div>
-    </ChakraProvider>
   );
 };
 

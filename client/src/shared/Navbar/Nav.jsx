@@ -8,7 +8,7 @@ import "./Nav.css";
 import ThemeSwitch from "../../components/ThemeSwitch";
 import DarkLogoSvg from "../../components/Svgs/DarkLogoSvg";
 
-import logo from "../../assets/Logo.png";
+import logo from "../../assets/logos.png";
 
 function Nav() {
   const { user, logOutUser } = useContext(AuthContext);
