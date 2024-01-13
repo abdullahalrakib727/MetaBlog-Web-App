@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 import { ChakraProvider } from "@chakra-ui/react";
-import { Input } from "antd";
 import { Helmet } from "react-helmet";
 import Skeleton from "react-loading-skeleton";
 import useBlogData from "../../hooks/useBlogData";
 
 import RecentBlogCard from "../Recent Blog/RecentBlogCard";
+import { TfiSearch } from "react-icons/tfi";
 const AllBlog = () => {
   const [blogs, isLoaded] = useBlogData();
   const [query, setQuery] = useState("");
@@ -23,25 +23,29 @@ const AllBlog = () => {
   );
 
   return (
-    <div className="min-h-screen mx-auto mb-10">
+    <div className="min-h-screen mx-auto mb-10 px-4 xl:px-0">
       <Helmet>
         <title>MetaBlog | All Blogs</title>
       </Helmet>
-      <div className="w-3/4 mx-auto  justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
-        <Input
-          placeholder="Search..."
-          className="w-1/2"
-          onChange={(e) => {
-            const search = e.target.value;
-            const searchLower = search.toLowerCase();
-            setQuery(searchLower);
-          }}
-        />
+      <div className=" justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
+        <div className="dropdown dropdown-end relative">
+          <input
+            type="text"
+            placeholder="Search Title"
+            className="border px-3 py-1 bg-[#F4F4F5] dark:text-[#A1A1AA] dark:bg-[#242535] dark:border-none rounded-md w-full max-w-xs"
+            onChange={(e) => {
+              const search = e.target.value;
+              const searchLower = search.toLowerCase();
+              setQuery(searchLower);
+            }}
+          />
+          <TfiSearch className="absolute dark:text-[#52525B] bottom-2 right-2 cursor-pointer overflow-hidden" />
+        </div>
 
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="select select-bordered select-info"
+          className=" border px-3 py-1 bg-[#F4F4F5] dark:text-[#A1A1AA] dark:bg-[#242535] dark:border-none rounded-md max-w-xs"
         >
           <option value="">All Categories</option>
           <option value="Food">Food</option>
