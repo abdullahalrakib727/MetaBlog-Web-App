@@ -47,7 +47,7 @@ const BlogDetail = () => {
   } = data;
 
   const formattedTime = TimeFormat(published);
-  console.log(published);
+  // console.log(published);
 
   //  show comment on site
   const { data: comments = [], refetch } = useQuery({
