@@ -1,18 +1,15 @@
-// import { useContext } from "react";
+
 import "react-photo-view/dist/react-photo-view.css";
 import { Link } from "react-router-dom";
-// import Swal from "sweetalert2";
-// import { AuthContext } from "../../Providers/AuthProvider";
+
 import { format } from "date-fns";
 
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
+
 
 const RecentBlogCard = ({ blog }) => {
-  // const axiosSecure = useAxiosSecure();
 
-  // const { user } = useContext(AuthContext);
   const {
     _id,
     title,
@@ -33,11 +30,15 @@ const RecentBlogCard = ({ blog }) => {
       <Link to={`/all/${_id}`} className="bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] p-4 rounded-xl max-w-[392px] flex flex-col">
         <PhotoProvider>
           <PhotoView src={photoUrl}>
+
+            <div className="h-[170px] md:h-[240px] max-w-[360px] overflow-hidden rounded-md">
+
             <img
-              className="h-[170px] md:h-[240px] max-w-[360px] rounded-md"
+              className="h-[170px] md:h-[240px] max-w-[360px] hover:scale-110 ease-linear transition-transform duration-300 rounded-md"
               src={photoUrl}
               alt=""
             />
+            </div>
           </PhotoView>
         </PhotoProvider>
         <Link className="mt-6">
