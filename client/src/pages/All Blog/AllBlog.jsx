@@ -27,7 +27,7 @@ const AllBlog = () => {
       <Helmet>
         <title>MetaBlog | All Blogs</title>
       </Helmet>
-      <div className=" justify-between mt-10 mb-10 text-center flex flex-col gap-5 md:flex-row">
+      <div className=" justify-center md:justify-between items-center  my-10 text-center flex flex-col gap-5 md:flex-row">
         <div className="dropdown dropdown-end relative">
           <input
             type="text"
