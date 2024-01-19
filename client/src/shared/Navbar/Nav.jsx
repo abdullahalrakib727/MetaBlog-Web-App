@@ -84,9 +84,9 @@ function Nav() {
         </div>
         <div>
           <Link to="/" className="md:hidden relative">
-            <img src={logo} alt="" />
+            <img src={logo} alt="site-logo" />
             <div className="absolute md:hidden dark:hidden top-0">
-              <img src={logo2} alt="" />
+              <img src={logo2} alt="site-logo" />
             </div>
           </Link>
         </div>
