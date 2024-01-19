@@ -17,7 +17,7 @@ const Home = () => {
       <Helmet>
         <title>MetaBlog</title>
       </Helmet>
-      <section className="mb-10 mt-14 lg:mb-[144px]">
+      <section className="mb-10 mt-14 md:mb-[144px]">
         <Banner></Banner>
       </section>
       <section className="flex mb-10 lg:mb-20  justify-center">

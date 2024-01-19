@@ -15,12 +15,12 @@ const Banner = () => {
         src={blogs[1]?.photoUrl}
         alt=""
       />
-      <div className="lg:min-w-[518px] lg:min-h-[304px] rounded-xl top-[400px] border left-20 bg-white lg:p-10 p-3 lg:absolute flex flex-col border-[#E8E8EA] shadow-sm shadow-[#97989F] dark:bg-[#181A2A] dark:border-[#242535] dark:shadow-md">
+      <div className="lg:min-w-[518px] lg:min-h-[304px] rounded-xl  md:-bottom-20 lg:-bottom-20 border left-16 bg-[#FFF] lg:p-10 p-3 md:absolute border-[#E8E8EA] shadow-md shadow-[#181A2A1F] dark:bg-[#181A2A] dark:border-[#242535]">
         <div className="max-w-[518px]">
-          <p className="bg-[#4B6BFB] rounded-md text-white px-[10px] py-1 text-sm lg:w-3/12 w-5/12 text-center mt-2 lg:mt-0">
+          <span className="bg-[#4B6BFB] rounded-md text-white px-2 py-1 text-sm text-center mt-2 lg:mt-0">
             {blogs[1]?.category}
-          </p>
-          <h1 className="text-[#181A2A] dark:text-white text-xl mt-4 mb-6 lg:text-4xl font-semibold max-w-[518px]">
+          </span>
+          <h1 className="text-[#181A2A] dark:text-white text-xl mt-4 mb-6 lg:text-4xl font-semibold max-w-[400px] lg:max-w-[518px] ">
            {blogs[1]?.title}
           </h1>
           <div className="flex gap-3 items-center mt-auto dark:text-[#97989F]">
