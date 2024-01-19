@@ -1,8 +1,11 @@
+import FooterDarkLogo from "../../components/Svgs/FooterDarkLogo";
+import FooterLogoLight from "../../components/Svgs/FooterLogoLight";
+
 const Footer = () => {
   return (
     <div className=" bg-[#F6F6F7] dark:bg-[#141624] ">
       <footer className="footer p-10 text-base-content max-w-[1216px] mx-auto">
-        <div className="grid grid-cols-3 gap-20">
+        <div className="grid md:grid-cols-3 gap-10">
           <nav className="flex flex-col">
             <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
               About
@@ -18,7 +21,7 @@ const Footer = () => {
               </span>
               <span className="text-[#3B3C4A] dark:text-[#97989F]">
                 {" "}
-                info@jstemplate.net
+                info@metablog.net
               </span>
             </p>
             <p>
@@ -31,7 +34,7 @@ const Footer = () => {
               </span>
             </p>
           </nav>
-          <nav className="flex flex-col">
+          <nav className="flex flex-col gap-2">
             <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
               Quick Link
             </header>
@@ -51,18 +54,27 @@ const Footer = () => {
               Contact
             </a>
           </nav>
-          <nav className="flex flex-col">
+          <nav className="flex flex-col gap-2">
             <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
-              Legal
+              Category
             </header>
             <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Terms of use
+              Lifestyle
             </a>
             <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Privacy policy
+              Technology
             </a>
             <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Cookie policy
+              Travel
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Business
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Economy
+            </a>
+            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+              Sports
             </a>
           </nav>
         </div>
@@ -82,16 +94,26 @@ const Footer = () => {
       <footer className="footer px-10 py-4 border-t bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
         <aside className="items-center grid-flow-col">
           {/* logo */}
-          <p>
-            ACME Industries Ltd. <br />
-            Providing reliable tech since 1992
-          </p>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <FooterLogoLight/>
+             <div className="absolute bottom-0 hidden dark:flex">
+             <FooterDarkLogo/>
+             </div>
+            </div>
+            <div className="dark:text-white">
+              <p className="text-xl ">
+                Meta<span className="font-extrabold">Blog</span>
+              </p>
+              <p>© MetaBlog 2023. All Rights Reserved.</p>
+            </div>
+          </div>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">
-          <div className="grid grid-flow-col gap-4 text-base font-normal text-[#3B3C4A]">
-            <a>Terms of Use</a>
-            <a>Privacy Policy</a>
-            <a>Cookie Policy</a>
+          <div className="grid grid-flow-col gap-4 text-base font-normal text-[#3B3C4A] dark:text-[#BABABF]">
+            <a className="cursor-pointer">Terms of Use</a>
+            <a className="cursor-pointer">Privacy Policy</a>
+            <a className="cursor-pointer">Cookie Policy</a>
           </div>
         </nav>
       </footer>
