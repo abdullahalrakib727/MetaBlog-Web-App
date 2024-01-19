@@ -4,7 +4,7 @@ import FooterLogoLight from "../../components/Svgs/FooterLogoLight";
 const Footer = () => {
   return (
     <div className=" bg-[#F6F6F7] dark:bg-[#141624] ">
-      <footer className="footer p-10 text-base-content max-w-[1216px] mx-auto">
+      <footer className="footer py-10 lg:py-16 text-base-content max-w-[1216px] mx-auto">
         <div className="grid md:grid-cols-3 gap-10">
           <nav className="flex flex-col">
             <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
@@ -91,7 +91,7 @@ const Footer = () => {
       </fieldset>
     </form> */}
       </footer>
-      <footer className="footer px-10 py-4 border-t bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
+      <footer className="footer  py-8 border-t dark:border-[#242535]  bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
         <aside className="items-center grid-flow-col">
           {/* logo */}
           <div className="flex items-center gap-2">
