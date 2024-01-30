@@ -113,6 +113,7 @@ const AddBlog = () => {
               <JoditEditor
                 value={content}
                 onChange={(newContent) => setContent(newContent)}
+                dark={true}
               />
             </div>
             <div className="form-control mt-6">

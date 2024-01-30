@@ -3,9 +3,10 @@ import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Update = () => {
   const params = useParams();
@@ -26,6 +27,7 @@ const Update = () => {
 
   const { _id, title, photoUrl, category, content:body } = item;
 
+  const navigate = useNavigate();
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -56,12 +58,10 @@ const Update = () => {
             }
           )
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.modifiedCount > 0) {
-              Swal.fire({
-                title: "Blog Has been Updated!",
-                icon: "success",
-              });
+             toast.success('Blog has been updated!');
+             navigate(`/all/${_id}`)
             }
           });
       } else if (result.isDenied) {
@@ -125,6 +125,7 @@ const Update = () => {
             </label>
             <JoditEditor
               value={body}
+              dark={true}
               onChange={(newContent) => setUpdatedContent(newContent)}
             />
           </div>
