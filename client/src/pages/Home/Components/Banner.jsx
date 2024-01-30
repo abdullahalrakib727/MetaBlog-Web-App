@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const Banner = () => {
   const [blogs] = useBlogData();
-  console.log(blogs[1]);
 
   // const {authorImg, authorName, publishDate} = blogs[1];
   return (

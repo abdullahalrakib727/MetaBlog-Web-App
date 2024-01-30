@@ -4,11 +4,19 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useRef } from "react";
+import { useState } from "react";
+import JoditEditor from "jodit-react";
 
 const AddBlog = () => {
   const { user } = useContext(AuthContext);
   // const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
+
+  // for jodit editor
+  const editor = useRef();
+  const [content, setContent] = useState();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,24 +104,12 @@ const AddBlog = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Short Description</span>
+                <span className="label-text">Body</span>
               </label>
-              <textarea
-                name="short"
-                className="textarea textarea-bordered"
-                placeholder="Short Description"
-              ></textarea>
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Long Description</span>
-              </label>
-              <textarea
-                name="long"
-                className="textarea textarea-bordered"
-                placeholder="Long Description"
-              ></textarea>
+             <JoditEditor ref={editor}
+             value={content}
+             onChange={(newContent) => setContent(newContent)}
+             />
             </div>
             <div className="form-control mt-6">
               <button className="btn register-btn normal-case">Submit</button>
