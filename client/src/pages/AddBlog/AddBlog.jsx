@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
-import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 import { useState } from "react";
 import JoditEditor from "jodit-react";
+import toast from "react-hot-toast";
 
 const AddBlog = () => {
   const { user } = useContext(AuthContext);
@@ -48,14 +48,11 @@ const AddBlog = () => {
       const res = await axiosSecure.post("/all", data);
 
       if (res.data.insertedId) {
-        Swal.fire({
-          title: "Blog Has been Added!",
-          icon: "success",
-        });
+        toast.success("Blog has been added!");
         form.reset();
       }
     } catch (error) {
-      console.log("error", error);
+      toast.error("error",error);
     } finally {
       setIsSubmitting(false);
     }
