@@ -20,6 +20,7 @@
     "date-fns": "^3.2.0",
     "firebase": "^10.6.0",
     "framer-motion": "^10.16.5",
+    "html-react-parser": "^5.1.1",
     "jodit-react": "^4.0.9",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

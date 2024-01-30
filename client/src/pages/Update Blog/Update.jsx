@@ -4,9 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
+import JoditEditor from "jodit-react";
+import { useState } from "react";
 
 const Update = () => {
   const params = useParams();
+  const [updatedContent, setUpdatedContent] = useState();
+
   const { data: item = [] } = useQuery({
     queryKey: ["item"],
     queryFn: async () => {
@@ -20,22 +24,19 @@ const Update = () => {
     },
   });
 
-  const { _id, title, photoUrl, category, shortDescription, longDescription } =
-    item;
+  const { _id, title, photoUrl, category, content:body } = item;
+
 
   const handleUpdate = (e) => {
     e.preventDefault();
     const title = e.target.title.value;
     const photoUrl = e.target.photo.value;
     const category = e.target.category.value;
-    const shortDescription = e.target.short.value;
-    const longDescription = e.target.long.value;
     const updatedBlog = {
       title,
       photoUrl,
       category,
-      shortDescription,
-      longDescription,
+      content: updatedContent,
     };
 
     Swal.fire({
@@ -45,7 +46,6 @@ const Update = () => {
       confirmButtonText: "Save",
       denyButtonText: `Don't save`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         axios
           .patch(
@@ -56,7 +56,7 @@ const Update = () => {
             }
           )
           .then((res) => {
-            // console.log(res.data);
+            console.log(res.data);
             if (res.data.modifiedCount > 0) {
               Swal.fire({
                 title: "Blog Has been Updated!",
@@ -70,86 +70,70 @@ const Update = () => {
     });
   };
   return (
-    <div>
+    <div className="card w-full shadow-md min-h-screen my-10">
       <Helmet>
-        <title>MetaBlog | Update</title>
+        <title>MetaBlog | Add Blog</title>
       </Helmet>
-      <div className="min-h-screen flex justify-center items-center mt-10">
-        <div className="card w-full shadow-2xl bg-base-100">
-          <h3 className="text-center text-3xl mb-5 font-bold mt-5">
-            Update Your Blog
-          </h3>
-          <form className="card-body" onSubmit={handleUpdate}>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Title</span>
-              </label>
-              <input
-                defaultValue={title}
-                type="text"
-                name="title"
-                placeholder="Title of the Blog"
-                className="input input-bordered"
-                // required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Image URL</span>
-              </label>
-              <input
-                defaultValue={photoUrl}
-                type="text"
-                name="photo"
-                placeholder="Url of the image"
-                className="input input-bordered"
-                // required
-              />
-            </div>
-            {/* select will be used */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Choose a Category</span>
-              </label>
-              <select
-                defaultValue={category}
-                name="category"
-                className="select select-bordered w-full"
-              >
-                <option>Food</option>
-                <option>Health</option>
-                <option>Entertainment</option>
-                <option>Tech</option>
-              </select>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Short Description</span>
-              </label>
-              <textarea
-                defaultValue={shortDescription}
-                name="short"
-                className="textarea textarea-bordered"
-                placeholder="Short Description"
-              ></textarea>
-            </div>
-
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Long Description</span>
-              </label>
-              <textarea
-                defaultValue={longDescription}
-                name="long"
-                className="textarea textarea-bordered"
-                placeholder="Long Description"
-              ></textarea>
-            </div>
-            <div className="form-control mt-6">
-              <button className="btn register-btn normal-case">Update</button>
-            </div>
-          </form>
-        </div>
+      <div className="min-h-screen flex justify-center items-center">
+        <form className="card-body" onSubmit={handleUpdate}>
+        <h1 className="text-center dark:text-white text-2xl font-semibold">Update : {title}</h1>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text dark:text-white">Title</span>
+            </label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Blog's title"
+              defaultValue={title}
+              className="input border-2 border-[#181A2A] dark:border-white"
+              // required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text dark:text-white">Image URL</span>
+            </label>
+            <input
+              defaultValue={photoUrl}
+              type="text"
+              name="photo"
+              placeholder="Thumbnail link"
+              className="input border-2 border-[#181A2A] dark:border-white"
+              // required
+            />
+          </div>
+          {/* select will be used */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text dark:text-white">Choose a Category</span>
+            </label>
+            <select
+              defaultValue={category}
+              name="category"
+              className="select border-2 border-[#181A2A] dark:border-white w-full"
+            >
+              <option>Food</option>
+              <option>Health</option>
+              <option>Entertainment</option>
+              <option>Tech</option>
+            </select>
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text dark:text-white">Body</span>
+            </label>
+            <JoditEditor
+              value={body}
+              onChange={(newContent) => setUpdatedContent(newContent)}
+            />
+          </div>
+          <div className="form-control mt-6">
+            <button className="btn  dark:bg-white text-black uppercase">
+              Update
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
-
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -12,9 +11,9 @@ import Comment from "./Comments/Comment";
 import { Skeleton } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Typography } from "antd";
-import Paragraph from "antd/es/typography/Paragraph";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Container/Container";
+import HTMLReactParser from "html-react-parser";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -38,13 +37,33 @@ const BlogDetail = () => {
     _id,
     title,
     photoUrl,
-    shortDescription,
-    longDescription,
     authorImg,
     authorName,
     published,
     authorEmail,
+    content,
   } = data;
+
+  const applyDarkMode = (tagName) => {
+    const elements = document.getElementsByTagName(tagName);
+    const elementsArray = Array.from(elements);
+    elementsArray.forEach((element) => {
+      element.classList.add("dark:text-white");
+    });
+  };
+
+  useEffect(() => {
+    applyDarkMode("strong");
+    applyDarkMode("h1");
+    applyDarkMode("h2");
+    applyDarkMode("h3");
+    applyDarkMode("h4");
+    applyDarkMode("h5");
+    applyDarkMode("h6");
+    applyDarkMode("p");
+    applyDarkMode("a");
+    applyDarkMode("span");
+  }, [content]);
 
   const formattedTime = TimeFormat(published);
   // console.log(published);
@@ -93,28 +112,27 @@ const BlogDetail = () => {
   const filteredComments = comments
     .filter((comment) => comment.blog_id == _id)
     .sort((a, b) => new Date(b.published) - new Date(a.published));
-  // console.log(filteredComments)
 
   return (
     <Container>
       <div className=" mb-10">
-      <div className=" mt-10 p-2 lg:p-10">
-        <Helmet>
-          <title>MetaBlog | Details</title>
-        </Helmet>
+        <div className=" mt-10 p-2 lg:p-10">
+          <Helmet>
+            <title>MetaBlog | Details</title>
+          </Helmet>
 
-        <Typography>
-          {title ? (
-            <Title
-              className="font-bold p-2 lg:p-0 dark:text-white lg:mt-8 text-center"
-              level={2}
-            >
-              {title}
-            </Title>
-          ) : (
-            <Skeleton count={2}></Skeleton>
-          )}
-           <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
+          <Typography>
+            {title ? (
+              <Title
+                className="font-bold p-2 lg:p-0 dark:text-white lg:mt-8 text-center"
+                level={2}
+              >
+                {title}
+              </Title>
+            ) : (
+              <Skeleton count={2}></Skeleton>
+            )}
+            <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
               <div className="p-1 ">
                 <div className="flex justify-center gap-2 items-center">
                   <img src={authorImg} alt="" className="w-10 rounded-full" />
@@ -130,59 +148,66 @@ const BlogDetail = () => {
               )}
             </div>
 
-          <div className=" mb-10 px-2 w-full">
-            <PhotoProvider className="px-2 lg:px-0">
-              <PhotoView src={photoUrl}>
-                <img className="hover:cursor-zoom-in w-full max-h-[500px]" src={photoUrl} alt="" />
-              </PhotoView>
-            </PhotoProvider>
-            <Paragraph className="mt-5 text-lg font-semibold dark:text-[#BABABF]">
-              {shortDescription ? shortDescription : <Skeleton></Skeleton>}
-            </Paragraph>
-          </div>
-          <Paragraph className=" text-base mt-10 font-medium mb-10 dark:text-[#BABABF]">
-            {longDescription || <Skeleton></Skeleton>}
-          </Paragraph>
-          <div className="mb-10 text-center">
-            {authorEmail === user?.email && (
-              <Link to={`/update/${_id}`}>
-                <button className="btn">Update</button>
-              </Link>
-            )}
-          </div>
-          <h1 className="text-3xl font-bold mb-5">Comments :</h1>
-          <div className="bg-blue-400">
-            {user && (
-              <div className="">
-                {authorEmail === user?.email ? (
-                  <p
-                    className="bg-white text-center text-red-500 pb-5 font-semibold text-lg"
-                    type="warning"
-                  >
-                    Can not comment to your own blog
-                  </p>
-                ) : (
-                  <form className="pt-5 pl-10" onSubmit={handleAddComment}>
-                    <textarea
-                      name="comment"
-                      className="textarea textarea-info"
-                      placeholder="Add a comment"
-                    ></textarea>
-                    <br />
-                   <button className="btn">Comment</button>
-                  </form>
+            <div className=" mb-10 px-2 w-full">
+              <PhotoProvider className="px-2 lg:px-0">
+                <PhotoView src={photoUrl}>
+                  <img
+                    className="hover:cursor-zoom-in w-full max-h-[500px]"
+                    src={photoUrl}
+                    alt="Thumbnail"
+                  />
+                </PhotoView>
+              </PhotoProvider>
+            </div>
+            {data?.content && (
+              <div className="mb-10 overflow-auto dark:bg-[#181A2A]">
+                {HTMLReactParser(
+                  `<div class="dark:bg-[#181A2A] overflow-auto dark:text-white">${content}</div>`
                 )}
               </div>
             )}
-            <div className="pb-5 pt-5">
-              {filteredComments.map((c) => (
-                <Comment refetch={refetch} key={c._id} c={c}></Comment>
-              ))}
+            <div className="mb-10 text-center">
+              {authorEmail === user?.email && (
+                <Link to={`/update/${_id}`}>
+                  <button className=" py-2 px-4 text-center rounded-md bg-black text-white  normal-case hover:bg-green-500 transition-all duration-300 shadow-md">
+                    Update
+                  </button>
+                </Link>
+              )}
             </div>
-          </div>
-        </Typography>
+            <h1 className="text-3xl font-bold mb-5">Comments :</h1>
+            <div className="bg-blue-400">
+              {user && (
+                <div className="">
+                  {authorEmail === user?.email ? (
+                    <p
+                      className="bg-white text-center text-red-500 pb-5 font-semibold text-lg"
+                      type="warning"
+                    >
+                      Can not comment to your own blog
+                    </p>
+                  ) : (
+                    <form className="pt-5 pl-10" onSubmit={handleAddComment}>
+                      <textarea
+                        name="comment"
+                        className="textarea textarea-info"
+                        placeholder="Add a comment"
+                      ></textarea>
+                      <br />
+                      <button className="btn">Comment</button>
+                    </form>
+                  )}
+                </div>
+              )}
+              <div className="pb-5 pt-5">
+                {filteredComments.map((c) => (
+                  <Comment refetch={refetch} key={c._id} c={c}></Comment>
+                ))}
+              </div>
+            </div>
+          </Typography>
+        </div>
       </div>
-    </div>
     </Container>
   );
 };
