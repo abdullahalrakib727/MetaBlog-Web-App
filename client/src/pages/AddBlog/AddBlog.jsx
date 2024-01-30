@@ -70,7 +70,7 @@ const AddBlog = () => {
       <div className="min-h-screen flex justify-center items-center">
         <div className="card w-full shadow-md">
           <h1 className="dark:text-white text-center text-2xl font-semibold">
-            Write a a blog from here
+            Write a blog from here
           </h1>
           <form className="card-body" onSubmit={handleSubmit}>
             <div className="form-control">
