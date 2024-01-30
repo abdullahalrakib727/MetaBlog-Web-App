@@ -11,9 +11,7 @@ const Footer = () => {
               About
             </header>
             <p className="mt-2 mb-6 text-[#696A75] dark:text-[#97989F]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam
+            MetaBlog is a platform for bloggers to explore and discuss various topics, promoting engaging conversations and knowledge sharing.
             </p>
             <p>
               <span className="text-[#181A2A] dark:text-white font-normal text-base">

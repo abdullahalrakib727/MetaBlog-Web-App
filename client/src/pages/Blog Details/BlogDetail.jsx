@@ -44,31 +44,30 @@ const BlogDetail = () => {
     content,
   } = data;
 
-  const applyDarkMode = (tagName) => {
+  const applyDarkMode = (tagName, className) => {
     const elements = document.getElementsByTagName(tagName);
     const elementsArray = Array.from(elements);
     elementsArray.forEach((element) => {
-      element.classList.add("dark:text-white");
+      element.classList.add(className);
     });
   };
 
   useEffect(() => {
-    applyDarkMode("strong");
-    applyDarkMode("h1");
-    applyDarkMode("h2");
-    applyDarkMode("h3");
-    applyDarkMode("h4");
-    applyDarkMode("h5");
-    applyDarkMode("h6");
-    applyDarkMode("p");
-    applyDarkMode("a");
-    applyDarkMode("span");
+    applyDarkMode("strong", "dark:text-white");
+    applyDarkMode("h1", "dark:text-white");
+    applyDarkMode("h2", "dark:text-white");
+    applyDarkMode("h3", "dark:text-white");
+    applyDarkMode("h4", "dark:text-white");
+    applyDarkMode("h5", "dark:text-white");
+    applyDarkMode("h6", "dark:text-white");
+    applyDarkMode("p", "dark:text-[#BABABF]");
+    applyDarkMode("a", "dark:text-white");
+    applyDarkMode("span", "dark:text-white");
   }, [content]);
 
   const formattedTime = published
     ? format(new Date(published), "yyyy-MM-dd HH:mm")
     : null;
-
 
   //  show comment on site
   const { data: comments = [], refetch } = useQuery({
