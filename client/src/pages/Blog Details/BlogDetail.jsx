@@ -5,7 +5,7 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
-import TimeFormat from "../../function/TimeFormat";
+
 import Comment from "./Comments/Comment";
 
 import { Skeleton } from "@chakra-ui/react";
@@ -14,6 +14,7 @@ import { Typography } from "antd";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
+import { format } from "date-fns";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -25,14 +26,13 @@ const BlogDetail = () => {
 
   const params = useParams();
 
-  const { data = [] } = useQuery({
+  const { data = [], isLoading } = useQuery({
     queryKey: ["data"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/all/${params.id}`);
       return res.data;
     },
   });
-
   const {
     _id,
     title,
@@ -65,8 +65,10 @@ const BlogDetail = () => {
     applyDarkMode("span");
   }, [content]);
 
-  const formattedTime = TimeFormat(published);
-  // console.log(published);
+  const formattedTime = published
+    ? format(new Date(published), "yyyy-MM-dd HH:mm")
+    : null;
+
 
   //  show comment on site
   const { data: comments = [], refetch } = useQuery({
@@ -122,15 +124,15 @@ const BlogDetail = () => {
           </Helmet>
 
           <Typography>
-            {title ? (
+            {isLoading ? (
+              <Skeleton count={2}></Skeleton>
+            ) : (
               <Title
                 className="font-bold p-2 lg:p-0 dark:text-white lg:mt-8 text-center"
                 level={2}
               >
                 {title}
               </Title>
-            ) : (
-              <Skeleton count={2}></Skeleton>
             )}
             <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
               <div className="p-1 ">
@@ -175,36 +177,48 @@ const BlogDetail = () => {
                 </Link>
               )}
             </div>
-            <h1 className="text-3xl font-bold mb-5">Comments :</h1>
-            <div className="bg-blue-400">
-              {user && (
-                <div className="">
-                  {authorEmail === user?.email ? (
-                    <p
-                      className="bg-white text-center text-red-500 pb-5 font-semibold text-lg"
-                      type="warning"
-                    >
-                      Can not comment to your own blog
-                    </p>
-                  ) : (
-                    <form className="pt-5 pl-10" onSubmit={handleAddComment}>
-                      <textarea
-                        name="comment"
-                        className="textarea textarea-info"
-                        placeholder="Add a comment"
-                      ></textarea>
-                      <br />
-                      <button className="btn">Comment</button>
-                    </form>
+
+            {/* comment section */}
+            <section>
+              <p className="text-xl font-semibold dark:text-white">
+                Comments :
+              </p>
+
+              {filteredComments.length > 0 && (
+                <div className="bg-[#F6F6F7]">
+                  {user && (
+                    <div className="">
+                      {authorEmail === user?.email ? (
+                        <p
+                          className="bg-white text-center text-red-500 pb-5 font-semibold text-lg"
+                          type="warning"
+                        >
+                          Can not comment to your own blog
+                        </p>
+                      ) : (
+                        <form
+                          className="pt-5 pl-10"
+                          onSubmit={handleAddComment}
+                        >
+                          <textarea
+                            name="comment"
+                            className="textarea textarea-info"
+                            placeholder="Add a comment"
+                          ></textarea>
+                          <br />
+                          <button className="btn">Comment</button>
+                        </form>
+                      )}
+                    </div>
                   )}
+                  <div className="pb-5 pt-5">
+                    {filteredComments.map((c) => (
+                      <Comment refetch={refetch} key={c._id} c={c}></Comment>
+                    ))}
+                  </div>
                 </div>
               )}
-              <div className="pb-5 pt-5">
-                {filteredComments.map((c) => (
-                  <Comment refetch={refetch} key={c._id} c={c}></Comment>
-                ))}
-              </div>
-            </div>
+            </section>
           </Typography>
         </div>
       </div>

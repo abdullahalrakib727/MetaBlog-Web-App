@@ -1,13 +1,13 @@
 import { Button } from '@chakra-ui/react'
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
-import TimeFormat from "../../function/TimeFormat";
+
 const Profile = () => {
   const { user, sendVerificationEmail } = useContext(AuthContext);
 
   const utcTimestamp = user?.metadata.creationTime;
 
-  const formattedTime = TimeFormat(utcTimestamp);
+  
 
   const handleVerification = ()=>{
     sendVerificationEmail().then(result=>{
@@ -30,7 +30,7 @@ const Profile = () => {
           {" "}
           Phone no : {user?.phoneNumber ? user?.phoneNumber : "Not provided"}
         </p>
-        <p>Account created at : {formattedTime}</p>
+        <p>Account created at : {utcTimestamp}</p>
        {
         !user?.emailVerified &&  <Button onClick={handleVerification} className='mt-10' >Send Email Verification</Button>
        }
