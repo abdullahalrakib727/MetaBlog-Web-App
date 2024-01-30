@@ -4,7 +4,6 @@ import AddBlog from "../pages/AddBlog/AddBlog";
 import AllBlog from "../pages/All Blog/AllBlog";
 import BlogDetail from "../pages/Blog Details/BlogDetail";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import FeaturedBlog from "../pages/Featured Blog/FeaturedBlog";
 import Home from "../pages/Home/Home/Home";
 import Login from "../pages/Login/Login";
 import Profile from "../pages/Profile/Profile";
@@ -50,10 +49,6 @@ const router = createBrowserRouter([
             <Update></Update>
           </PrivateRoute>
         ),
-      },
-      {
-        path: "/featured",
-        element: <FeaturedBlog></FeaturedBlog>,
       },
       {
         path: "/profile",

@@ -27,9 +27,6 @@ function Nav() {
       <li>
         <NavLink to="/all">All Blogs</NavLink>
       </li>
-      <li>
-        <NavLink to="/featured">Featured Blogs</NavLink>
-      </li>
       {user ? (
         <>
           <li>
