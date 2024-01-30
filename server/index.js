@@ -129,8 +129,7 @@ async function run() {
           title: updatedBlog.title,
           photoUrl: updatedBlog.photoUrl,
           category: updatedBlog.category,
-          shortDescription: updatedBlog.shortDescription,
-          longDescription: updatedBlog.longDescription,
+          content: updatedBlog.content,
         },
       };
       const result = await blogsCollection.updateOne(query, blog, options);
