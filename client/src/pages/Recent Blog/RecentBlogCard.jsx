@@ -2,7 +2,8 @@
 import "react-photo-view/dist/react-photo-view.css";
 import { Link } from "react-router-dom";
 
-import { format } from "date-fns";
+import { format, parseISO } from 'date-fns';
+
 
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -14,14 +15,15 @@ const RecentBlogCard = ({ blog }) => {
     _id,
     title,
     photoUrl,
-
     category,
     authorName,
     authorImg,
     published,
   } = blog;
 
-  const publishDate = format(published, "MMMM d, yyyy");
+  const isValidDate = published && !isNaN(new Date(published));
+
+  const publishDate = isValidDate ? format(parseISO(published), "MMMM dd, yyyy") : null;
 
 
 

@@ -22,6 +22,7 @@ const AllBlog = () => {
       (selectedCategory === "" || blog.category === selectedCategory)
   );
 
+
   return (
     <div className="min-h-screen mx-auto mb-10 px-4 xl:px-0">
       <Helmet>

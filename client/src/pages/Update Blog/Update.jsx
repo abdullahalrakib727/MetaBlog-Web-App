@@ -12,7 +12,7 @@ const Update = () => {
   const params = useParams();
   const [updatedContent, setUpdatedContent] = useState();
 
-  const { data: item = [] } = useQuery({
+  const { data: item = [], refetch } = useQuery({
     queryKey: ["item"],
     queryFn: async () => {
       const res = await axios.get(
@@ -24,8 +24,6 @@ const Update = () => {
       return res.data;
     },
   });
-
-  const { _id, title, photoUrl, category, content:body } = item;
 
   const navigate = useNavigate();
 
@@ -51,7 +49,7 @@ const Update = () => {
       if (result.isConfirmed) {
         axios
           .patch(
-            `https://blog-website-server-theta.vercel.app/all/${_id}`,
+            `https://blog-website-server-theta.vercel.app/all/${item?._id}`,
             updatedBlog,
             {
               withCredentials: true,
@@ -60,8 +58,9 @@ const Update = () => {
           .then((res) => {
             // console.log(res.data);
             if (res.data.modifiedCount > 0) {
-             toast.success('Blog has been updated!');
-             navigate(`/all/${_id}`)
+              refetch();
+              toast.success("Blog has been updated!");
+              navigate(`/all/${item?._id}`);
             }
           });
       } else if (result.isDenied) {
@@ -76,7 +75,9 @@ const Update = () => {
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
         <form className="card-body" onSubmit={handleUpdate}>
-        <h1 className="text-center dark:text-white text-2xl font-semibold">Update : {title}</h1>
+          <h1 className="text-center dark:text-white text-2xl font-semibold">
+            Update : {item?.title}
+          </h1>
           <div className="form-control">
             <label className="label">
               <span className="label-text dark:text-white">Title</span>
@@ -85,7 +86,7 @@ const Update = () => {
               type="text"
               name="title"
               placeholder="Blog's title"
-              defaultValue={title}
+              defaultValue={item?.title}
               className="input border-2 border-[#181A2A] dark:border-white"
               // required
             />
@@ -95,7 +96,7 @@ const Update = () => {
               <span className="label-text dark:text-white">Image URL</span>
             </label>
             <input
-              defaultValue={photoUrl}
+              defaultValue={item?.photoUrl}
               type="text"
               name="photo"
               placeholder="Thumbnail link"
@@ -106,10 +107,12 @@ const Update = () => {
           {/* select will be used */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text dark:text-white">Choose a Category</span>
+              <span className="label-text dark:text-white">
+                Choose a Category
+              </span>
             </label>
             <select
-              defaultValue={category}
+              defaultValue={item?.category}
               name="category"
               className="select border-2 border-[#181A2A] dark:border-white w-full"
             >
@@ -124,7 +127,7 @@ const Update = () => {
               <span className="label-text dark:text-white">Body</span>
             </label>
             <JoditEditor
-              value={body}
+              value={item?.content}
               dark={true}
               onChange={(newContent) => setUpdatedContent(newContent)}
             />
