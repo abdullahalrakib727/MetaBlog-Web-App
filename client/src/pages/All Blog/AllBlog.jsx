@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
 import Skeleton from "react-loading-skeleton";
 import useBlogData from "../../hooks/useBlogData";
 
 import RecentBlogCard from "../Recent Blog/RecentBlogCard";
 import { TfiSearch } from "react-icons/tfi";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 const AllBlog = () => {
   const [blogs, isLoaded] = useBlogData();
   const [query, setQuery] = useState("");
@@ -57,7 +58,7 @@ const AllBlog = () => {
       </div>
       <ChakraProvider>
         {isLoaded ? (
-          <Skeleton height="600px"></Skeleton>
+         <CardSkeleton/>
         ) : (
           <div className="flex justify-center">
             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">

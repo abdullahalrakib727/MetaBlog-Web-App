@@ -2,6 +2,8 @@ import { Skeleton } from "@chakra-ui/skeleton";
 import useBlogData from "../../hooks/useBlogData";
 // import { ChakraProvider } from "@chakra-ui/react";
 import RecentBlogCard from "./RecentBlogCard";
+import { ChakraProvider } from "@chakra-ui/react";
+import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
 
 
 const RecentBlog = () => {
@@ -10,9 +12,9 @@ const RecentBlog = () => {
 
 
   return (
-    <div>
+    <ChakraProvider>
       {isLoaded ? (
-        <Skeleton height="300px"></Skeleton>
+        <CardSkeleton/>
       ) : (
         <>
           <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">Latest Post</h3>
@@ -29,7 +31,7 @@ const RecentBlog = () => {
           </div>
         </>
       )}
-    </div>
+    </ChakraProvider>
   );
 };
 
