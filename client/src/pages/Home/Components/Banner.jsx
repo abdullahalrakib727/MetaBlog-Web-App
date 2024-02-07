@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
 import useBlogData from "../../../api/useBlogData";
+import { format, parseISO } from "date-fns";
 
 const Banner = () => {
-  const [blogs] = useBlogData();
-
-
-  
+  const { blogs } = useBlogData();
 
   return (
     <Link to={`/all/${blogs[1]?._id}`}>
@@ -34,7 +32,9 @@ const Banner = () => {
                 {blogs[1]?.authorName}
               </p>
               <p className="ml-2 font-normal text-base text-[#97989F]">
-                {blogs[1]?.publishDate}
+                {blogs[1]?.published && !isNaN(new Date(blogs[1].published))
+                  ? format(parseISO(blogs[1].published), "MMMM dd, yyyy")
+                  : null}
               </p>
             </div>
           </div>

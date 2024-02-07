@@ -46,7 +46,6 @@ const AuthProvider = ({ children }) => {
   //  current user
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       if (currentUser === null) {
         setLoading(false);
       }
@@ -56,14 +55,12 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       if (currentUser) {
         // post use to backend
-        axios
-          .post("https://blog-website-server-theta.vercel.app/jwt", user)
-          .then(() => {
-            // console.log(res.data)
-          });
+        axios.post("http://localhost:5000/jwt", user).then(() => {
+          // console.log(res.data)
+        });
       } else {
         axios
-          .post("https://blog-website-server-theta.vercel.app/logout", user, {
+          .post("http://localhost:5000/logout", user, {
             withCredentials: true,
           })
           .then((res) => {

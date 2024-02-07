@@ -9,18 +9,12 @@ const useBlogData = () => {
   } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await axios.get(
-        "https://blog-website-server-theta.vercel.app/blogs"
-      );
-      return res.data;
+      const res = await axios.get("http://localhost:5000/blogs");
+      return res.data.data;
     },
   });
 
-  const recentBlogs = blogs.sort(
-    (a, b) => new Date(b.published) - new Date(a.published)
-  );
-
-  return [blogs, isLoaded, recentBlogs, refetch];
+  return { blogs, isLoaded, refetch };
 };
 
 export default useBlogData;

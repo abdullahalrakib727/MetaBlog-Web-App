@@ -43,26 +43,26 @@ const client = new MongoClient(uri, {
 
 // verify token
 
-const verifyToken = async (req, res, next) => {
-  const token = req?.cookies?.token;
-  // console.log('token inside verify token',token);
+// const verifyToken = async (req, res, next) => {
+//   const token = req?.cookies?.token;
+//   // console.log('token inside verify token',token);
 
-  if (!token) {
-    res.status(401).send({ message: "unauthorized" });
-  }
-  jwt.verify(token, process.env.ACCESS_TOKEN, (error, decoded) => {
-    // error
-    if (error) {
-      console.log(error);
-      return res.status(401).send({ message: "unauthorized" });
-    }
+//   if (!token) {
+//     res.status(401).send({ message: "unauthorized" });
+//   }
+//   jwt.verify(token, process.env.ACCESS_TOKEN, (error, decoded) => {
+//     // error
+//     if (error) {
+//       console.log(error);
+//       return res.status(401).send({ message: "unauthorized" });
+//     }
 
-    console.log(decoded);
-    // decoded
-    req.user = decoded;
-    next();
-  });
-};
+//     console.log(decoded);
+//     // decoded
+//     req.user = decoded;
+//     next();
+//   });
+// };
 
 async function run() {
   try {
@@ -97,25 +97,31 @@ async function run() {
       res.clearCookie("token", { maxAge: 0 }).send({ message: true });
     });
 
-    //  blogs related api
+    //*  blogs related api
 
+    // ? search api
     app.get("/blogs/search", async (req, res) => {
-
       const regexPattern = new RegExp(req.query.include, "i");
       try {
         const blogs = await blogsCollection
-          .find({ title: regexPattern }).project({ title: 1})
+          .find({ title: regexPattern })
+          .project({ title: 1 })
           .toArray();
-        return res.status(200).send({ total: blogs.length, data: blogs });
+        return res
+          .status(200)
+          .send({ success: true, total: blogs.length, data: blogs });
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }
     });
 
+    // ?recent blog api
+
     app.get("/blogs/recent", async (req, res) => {
       try {
         const blogs = await blogsCollection
           .find()
+          .project({ authorEmail: 0 })
           .sort({ $natural: -1 })
           .limit(9)
           .toArray();
@@ -125,57 +131,93 @@ async function run() {
       }
     });
 
+    // ? all blogs api
+
     app.get("/blogs", async (req, res) => {
       try {
         let query = {};
 
-      if (req.query?.email) {
-        query = { authorEmail: req.query.email };
-      }
+        if (req.query?.email) {
+          query = { authorEmail: req.query.email };
+        }
 
-      if(req.query?.category){
-        query = { category: req.query.category };
-      }
+        if (req.query?.category) {
+          query = { category: req.query.category };
+        }
 
-      console.log(query);
+        console.log(query);
 
-      const blogs = await blogsCollection.find(query).toArray();
-      return res.status(200).send({total:blogs.length, data:blogs});
+        const blogs = await blogsCollection
+          .find(query)
+          .project({ authorEmail: 0 })
+          .sort({ $natural: -1 })
+          .toArray();
+        return res
+          .status(200)
+          .send({ success: true, total: blogs.length, data: blogs });
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }
     });
 
-    app.post("/blogs", async (req, res) => {
-      const blog = req.body;
-      const result = await blogsCollection.insertOne(blog);
-      res.send(result);
-    });
+    // ? create blog api
 
+    app.post("/blogs", async (req, res) => {
+      try {
+        const blog = req.body;
+        const result = await blogsCollection.insertOne(blog);
+        return res.status(201).send(result);
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
 
     app.get("/blogs/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
+      try {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
 
-      const result = await blogsCollection.findOne(query);
-      res.send(result);
+        const result = await blogsCollection.findOne(query);
+        return res.status(200).send({ success: true, data: result });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
     });
 
+    // ? update blog api
+
     app.patch("/blogs/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const options = { upsert: true };
-      const updatedBlog = req.body;
-      const blog = {
-        $set: {
-          title: updatedBlog.title,
-          photoUrl: updatedBlog.photoUrl,
-          category: updatedBlog.category,
-          content: updatedBlog.content,
-        },
-      };
-      const result = await blogsCollection.updateOne(query, blog, options);
-      res.send(result);
+      try {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const options = { upsert: true };
+        const updatedBlog = req.body;
+        const blog = {
+          $set: {
+            title: updatedBlog.title,
+            photoUrl: updatedBlog.photoUrl,
+            category: updatedBlog.category,
+            content: updatedBlog.content,
+          },
+        };
+        const result = await blogsCollection.updateOne(query, blog, options);
+        return res.status(200).send({ success: true, data: result });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+    // ? delete blog api
+
+    app.delete("/blogs/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await blogsCollection.deleteOne(query);
+        return res.status(200).send(result);
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
     });
 
     //  comments related api

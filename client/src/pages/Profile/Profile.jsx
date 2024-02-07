@@ -17,8 +17,8 @@ const Profile = () => {
   const { data = [], isLoading } = useQuery({
     queryKey: ["blogByUser", user?.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/blogs?email=${user?.email}`);
-      return res.data;
+      const res = await axiosPublic.get(`/blogs?email=${user.email}`);
+      return res.data.data;
     },
   });
 
@@ -86,7 +86,7 @@ const Profile = () => {
                 ) : (
                   <>
                     <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
-                      `${"You haven't created any blogs yet"}`
+                      {"You haven't created any blogs yet"}
                     </h3>
                   </>
                 )}

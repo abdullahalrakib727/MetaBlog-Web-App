@@ -5,7 +5,7 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
-import {  useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 const Update = () => {
@@ -15,24 +15,18 @@ const Update = () => {
   const { data: item = [], refetch } = useQuery({
     queryKey: ["item"],
     queryFn: async () => {
-      const res = await axios.get(
-        `https://blog-website-server-theta.vercel.app/blogs/${params.id}`,
-        {
-          withCredentials: true,
-        }
-      );
-      return res.data;
+      const res = await axios.get(`http://localhost:5000/blogs/${params.id}`, {
+        withCredentials: true,
+      });
+      return res.data.data;
     },
   });
-
-  
 
   const navigate = useNavigate();
 
   // ToDo will add react hook form here later
 
   const handleUpdate = (e) => {
-    
     e.preventDefault();
     const title = e.target.title.value;
     const photoUrl = e.target.photo.value;
@@ -54,19 +48,17 @@ const Update = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .patch(
-            `https://blog-website-server-theta.vercel.app/blogs/${item?._id}`,
-            updatedBlog,
-            {
-              withCredentials: true,
-            }
-          )
+          .patch(`http://localhost:5000/blogs/${item?._id}`, updatedBlog, {
+            withCredentials: true,
+          })
           .then((res) => {
             // console.log(res.data);
-            if (res.data.modifiedCount > 0) {
-              refetch();
+            if (res.data.data.modifiedCount > 0) {
               toast.success("Blog has been updated!");
-              navigate(`/all/${item?._id}`);
+              refetch();
+              setTimeout(() => {
+                navigate(`/all/${item?._id}`);
+              }, 3000);
             }
           });
       } else if (result.isDenied) {
@@ -74,6 +66,7 @@ const Update = () => {
       }
     });
   };
+
   return (
     <div className="card w-full shadow-md min-h-screen my-10">
       <Helmet>

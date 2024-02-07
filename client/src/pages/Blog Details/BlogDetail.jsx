@@ -15,6 +15,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
 import { format, parseISO } from "date-fns";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -24,26 +25,21 @@ const BlogDetail = () => {
   // const axiosPublic = useAxiosSecure();
   const axiosSecure = useAxiosSecure();
 
+  const axiosPublic = useAxiosPublic();
+
   const params = useParams();
 
   const {
     data = [],
-    refetch:reload,
+    refetch: reload,
     isLoading,
-
   } = useQuery({
     queryKey: ["data"],
     queryFn: async () => {
-      if (!params.id) {
-        return null; // or handle it in a way that suits your application
-      }
-
-      const res = await axiosSecure.get(`/all/${params.id}`);
-      return res.data;
+      const res = await axiosPublic.get(`/blogs/${params.id}`);
+      return res.data.data;
     },
   });
-
-  
 
   useEffect(() => {
     reload();
@@ -88,16 +84,16 @@ const BlogDetail = () => {
     : null;
 
   //  show comment on site
-  const { data: comments = [], refetch } = useQuery({
-    queryKey: ["comments"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `https://blog-website-server-theta.vercel.app/comments?blog_id=${_id}`,
-        { withCredentials: true }
-      );
-      return res.data;
-    },
-  });
+  // const { data: comments = [], refetch } = useQuery({
+  //   queryKey: ["comments"],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(
+  //       `http://localhost:5000/comments?blog_id=${_id}`,
+  //       { withCredentials: true }
+  //     );
+  //     return res.data.data;
+  //   },
+  // });
 
   //  add a comment
 
@@ -123,19 +119,22 @@ const BlogDetail = () => {
       const res = await axiosSecure.post("/comments", commentData);
       if (res.data.insertedId) {
         form.reset();
-        refetch();
+        // refetch();
       }
     }
   };
+
+  let comments = ["abc"];
 
   const filteredComments = comments
     .filter((comment) => comment.blog_id == _id)
     .sort((a, b) => new Date(b.published) - new Date(a.published));
 
-
-    if(isLoading){
-      return   <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>;
-    }
+  if (isLoading) {
+    return (
+      <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>
+    );
+  }
 
   return (
     <Container>

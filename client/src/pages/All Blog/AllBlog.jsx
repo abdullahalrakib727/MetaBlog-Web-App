@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ChakraProvider } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
-
-
 
 import RecentBlogCard from "../Recent Blog/RecentBlogCard";
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
@@ -20,24 +18,36 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
-import useBlogData from "../../api/useBlogData";
+
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const AllBlog = () => {
-
-  const [blogs, isLoaded] = useBlogData();
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const recentBlogs = blogs.sort(
-    (a, b) => new Date(a.published) - new Date(b.published)
-  );
+  const axiosPublic = useAxiosPublic();
 
-  const filteredBlogs = recentBlogs.filter(
-    (blog) => selectedCategory === "" || blog.category === selectedCategory
-  );
+  const {
+    data: allBlogs = [],
+    refetch,
+    isLoading: isLoaded,
+  } = useQuery({
+    queryKey: ["all-blogs"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/blogs?category=${selectedCategory}`);
+      return res.data.data;
+    },
+  });
 
+  useEffect(() => {
+    refetch();
+  }, [selectedCategory, refetch]);
 
+  const handleChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
 
-  const { data, isLoading } = useRecentBlogs();
+  const { data } = useRecentBlogs();
 
   // ? can show featured blogs instead of recent blogs here on slider later
 
@@ -47,7 +57,7 @@ const AllBlog = () => {
         <Helmet>
           <title>All Blogs | MetaBlog</title>
         </Helmet>
-{/* slider section of recent blogs //! will add featured blogs here */}
+        {/* slider section of recent blogs //! will add featured blogs here */}
         <section>
           <Swiper
             autoplay={{
@@ -58,7 +68,7 @@ const AllBlog = () => {
             className="mySwiper"
           >
             {data.map((blog) => (
-              <SwiperSlide key={blog._id}  style={{ borderRadius: '12px' }}>
+              <SwiperSlide key={blog._id} style={{ borderRadius: "12px" }}>
                 <Link to={`/blogs/${blog._id}`}>
                   <section className="max-w-[1216px] overflow-hidden rounded-xl">
                     <div
@@ -104,8 +114,7 @@ const AllBlog = () => {
 
         <div className="justify-center md:justify-between items-center  my-10 text-center flex flex-col gap-5 md:flex-row">
           <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            onChange={(e) => handleChange(e)}
             className=" border px-3 py-1 bg-[#F4F4F5] dark:text-[#A1A1AA] dark:bg-[#242535] dark:border-none rounded-md max-w-xs"
           >
             <option value="">All Categories</option>
@@ -122,7 +131,7 @@ const AllBlog = () => {
           ) : (
             <div className="flex justify-center">
               <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-                {filteredBlogs.map((blog) => (
+                {allBlogs.map((blog) => (
                   <RecentBlogCard
                     key={blog._id}
                     isLoaded={isLoaded}
