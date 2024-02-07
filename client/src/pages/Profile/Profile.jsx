@@ -5,18 +5,19 @@ import { ChakraProvider } from "@chakra-ui/react";
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 import RecentBlogCard from "../Recent Blog/RecentBlogCard";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+
 import PdSkeleton from "../../components/Skeletons/ProfileDetailsSkeleton/PdSkeleton";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
 
+  const axiosPublic = useAxiosPublic();
+
   const { data = [], isLoading } = useQuery({
     queryKey: ["blogByUser", user?.email],
     queryFn: async () => {
-      const res = await axios.get(
-        `https://blog-website-server-theta.vercel.app/blogs?email=${user?.email}`
-      );
+      const res = await axiosPublic.get(`/blogs?email=${user?.email}`);
       return res.data;
     },
   });
@@ -42,7 +43,9 @@ const Profile = () => {
                   <h4 className="font-medium text-xl text-[#181A2A] dark:text-white">
                     {user?.displayName}
                   </h4>
-                  <p className="text-[#696A75] font-normal text-sm dark:text-[#BABABF]">Role</p>
+                  <p className="text-[#696A75] font-normal text-sm dark:text-[#BABABF]">
+                    Role
+                  </p>
                 </div>
               </div>
               <p className="text-center text-[#3B3C4A] text-lg dark:text-[#BABABF]">
