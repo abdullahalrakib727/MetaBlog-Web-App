@@ -69,7 +69,7 @@ const AllBlog = () => {
           >
             {data.map((blog) => (
               <SwiperSlide key={blog._id} style={{ borderRadius: "12px" }}>
-                <Link to={`/blogs/${blog._id}`}>
+                <Link to={`/all/${blog._id}`}>
                   <section className="max-w-[1216px] overflow-hidden rounded-xl">
                     <div
                       style={{
