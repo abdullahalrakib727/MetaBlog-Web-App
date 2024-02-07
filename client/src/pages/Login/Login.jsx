@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <div className="hero min-h-screen bg-base-200">
       <Helmet>
-        <title>Blog-Zone || Login</title>
+        <title>Login | MetaBlog</title>
       </Helmet>
       <div className="hero-content flex-col lg:flex-row">
         <div className="text-center lg:text-left">

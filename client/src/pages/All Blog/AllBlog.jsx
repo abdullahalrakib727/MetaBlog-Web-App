@@ -27,7 +27,7 @@ const AllBlog = () => {
   return (
     <div className="min-h-screen mx-auto mb-10 px-4 xl:px-0">
       <Helmet>
-        <title>MetaBlog | All Blogs</title>
+        <title>All Blogs | MetaBlog</title>
       </Helmet>
       <div className=" justify-center md:justify-between items-center  my-10 text-center flex flex-col gap-5 md:flex-row">
         <div className="dropdown dropdown-end relative">

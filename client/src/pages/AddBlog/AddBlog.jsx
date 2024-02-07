@@ -65,7 +65,7 @@ const AddBlog = () => {
   return (
     <div className="my-10">
       <Helmet>
-        <title>MetaBlog | Add Blog</title>
+        <title>Add Blog | MetaBlog</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
         <div className="card w-full shadow-md">
