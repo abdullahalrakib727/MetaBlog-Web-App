@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import { Box, ChakraProvider, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
+import {  ChakraProvider,} from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
-import Skeleton from "react-loading-skeleton";
+
 import useBlogData from "../../hooks/useBlogData";
 
 import RecentBlogCard from "../Recent Blog/RecentBlogCard";
 import { TfiSearch } from "react-icons/tfi";
-import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 const AllBlog = () => {
   const [blogs, isLoaded] = useBlogData();
   const [query, setQuery] = useState("");

@@ -119,7 +119,7 @@ const BlogDetail = () => {
       <div className=" mb-10">
         <div className=" mt-10 p-2 lg:p-10">
           <Helmet>
-            <title>MetaBlog | Details</title>
+            <title>Details | MetaBlog</title>
           </Helmet>
 
           <Typography>

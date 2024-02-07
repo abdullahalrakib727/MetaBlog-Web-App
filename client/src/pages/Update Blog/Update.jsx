@@ -5,7 +5,7 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
-import { useState } from "react";
+import {  useState } from "react";
 import toast from "react-hot-toast";
 
 const Update = () => {
@@ -24,6 +24,8 @@ const Update = () => {
       return res.data;
     },
   });
+
+  
 
   const navigate = useNavigate();
 
@@ -71,7 +73,7 @@ const Update = () => {
   return (
     <div className="card w-full shadow-md min-h-screen my-10">
       <Helmet>
-        <title>MetaBlog | Add Blog</title>
+        <title>Update | MetaBlog</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
         <form className="card-body" onSubmit={handleUpdate}>
@@ -85,10 +87,9 @@ const Update = () => {
             <input
               type="text"
               name="title"
-              placeholder="Blog's title"
-              defaultValue={item?.title}
+              placeholder={item?.title}
               className="input border-2 border-[#181A2A] dark:border-white"
-              // required
+              required
             />
           </div>
           <div className="form-control">
@@ -96,12 +97,11 @@ const Update = () => {
               <span className="label-text dark:text-white">Image URL</span>
             </label>
             <input
-              defaultValue={item?.photoUrl}
               type="text"
               name="photo"
-              placeholder="Thumbnail link"
+              placeholder={item?.photoUrl}
               className="input border-2 border-[#181A2A] dark:border-white"
-              // required
+              required
             />
           </div>
           {/* select will be used */}

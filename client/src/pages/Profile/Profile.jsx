@@ -1,41 +1,98 @@
-import { Button } from '@chakra-ui/react'
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Container from "../../components/Container/Container";
+import { ChakraProvider } from "@chakra-ui/react";
+import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
+import RecentBlogCard from "../Recent Blog/RecentBlogCard";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import PdSkeleton from "../../components/Skeletons/ProfileDetailsSkeleton/PdSkeleton";
 
 const Profile = () => {
-  const { user, sendVerificationEmail } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  const utcTimestamp = user?.metadata.creationTime;
-
-  
-
-  const handleVerification = ()=>{
-    sendVerificationEmail().then(result=>{
-      console.log(result)
-    })
-  }
-
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["blogByUser", user?.email],
+    queryFn: async () => {
+      const res = await axios.get(
+        `https://blog-website-server-theta.vercel.app/blogs?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
 
   return (
+    <Container>
+      <div className="mt-6  dark:text-white">
+        {/* profile details section */}
+        {isLoading ? (
+          <ChakraProvider>
+            <PdSkeleton />
+          </ChakraProvider>
+        ) : (
+          <section className="max-w-[1216px] max-h-[344px] bg-[#F6F6F7] p-12 rounded-xl mb-12">
+            <div className="flex flex-col justify-center items-center max-w-[648px] max-h-[284px] mx-auto">
+              <div className="flex items-center gap-4 mb-6">
+                <img
+                  className="max-w-[64px] max-h-[64px] object-contain rounded-full"
+                  src={user?.photoURL}
+                  alt=""
+                />
+                <div>
+                  <h4 className="font-medium text-xl text-[#181A2A]">
+                    {user?.displayName}
+                  </h4>
+                  <p className="text-[#696A75] font-normal text-sm">Role</p>
+                </div>
+              </div>
+              <p className="text-center text-[#3B3C4A] text-lg">
+                Meet {user?.displayName}, a passionate writer and blogger with a
+                love for technology and travel. {user?.displayName} holds a
+                degree in Computer Science and has spent years working in the
+                tech industry, gaining a deep understanding of the impact
+                technology has on our lives.
+              </p>
+            </div>
+          </section>
+        )}
+        {/* User's post section */}
 
-      <div className="flex gap-5 px-20 min-h-screen items-center dark:text-white">
-      <div>
-        <img className='max-w-[150px]' src={user?.photoURL} alt="" />
+        <section className="mb-24">
+          <ChakraProvider>
+            {isLoading ? (
+              <CardSkeleton />
+            ) : (
+              <>
+                {data.length > 0 ? (
+                  <>
+                    <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
+                      BLogs by you
+                    </h3>
+                    <div className="flex justify-center px-4 xl:px-0">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
+                        {data.map((blog) => (
+                          <RecentBlogCard
+                            key={blog._id}
+                            isLoaded={isLoading}
+                            blog={blog}
+                          ></RecentBlogCard>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
+                      `${"You haven't created any blogs yet"}`
+                    </h3>
+                  </>
+                )}
+              </>
+            )}
+          </ChakraProvider>
+        </section>
       </div>
-      <div className='space-y-2'>
-        <h3>Name: {user?.displayName}</h3>
-        <p>Email : {user?.email}</p>
-        <p>User verification : {user?.emailVerified ? <span className='text-green-500 font-bold'>verified</span> :  <span className='text-red-500 font-bold'>Not verified</span>}</p>
-        <p>
-          {" "}
-          Phone no : {user?.phoneNumber ? user?.phoneNumber : "Not provided"}
-        </p>
-        <p>Account created at : {utcTimestamp}</p>
-       {
-        !user?.emailVerified &&  <Button onClick={handleVerification} className='mt-10' >Send Email Verification</Button>
-       }
-      </div>
-    </div>
+    </Container>
   );
 };
 

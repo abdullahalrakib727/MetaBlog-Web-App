@@ -26,7 +26,6 @@ const RecentBlogCard = ({ blog }) => {
   const publishDate = isValidDate ? format(parseISO(published), "MMMM dd, yyyy") : null;
 
 
-
   return (
 
       <Link to={`/all/${_id}`} className="bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] p-4 rounded-xl max-w-[392px] flex flex-col">

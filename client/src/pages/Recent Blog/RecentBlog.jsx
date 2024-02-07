@@ -1,9 +1,10 @@
-import { Skeleton } from "@chakra-ui/skeleton";
+
+import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 import useBlogData from "../../hooks/useBlogData";
 // import { ChakraProvider } from "@chakra-ui/react";
 import RecentBlogCard from "./RecentBlogCard";
 import { ChakraProvider } from "@chakra-ui/react";
-import CardSkeleton from "../../components/CardSkeleton/CardSkeleton";
+
 
 
 const RecentBlog = () => {

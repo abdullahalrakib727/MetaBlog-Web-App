@@ -82,7 +82,7 @@ const AddBlog = () => {
                 name="title"
                 placeholder="Blog's title"
                 className="input border-2 border-[#181A2A] dark:border-white"
-                // required
+                required
               />
             </div>
             <div className="form-control">
@@ -94,7 +94,7 @@ const AddBlog = () => {
                 name="photo"
                 placeholder="Thumbnail link"
                 className="input border-2 border-[#181A2A] dark:border-white"
-                // required
+                required
               />
             </div>
             {/* select will be used */}
@@ -105,6 +105,7 @@ const AddBlog = () => {
               <select
                 name="category"
                 className="select border-2 border-[#181A2A] dark:border-white w-full"
+                required
               >
                 <option>Food</option>
                 <option>Health</option>
