@@ -6,8 +6,8 @@ const Banner = () => {
 
   // const {authorImg, authorName, publishDate} = blogs[1];
   return (
-   <Link to={`/all/${blogs[1]?._id}`}>
-
+   <Link to={`/all/${blogs[1]?._id}`}> 
+{/* // TODO will add featured blog here later instead of recentBlogs[4] */}
    <div className="relative">
       <img
         className="xl:max-w-[1216px] xl:max-h-[600px] xl:min-w-[1216px] lg:min-h-[600px] lg:rounded-xl"

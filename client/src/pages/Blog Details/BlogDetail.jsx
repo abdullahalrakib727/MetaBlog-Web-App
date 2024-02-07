@@ -14,7 +14,7 @@ import { Typography } from "antd";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -65,9 +65,9 @@ const BlogDetail = () => {
     applyDarkMode("span", "dark:text-white");
   }, [content]);
 
-  const formattedTime = published
-    ? format(new Date(published), "yyyy-MM-dd HH:mm")
-    : null;
+  const isValidDate = published && !isNaN(new Date(published));
+
+  const publishDate = isValidDate ? format(parseISO(published), "MMMM dd, yyyy") : null;
 
   //  show comment on site
   const { data: comments = [], refetch } = useQuery({
@@ -142,8 +142,8 @@ const BlogDetail = () => {
                   </Text>
                 </div>
               </div>
-              {formattedTime ? (
-                <div className="dark:text-[#696A75]">{formattedTime}</div>
+              {publishDate ? (
+                <div className="dark:text-[#696A75]">{publishDate}</div>
               ) : (
                 <Skeleton></Skeleton>
               )}
