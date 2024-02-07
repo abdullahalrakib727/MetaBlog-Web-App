@@ -97,24 +97,43 @@ async function run() {
       res.clearCookie("token", { maxAge: 0 }).send({ message: true });
     });
 
+    //  blogs related api
+
+    app.get("/blogs/search", async (req, res) => {
+
+      const regexPattern = new RegExp(req.query.include, "i");
+      try {
+        const blogs = await blogsCollection
+          .find({ title: regexPattern }).project({ title: 1})
+          .toArray();
+        return res.status(200).send({ total: blogs.length, data: blogs });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+    app.get("/blogs/recent", async (req, res) => {
+      try {
+        const blogs = await blogsCollection
+          .find()
+          .sort({ $natural: -1 })
+          .limit(9)
+          .toArray();
+        return res.status(200).send({ total: blogs.length, data: blogs });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
     app.get("/blogs", async (req, res) => {
       let query = {};
-      console.log(req.query);
+
       if (req.query?.email) {
         query = { authorEmail: req.query.email };
         const blogs = await blogsCollection.find(query).toArray();
         return res.send(blogs);
-      } else if (req.query?.recent) {
-        const blogs = await blogsCollection
-          .find()
-          .sort({$natural: -1})
-          .limit(9)
-          .toArray();
-        return res.send({ total: blogs.length, data: blogs });
       }
     });
-
-    //  blogs related api
 
     app.post("/all", async (req, res) => {
       const blog = req.body;
