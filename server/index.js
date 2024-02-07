@@ -97,14 +97,21 @@ async function run() {
       res.clearCookie("token", { maxAge: 0 }).send({ message: true });
     });
 
-
     app.get("/blogs", async (req, res) => {
       let query = {};
+      console.log(req.query);
       if (req.query?.email) {
         query = { authorEmail: req.query.email };
+        const blogs = await blogsCollection.find(query).toArray();
+        return res.send(blogs);
+      } else if (req.query?.recent) {
+        const blogs = await blogsCollection
+          .find()
+          .sort({ _id: -1 })
+          .limit(9)
+          .toArray();
+        return res.send({ total: blogs.length, data: blogs });
       }
-      const blogs = await blogsCollection.find(query).toArray();
-      res.send(blogs);
     });
 
     //  blogs related api
@@ -209,8 +216,6 @@ async function run() {
       const result = await wishlistCollection.deleteOne(query);
       res.send(result);
     });
-
-    
 
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
