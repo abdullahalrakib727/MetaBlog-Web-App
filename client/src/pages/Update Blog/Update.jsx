@@ -15,9 +15,12 @@ const Update = () => {
   const { data: item = [], refetch } = useQuery({
     queryKey: ["item"],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/blogs/${params.id}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `https://blog-website-server-theta.vercel.app/blogs/${params.id}`,
+        {
+          withCredentials: true,
+        }
+      );
       return res.data.data;
     },
   });
@@ -48,9 +51,13 @@ const Update = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .patch(`http://localhost:5000/blogs/${item?._id}`, updatedBlog, {
-            withCredentials: true,
-          })
+          .patch(
+            `https://blog-website-server-theta.vercel.app/blogs/${item?._id}`,
+            updatedBlog,
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
             // console.log(res.data);
             if (res.data.data.modifiedCount > 0) {
