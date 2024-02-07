@@ -97,6 +97,16 @@ async function run() {
       res.clearCookie("token", { maxAge: 0 }).send({ message: true });
     });
 
+
+    app.get("/blogs", async (req, res) => {
+      let query = {};
+      if (req.query?.email) {
+        query = { authorEmail: req.query.email };
+      }
+      const blogs = await blogsCollection.find(query).toArray();
+      res.send(blogs);
+    });
+
     //  blogs related api
 
     app.post("/all", async (req, res) => {
@@ -199,6 +209,8 @@ async function run() {
       const result = await wishlistCollection.deleteOne(query);
       res.send(result);
     });
+
+    
 
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
