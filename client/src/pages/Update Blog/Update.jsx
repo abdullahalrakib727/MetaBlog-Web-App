@@ -29,6 +29,8 @@ const Update = () => {
 
   const navigate = useNavigate();
 
+  // ToDo will add react hook form here later
+
   const handleUpdate = (e) => {
     e.preventDefault();
     const title = e.target.title.value;

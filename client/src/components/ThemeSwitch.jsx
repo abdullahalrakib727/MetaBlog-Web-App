@@ -21,7 +21,7 @@ const ThemeSwitch = () => {
 
   return (
     <input
-      onClick={handleSwitch}
+      onChange={handleSwitch}
       type="checkbox"
       className="toggle bg-[#E8E8EA] border-[#E8E8EA]"
       checked={theme === "dark"}

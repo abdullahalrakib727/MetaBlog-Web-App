@@ -22,7 +22,7 @@ const AllBlog = () => {
     (blog) => selectedCategory === "" || blog.category === selectedCategory
   );
 
-// TODO will add featured blog here later instead of recentBlogs[4]
+  // TODO will add featured blog here later instead of recentBlogs[4]
 
   const image = recentBlogs[4]?.photoUrl;
   const title = recentBlogs[4]?.title;
@@ -34,7 +34,9 @@ const AllBlog = () => {
 
   const isValidDate = published && !isNaN(new Date(published));
 
-  const publishDate = isValidDate ? format(parseISO(published), "MMMM dd, yyyy") : null;
+  const publishDate = isValidDate
+    ? format(parseISO(published), "MMMM dd, yyyy")
+    : null;
 
   return (
     <Container>
@@ -42,37 +44,35 @@ const AllBlog = () => {
         <Helmet>
           <title>All Blogs | MetaBlog</title>
         </Helmet>
-     
 
         <Link to={`/all/${_id}`}>
-        <section
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundRepeat: "no-repeat",
-            maxWidth: "1216px",
-            backgroundSize: "cover",
-          }}
-          className=" h-[450px] my-12 rounded-xl hidden md:flex"
-        >
-          {/* details */}
-          <div className="lg:p-10 self-end">
-            <p className="text-white bg-[#4B6BFB] inline-block py-1 px-[10px] rounded-md text-sm font-medium mb-4">
-              {category}
-            </p>
-            <h2 className="text-white text-3xl font-semibold max-w-[720px]">
-              {title}
-            </h2>
-            <div className="text-white flex items-center gap-5 mt-6">
-              <img
-                src={authorImage}
-                alt="author-image"
-                className="max-w-[36px] max-h-[36px] rounded-full"
-              />
-              <h6 className="font-medium text-base">{author}</h6>
-              <p className="text-base font-normal">{publishDate}</p>
+          <section className="max-w-[1216px] overflow-hidden">
+            <div
+              style={{
+                backgroundImage: `url(${image})`,
+              }}
+              className=" h-[450px] my-12 rounded-xl flex bg-cover bg-no-repeat max-w-[1216px]"
+            >
+              {/* details */}
+              <div className="p-10 self-end">
+                <p className="text-white bg-[#4B6BFB] inline-block py-1 px-[10px] rounded-md text-sm font-medium mb-4">
+                  {category}
+                </p>
+                <h2 className="text-white text-3xl font-semibold max-w-[720px]">
+                  {title}
+                </h2>
+                <div className="text-white flex items-center gap-5 mt-6">
+                  <img
+                    src={authorImage}
+                    alt="author-image"
+                    className="max-w-[36px] max-h-[36px] rounded-full"
+                  />
+                  <h6 className="font-medium text-base">{author}</h6>
+                  <p className="text-base font-normal">{publishDate}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
         </Link>
 
         <div className="justify-center md:justify-between items-center  my-10 text-center flex flex-col gap-5 md:flex-row">

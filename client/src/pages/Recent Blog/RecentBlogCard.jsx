@@ -42,14 +42,14 @@ const RecentBlogCard = ({ blog }) => {
             </div>
           </PhotoView>
         </PhotoProvider>
-        <Link className="mt-6">
+        <div className="mt-6">
           <span
             style={{ backgroundColor: "rgba(75, 107, 251, 0.05)" }}
             className="px-[10px] py-1 text-[#4B6BFB] text-sm font-medium"
           >
             {category}
           </span>
-        </Link>
+        </div>
         <h2 className="mt-4 dark:text-white text-2xl font-semibold mb-5">{title}</h2>
 
 

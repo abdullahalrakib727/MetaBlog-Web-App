@@ -21,6 +21,8 @@ const AddBlog = () => {
 
   const navigate = useNavigate();
 
+// ToDo will add react hook form here later
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
