@@ -107,7 +107,7 @@ async function run() {
       } else if (req.query?.recent) {
         const blogs = await blogsCollection
           .find()
-          .sort({ _id: -1 })
+          .sort({$natural: -1})
           .limit(9)
           .toArray();
         return res.send({ total: blogs.length, data: blogs });
