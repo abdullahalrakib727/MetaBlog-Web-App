@@ -126,28 +126,34 @@ async function run() {
     });
 
     app.get("/blogs", async (req, res) => {
-      let query = {};
+      try {
+        let query = {};
 
       if (req.query?.email) {
         query = { authorEmail: req.query.email };
-        const blogs = await blogsCollection.find(query).toArray();
-        return res.send(blogs);
+      }
+
+      if(req.query?.category){
+        query = { category: req.query.category };
+      }
+
+      console.log(query);
+
+      const blogs = await blogsCollection.find(query).toArray();
+      return res.status(200).send({total:blogs.length, data:blogs});
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
       }
     });
 
-    app.post("/all", async (req, res) => {
+    app.post("/blogs", async (req, res) => {
       const blog = req.body;
       const result = await blogsCollection.insertOne(blog);
       res.send(result);
     });
 
-    app.get("/all", async (req, res) => {
-      const cursor = blogsCollection.find();
-      const result = await cursor.toArray();
-      res.send(result);
-    });
 
-    app.get("/all/:id", async (req, res) => {
+    app.get("/blogs/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
 
@@ -155,7 +161,7 @@ async function run() {
       res.send(result);
     });
 
-    app.patch("/all/:id", async (req, res) => {
+    app.patch("/blogs/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const options = { upsert: true };

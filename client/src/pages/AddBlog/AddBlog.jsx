@@ -50,7 +50,7 @@ const AddBlog = () => {
         authorName,
         authorImg,
       };
-      const res = await axiosSecure.post("/all", data);
+      const res = await axiosSecure.post("/blogs", data);
 
       if (res.data.insertedId) {
         toast.success("Blog has been added!");

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
 
-import useBlogData from "../../hooks/useBlogData";
+
 
 import RecentBlogCard from "../Recent Blog/RecentBlogCard";
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
@@ -20,8 +20,10 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
+import useBlogData from "../../api/useBlogData";
 
 const AllBlog = () => {
+
   const [blogs, isLoaded] = useBlogData();
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -33,6 +35,8 @@ const AllBlog = () => {
     (blog) => selectedCategory === "" || blog.category === selectedCategory
   );
 
+
+
   const { data, isLoading } = useRecentBlogs();
 
   // ? can show featured blogs instead of recent blogs here on slider later
@@ -43,7 +47,7 @@ const AllBlog = () => {
         <Helmet>
           <title>All Blogs | MetaBlog</title>
         </Helmet>
-
+{/* slider section of recent blogs //! will add featured blogs here */}
         <section>
           <Swiper
             autoplay={{
@@ -54,9 +58,9 @@ const AllBlog = () => {
             className="mySwiper"
           >
             {data.map((blog) => (
-              <SwiperSlide key={blog._id}>
-                <Link to={`/all/${blog._id}`}>
-                  <section className="max-w-[1216px] overflow-hidden">
+              <SwiperSlide key={blog._id}  style={{ borderRadius: '12px' }}>
+                <Link to={`/blogs/${blog._id}`}>
+                  <section className="max-w-[1216px] overflow-hidden rounded-xl">
                     <div
                       style={{
                         backgroundImage: `url(${blog.photoUrl})`,

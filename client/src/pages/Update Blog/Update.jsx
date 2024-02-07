@@ -16,7 +16,7 @@ const Update = () => {
     queryKey: ["item"],
     queryFn: async () => {
       const res = await axios.get(
-        `https://blog-website-server-theta.vercel.app/all/${params.id}`,
+        `https://blog-website-server-theta.vercel.app/blogs/${params.id}`,
         {
           withCredentials: true,
         }
@@ -32,10 +32,12 @@ const Update = () => {
   // ToDo will add react hook form here later
 
   const handleUpdate = (e) => {
+    
     e.preventDefault();
     const title = e.target.title.value;
     const photoUrl = e.target.photo.value;
     const category = e.target.category.value;
+
     const updatedBlog = {
       title,
       photoUrl,
@@ -53,7 +55,7 @@ const Update = () => {
       if (result.isConfirmed) {
         axios
           .patch(
-            `https://blog-website-server-theta.vercel.app/all/${item?._id}`,
+            `https://blog-website-server-theta.vercel.app/blogs/${item?._id}`,
             updatedBlog,
             {
               withCredentials: true,
