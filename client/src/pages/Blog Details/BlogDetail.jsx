@@ -26,13 +26,29 @@ const BlogDetail = () => {
 
   const params = useParams();
 
-  const { data = [], isLoading } = useQuery({
+  const {
+    data = [],
+    refetch:reload,
+    isLoading,
+
+  } = useQuery({
     queryKey: ["data"],
     queryFn: async () => {
+      if (!params.id) {
+        return null; // or handle it in a way that suits your application
+      }
+
       const res = await axiosSecure.get(`/all/${params.id}`);
       return res.data;
     },
   });
+
+  
+
+  useEffect(() => {
+    reload();
+  }, [params.id, reload]);
+
   const {
     _id,
     title,
@@ -67,7 +83,9 @@ const BlogDetail = () => {
 
   const isValidDate = published && !isNaN(new Date(published));
 
-  const publishDate = isValidDate ? format(parseISO(published), "MMMM dd, yyyy") : null;
+  const publishDate = isValidDate
+    ? format(parseISO(published), "MMMM dd, yyyy")
+    : null;
 
   //  show comment on site
   const { data: comments = [], refetch } = useQuery({
@@ -113,6 +131,11 @@ const BlogDetail = () => {
   const filteredComments = comments
     .filter((comment) => comment.blog_id == _id)
     .sort((a, b) => new Date(b.published) - new Date(a.published));
+
+
+    if(isLoading){
+      return   <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>;
+    }
 
   return (
     <Container>

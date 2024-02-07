@@ -8,8 +8,19 @@ import useBlogData from "../../hooks/useBlogData";
 import RecentBlogCard from "../Recent Blog/RecentBlogCard";
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 import Container from "../../components/Container/Container";
+
+import useRecentBlogs from "../../api/useRecentBlogs";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/autoplay";
+
+// import required modules
+import { Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
+
 const AllBlog = () => {
   const [blogs, isLoaded] = useBlogData();
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -22,21 +33,9 @@ const AllBlog = () => {
     (blog) => selectedCategory === "" || blog.category === selectedCategory
   );
 
-  // TODO will add featured blog here later instead of recentBlogs[4]
+  const { data, isLoading } = useRecentBlogs();
 
-  const image = recentBlogs[4]?.photoUrl;
-  const title = recentBlogs[4]?.title;
-  const author = recentBlogs[4]?.authorName;
-  const published = recentBlogs[4]?.published;
-  const authorImage = recentBlogs[4]?.authorImg;
-  const category = recentBlogs[4]?.category;
-  const _id = recentBlogs[4]?._id;
-
-  const isValidDate = published && !isNaN(new Date(published));
-
-  const publishDate = isValidDate
-    ? format(parseISO(published), "MMMM dd, yyyy")
-    : null;
+  // ? can show featured blogs instead of recent blogs here on slider later
 
   return (
     <Container>
@@ -45,35 +44,59 @@ const AllBlog = () => {
           <title>All Blogs | MetaBlog</title>
         </Helmet>
 
-        <Link to={`/all/${_id}`}>
-          <section className="max-w-[1216px] overflow-hidden">
-            <div
-              style={{
-                backgroundImage: `url(${image})`,
-              }}
-              className=" h-[450px] my-12 rounded-xl flex bg-cover bg-no-repeat max-w-[1216px]"
-            >
-              {/* details */}
-              <div className="p-10 self-end">
-                <p className="text-white bg-[#4B6BFB] inline-block py-1 px-[10px] rounded-md text-sm font-medium mb-4">
-                  {category}
-                </p>
-                <h2 className="text-white text-3xl font-semibold max-w-[720px]">
-                  {title}
-                </h2>
-                <div className="text-white flex items-center gap-5 mt-6">
-                  <img
-                    src={authorImage}
-                    alt="author-image"
-                    className="max-w-[36px] max-h-[36px] rounded-full"
-                  />
-                  <h6 className="font-medium text-base">{author}</h6>
-                  <p className="text-base font-normal">{publishDate}</p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </Link>
+        <section>
+          <Swiper
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            modules={[Autoplay]}
+            className="mySwiper"
+          >
+            {data.map((blog) => (
+              <SwiperSlide key={blog._id}>
+                <Link to={`/all/${blog._id}`}>
+                  <section className="max-w-[1216px] overflow-hidden">
+                    <div
+                      style={{
+                        backgroundImage: `url(${blog.photoUrl})`,
+                      }}
+                      className=" h-[450px] my-12 rounded-xl flex bg-cover bg-no-repeat max-w-[1216px]"
+                    >
+                      {/* details */}
+                      <div className="p-10 self-end">
+                        <p className="text-white bg-[#4B6BFB] inline-block py-1 px-[10px] rounded-md text-sm font-medium mb-4">
+                          {blog.category}
+                        </p>
+                        <h2 className="text-white text-3xl font-semibold max-w-[720px]">
+                          {blog.title}
+                        </h2>
+                        <div className="text-white flex items-center gap-5 mt-6">
+                          <img
+                            src={blog.authorImg}
+                            alt="author-image"
+                            className="max-w-[36px] max-h-[36px] rounded-full"
+                          />
+                          <h6 className="font-medium text-base">
+                            {blog.authorName}
+                          </h6>
+                          <p className="text-base font-normal">
+                            {blog.published && !isNaN(new Date(blog.published))
+                              ? format(
+                                  parseISO(blog.published),
+                                  "MMMM dd, yyyy"
+                                )
+                              : null}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </section>
 
         <div className="justify-center md:justify-between items-center  my-10 text-center flex flex-col gap-5 md:flex-row">
           <select

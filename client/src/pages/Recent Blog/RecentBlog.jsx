@@ -1,22 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import useRecentBlogs from "../../api/useRecentBlogs";
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 
 import RecentBlogCard from "./RecentBlogCard";
 import { ChakraProvider } from "@chakra-ui/react";
 
-import useAxiosPublic from "../../hooks/useAxiosPublic";
-
 const RecentBlog = () => {
-  const axiosPublic = useAxiosPublic();
-
-  const { data = [], isLoading } = useQuery({
-    queryKey: ["recentBlogs"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/blogs?recent=true");
-      return res.data.data;
-    },
-  });
-
+  const { data, isLoading } = useRecentBlogs();
   return (
     <ChakraProvider>
       {isLoading ? (

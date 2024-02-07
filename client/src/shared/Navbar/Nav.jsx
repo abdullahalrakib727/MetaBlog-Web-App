@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
-import { useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
 
 import LightLogoSvg from "../../components/Svgs/LightLogoSvg";
@@ -10,9 +10,50 @@ import DarkLogoSvg from "../../components/Svgs/DarkLogoSvg";
 
 import logo from "../../assets/logos.png";
 import logo2 from "../../assets/lightlogo.png";
+import { debounce } from 'lodash';
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 function Nav() {
   const { user, logOutUser } = useContext(AuthContext);
+  const [value, setValue] = useState("");
+  const [blogs, setBlogs] = useState([]);
+
+  const axiosPublic = useAxiosPublic();
+
+  const handleSearch = useCallback(async () => {
+    if (value.trim() === "") {
+      clearSearchResults();
+      return;
+    }
+
+    const res = await axiosPublic.get(
+      `/blogs/search?include=${value}`
+    );
+    setBlogs(res.data.data);
+  },[value, axiosPublic]);
+
+
+  const debouncedHandleSearch = debounce(handleSearch, 300);
+
+  const clearSearchResults = () => {
+    setBlogs([]);
+  };
+
+  const handleInputChange = (e) => {
+    setValue(e.target.value);
+
+    if (e.target.value.trim() === "") {
+      clearSearchResults();
+    }
+    else {
+      debouncedHandleSearch(); // Use the debounced function
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [value, handleSearch]);
+
 
   const navLinks = (
     <>
@@ -102,13 +143,28 @@ function Nav() {
         </ul>
       </div>
       <div className="navbar-end">
-        <div className="dropdown dropdown-end relative mr-2">
+        <div className="dropdown dropdown-end  mr-2 relative">
           <input
             type="text"
+            onChange={(e) => handleInputChange(e)}
             placeholder="Search"
             className="border px-3 py-1 bg-[#F4F4F5] dark:text-[#A1A1AA] dark:bg-[#242535] dark:border-none rounded-md w-full max-w-xs"
           />
-          <TfiSearch className="absolute dark:text-[#52525B] bottom-2 right-2 cursor-pointer overflow-hidden" />
+          <TfiSearch
+            onClick={handleSearch}
+            className="absolute dark:text-[#52525B] bottom-2 right-2 cursor-pointer overflow-hidden"
+          />
+          {blogs.length > 0 && (
+            <div className="absolute mt-2 bg-[#F4F4F5] z-10 p-2 rounded-xl border space-y-1 overflow-x-auto max-h-40">
+              {blogs.map((blog) => (
+                <Link to={`all/${blog._id}`} className="border p-[2px] rounded-md inline-block" key={blog._id}>
+                  {blog.title.length > 40
+                    ? blog.title.slice(0, 40) + "..."
+                    : blog.title}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         <ThemeSwitch />
       </div>
