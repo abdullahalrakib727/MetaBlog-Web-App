@@ -21,6 +21,7 @@ import { format, parseISO } from "date-fns";
 
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import FsSkeleton from "../../components/Skeletons/FeaturedSliderSkeleton/FsSkeleton";
 
 const AllBlog = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -34,7 +35,7 @@ const AllBlog = () => {
   } = useQuery({
     queryKey: ["all-blogs"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/blogs?category=${selectedCategory}`);
+      const res = await axiosPublic.get(`/blogs${selectedCategory}`);
       return res.data.data;
     },
   });
@@ -44,10 +45,16 @@ const AllBlog = () => {
   }, [selectedCategory, refetch]);
 
   const handleChange = (e) => {
-    setSelectedCategory(e.target.value);
+
+    if(e.target.value === "") {
+      setSelectedCategory("");
+      return;
+    }
+    setSelectedCategory("?category=" + e.target.value);
   };
 
-  const { data } = useRecentBlogs();
+  const { data,isLoading  } = useRecentBlogs();
+
 
   // ? can show featured blogs instead of recent blogs here on slider later
 
@@ -59,6 +66,10 @@ const AllBlog = () => {
         </Helmet>
         {/* slider section of recent blogs //! will add featured blogs here */}
         <section>
+
+
+        {
+          isLoading ? <FsSkeleton/> :
           <Swiper
             autoplay={{
               delay: 4000,
@@ -70,7 +81,7 @@ const AllBlog = () => {
             {data.map((blog) => (
               <SwiperSlide key={blog._id} style={{ borderRadius: "12px" }}>
                 <Link to={`/all/${blog._id}`}>
-                  <section className="max-w-[1216px] overflow-hidden rounded-xl">
+                  <div className="max-w-[1216px] overflow-hidden rounded-xl">
                     <div
                       style={{
                         backgroundImage: `url(${blog.photoUrl})`,
@@ -105,11 +116,13 @@ const AllBlog = () => {
                         </div>
                       </div>
                     </div>
-                  </section>
+                  </div>
                 </Link>
               </SwiperSlide>
             ))}
           </Swiper>
+        }
+          
         </section>
 
         <div className="justify-center md:justify-between items-center  my-10 text-center flex flex-col gap-5 md:flex-row">

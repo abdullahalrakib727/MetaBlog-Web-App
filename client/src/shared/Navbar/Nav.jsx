@@ -10,7 +10,7 @@ import DarkLogoSvg from "../../components/Svgs/DarkLogoSvg";
 
 import logo from "../../assets/logos.png";
 import logo2 from "../../assets/lightlogo.png";
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 function Nav() {
@@ -26,12 +26,9 @@ function Nav() {
       return;
     }
 
-    const res = await axiosPublic.get(
-      `/blogs/search?include=${value}`
-    );
+    const res = await axiosPublic.get(`/blogs/search?include=${value}`);
     setBlogs(res.data.data);
-  },[value, axiosPublic]);
-
+  }, [value, axiosPublic]);
 
   const debouncedHandleSearch = debounce(handleSearch, 300);
 
@@ -44,8 +41,7 @@ function Nav() {
 
     if (e.target.value.trim() === "") {
       clearSearchResults();
-    }
-    else {
+    } else {
       debouncedHandleSearch(); // Use the debounced function
     }
   };
@@ -54,6 +50,10 @@ function Nav() {
     handleSearch();
   }, [value, handleSearch]);
 
+  const handleReset = () => {
+    setValue("");
+    clearSearchResults();
+  };
 
   const navLinks = (
     <>
@@ -155,9 +155,14 @@ function Nav() {
             className="absolute dark:text-[#52525B] bottom-2 right-2 cursor-pointer overflow-hidden"
           />
           {blogs.length > 0 && (
-            <div className="absolute mt-2 bg-[#F4F4F5] z-10 p-2 rounded-xl border space-y-1 overflow-x-auto max-h-40">
+            <div className="absolute mt-2 bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] z-10 p-2 rounded-xl space-y-1 overflow-x-auto max-h-40">
               {blogs.map((blog) => (
-                <Link to={`all/${blog._id}`} className="border p-[2px] rounded-md inline-block" key={blog._id}>
+                <Link
+                  to={`all/${blog._id}`}
+                  onClick={handleReset}
+                  className="bg-white border dark:bg-[#242535]  border-[#E8E8EA] dark:border-[#242535]  p-1 rounded-md inline-block"
+                  key={blog._id}
+                >
                   {blog.title.length > 40
                     ? blog.title.slice(0, 40) + "..."
                     : blog.title}
