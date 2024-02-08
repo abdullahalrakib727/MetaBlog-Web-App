@@ -154,7 +154,7 @@ async function run() {
           .toArray();
         return res
           .status(200)
-          .send({ success: true, total: blogs.length, data: blogs });
+          .json({ success: true, total: blogs.length, data: blogs });
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }
