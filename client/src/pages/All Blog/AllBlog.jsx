@@ -131,10 +131,12 @@ const AllBlog = () => {
             className=" border px-3 py-1 bg-[#F4F4F5] dark:text-[#A1A1AA] dark:bg-[#242535] dark:border-none rounded-md max-w-xs"
           >
             <option value="">All Categories</option>
-            <option value="Food">Food</option>
-            <option value="Health">Health</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Tech">Tech</option>
+            <option value="Lifestyle">Life Style</option>
+            <option value="Technology">Technology</option>
+            <option value="Travel">Travel</option>
+            <option value="Business">Business</option>
+            <option value="Economy">Economy</option>
+            <option value="Sports">Sports</option>
           </select>
         </div>
 

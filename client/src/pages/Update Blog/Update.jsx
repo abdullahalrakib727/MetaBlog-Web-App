@@ -120,10 +120,12 @@ const Update = () => {
               name="category"
               className="select border-2 border-[#181A2A] dark:border-white w-full"
             >
-              <option>Food</option>
-              <option>Health</option>
-              <option>Entertainment</option>
-              <option>Tech</option>
+              <option value="Lifestyle">Life Style</option>
+              <option value="Technology">Technology</option>
+              <option value="Travel">Travel</option>
+              <option value="Business">Business</option>
+              <option value="Economy">Economy</option>
+              <option value="Sports">Sports</option>
             </select>
           </div>
           <div className="form-control">

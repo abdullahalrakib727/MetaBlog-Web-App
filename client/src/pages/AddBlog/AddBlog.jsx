@@ -21,7 +21,7 @@ const AddBlog = () => {
 
   const navigate = useNavigate();
 
-// ToDo will add react hook form here later
+  // ToDo will add react hook form here later
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,10 +109,12 @@ const AddBlog = () => {
                 className="select border-2 border-[#181A2A] dark:border-white w-full"
                 required
               >
-                <option>Food</option>
-                <option>Health</option>
-                <option>Entertainment</option>
-                <option>Tech</option>
+                <option value="Lifestyle">Life Style</option>
+                <option value="Technology">Technology</option>
+                <option value="Travel">Travel</option>
+                <option value="Business">Business</option>
+                <option value="Economy">Economy</option>
+                <option value="Sports">Sports</option>
               </select>
             </div>
             <div className="form-control">
