@@ -137,8 +137,8 @@ async function run() {
       try {
         let query = {};
 
-        if (req.query?.email) {
-          query = { authorEmail: req.query.email };
+        if (req.query?.authorId) {
+          query = { authorId: req.query.authorId };
         }
 
         if (req.query?.category) {
