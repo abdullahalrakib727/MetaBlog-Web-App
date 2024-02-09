@@ -149,7 +149,6 @@ const AllBlog = () => {
                 {allBlogs.map((blog) => (
                   <RecentBlogCard
                     key={blog._id}
-                    isLoaded={isLoaded}
                     blog={blog}
                   ></RecentBlogCard>
                 ))}

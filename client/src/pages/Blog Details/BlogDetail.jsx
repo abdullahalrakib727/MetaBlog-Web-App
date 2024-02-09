@@ -75,6 +75,7 @@ const BlogDetail = () => {
     applyDarkMode("p", "dark:text-[#BABABF]");
     applyDarkMode("a", "dark:text-white");
     applyDarkMode("span", "dark:text-white");
+    applyDarkMode("td", "dark:text-white");
   }, [content]);
 
   const isValidDate = published && !isNaN(new Date(published));
