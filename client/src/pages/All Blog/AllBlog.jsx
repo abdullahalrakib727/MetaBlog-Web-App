@@ -16,7 +16,7 @@ import "swiper/css/autoplay";
 
 // import required modules
 import { Autoplay } from "swiper/modules";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 
 import { useQuery } from "@tanstack/react-query";
@@ -26,19 +26,19 @@ import FsSkeleton from "../../components/Skeletons/FeaturedSliderSkeleton/FsSkel
 const AllBlog = () => {
 
   
+  
+  // hooks
+  
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get("category");
-
-  useEffect(() => {
-    if (category) {
-      setSelectedCategory(`?category=${category}`);
-    }
-  }, [category]);
-
-  const [selectedCategory, setSelectedCategory] = useState("");
-
+  
+  
+  // data fetching
   const axiosPublic = useAxiosPublic();
+  const { data, isLoading } = useRecentBlogs();
 
   const {
     data: allBlogs = [],
@@ -52,19 +52,30 @@ const AllBlog = () => {
     },
   });
 
+
+// hooks
+  useEffect(() => {
+    if (category) {
+      setSelectedCategory(`?category=${category}`);
+    }
+  }, [category]);
+
   useEffect(() => {
     refetch();
   }, [selectedCategory, refetch]);
 
+  // functions
+
   const handleChange = (e) => {
     if (e.target.value === "") {
       setSelectedCategory("");
+      navigate("/blogs");
       return;
+    } else {
+      setSelectedCategory("?category=" + e.target.value);
+      navigate(`/blogs?category=${e.target.value}`);
     }
-    setSelectedCategory("?category=" + e.target.value);
   };
-
-  const { data, isLoading } = useRecentBlogs();
 
   // ? can show featured blogs instead of recent blogs here on slider later
 
