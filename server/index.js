@@ -122,7 +122,7 @@ async function run() {
         const blogs = await blogsCollection
           .find()
           .project({ authorEmail: 0 })
-          .sort({ $natural: -1 })
+          .sort({ published : -1 })
           .limit(9)
           .toArray();
         return res.status(200).send({ total: blogs.length, data: blogs });
@@ -148,7 +148,7 @@ async function run() {
         const blogs = await blogsCollection
           .find(query)
           .project({ authorEmail: 0 })
-          .sort({ $natural: -1 })
+          .sort({ published: -1 })
           .toArray();
         return res
           .status(200)

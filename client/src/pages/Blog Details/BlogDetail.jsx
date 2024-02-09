@@ -98,38 +98,38 @@ const BlogDetail = () => {
 
   //  add a comment
 
-  const handleAddComment = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const commenter = user?.displayName;
-    const commenterImg = user?.photoURL;
-    const commenterEmail = user?.email;
-    const comment = e.target.comment.value;
-    const published = new Date();
-    if (comment) {
-      const commentData = {
-        blog_id: _id,
-        parent_id: null,
-        commenter,
-        commenterImg,
-        comment,
-        commenterEmail,
-        published,
-      };
+  // const handleAddComment = async (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const commenter = user?.displayName;
+  //   const commenterImg = user?.photoURL;
+  //   const commenterEmail = user?.email;
+  //   const comment = e.target.comment.value;
+  //   const published = new Date();
+  //   if (comment) {
+  //     const commentData = {
+  //       blog_id: _id,
+  //       parent_id: null,
+  //       commenter,
+  //       commenterImg,
+  //       comment,
+  //       commenterEmail,
+  //       published,
+  //     };
 
-      const res = await axiosSecure.post("/comments", commentData);
-      if (res.data.insertedId) {
-        form.reset();
-        // refetch();
-      }
-    }
-  };
+  //     const res = await axiosSecure.post("/comments", commentData);
+  //     if (res.data.insertedId) {
+  //       form.reset();
+  //       // refetch();
+  //     }
+  //   }
+  // };
 
-  let comments = ["abc"];
+  // let comments = ["abc"];
 
-  const filteredComments = comments
-    .filter((comment) => comment.blog_id == _id)
-    .sort((a, b) => new Date(b.published) - new Date(a.published));
+  // const filteredComments = comments
+  //   .filter((comment) => comment.blog_id == _id)
+  //   .sort((a, b) => new Date(b.published) - new Date(a.published));
 
   if (isLoading) {
     return (
@@ -191,7 +191,7 @@ const BlogDetail = () => {
               </div>
             )}
             <div className="mb-10 text-center">
-              {authorEmail === user?.email && (
+              {authorId === user?.uid && (
                 <Link to={`/update/${_id}`}>
                   <button className=" py-2 px-4 text-center rounded-md bg-black text-white  normal-case hover:bg-green-500 transition-all duration-300 shadow-md">
                     Update
@@ -201,7 +201,7 @@ const BlogDetail = () => {
             </div>
 
             {/* comment section */}
-            <section>
+            {/* <section>
               <p className="text-xl font-semibold dark:text-white">
                 Comments :
               </p>
@@ -240,7 +240,7 @@ const BlogDetail = () => {
                   </div>
                 </div>
               )}
-            </section>
+            </section> */}
           </Typography>
         </div>
       </div>
