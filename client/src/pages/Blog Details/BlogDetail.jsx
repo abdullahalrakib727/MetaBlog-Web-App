@@ -6,12 +6,12 @@ import "react-photo-view/dist/react-photo-view.css";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
-import Comment from "./Comments/Comment";
+// import Comment from "./Comments/Comment";
 
 import { Skeleton } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Typography } from "antd";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
 import { format, parseISO } from "date-fns";
@@ -23,7 +23,7 @@ const { Title } = Typography;
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
   // const axiosPublic = useAxiosSecure();
-  const axiosSecure = useAxiosSecure();
+  // const axiosSecure = useAxiosSecure();
 
   const axiosPublic = useAxiosPublic();
 

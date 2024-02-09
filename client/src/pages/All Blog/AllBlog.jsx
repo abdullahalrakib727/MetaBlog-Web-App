@@ -24,16 +24,14 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import FsSkeleton from "../../components/Skeletons/FeaturedSliderSkeleton/FsSkeleton";
 
 const AllBlog = () => {
-
   // hooks
-  
+
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get("category");
-  
-  
+
   // data fetching
 
   const axiosPublic = useAxiosPublic();
@@ -51,8 +49,7 @@ const AllBlog = () => {
     },
   });
 
-
-// hooks
+  // hooks
 
   useEffect(() => {
     if (category) {
@@ -63,7 +60,6 @@ const AllBlog = () => {
   useEffect(() => {
     refetch();
   }, [selectedCategory, refetch]);
-  
 
   // functions
 
@@ -167,11 +163,17 @@ const AllBlog = () => {
             <CardSkeleton />
           ) : (
             <div className="flex justify-center">
-              <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-                {allBlogs.map((blog) => (
-                  <RecentBlogCard key={blog._id} blog={blog}></RecentBlogCard>
-                ))}
-              </div>
+              {allBlogs?.length > 0 ? (
+                <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
+                  {allBlogs.map((blog) => (
+                    <RecentBlogCard key={blog._id} blog={blog}></RecentBlogCard>
+                  ))}
+                </div>
+              ) : (
+                <h1 className="text-3xl dark:text-white font-semibold text-center">
+                  No Blogs Found
+                </h1>
+              )}
             </div>
           )}
         </ChakraProvider>

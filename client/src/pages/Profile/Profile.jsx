@@ -17,7 +17,7 @@ const Profile = () => {
   const { data = [], isLoading } = useQuery({
     queryKey: ["blogByUser", user?.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/blogs?email=${user.email}`);
+      const res = await axiosPublic.get(`/blogs?authorId=${user.uid}`);
       return res.data.data;
     },
   });
