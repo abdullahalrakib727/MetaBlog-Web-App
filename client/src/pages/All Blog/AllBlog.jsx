@@ -25,8 +25,6 @@ import FsSkeleton from "../../components/Skeletons/FeaturedSliderSkeleton/FsSkel
 
 const AllBlog = () => {
 
-  
-  
   // hooks
   
   const navigate = useNavigate();
@@ -37,6 +35,7 @@ const AllBlog = () => {
   
   
   // data fetching
+
   const axiosPublic = useAxiosPublic();
   const { data, isLoading } = useRecentBlogs();
 
@@ -54,6 +53,7 @@ const AllBlog = () => {
 
 
 // hooks
+
   useEffect(() => {
     if (category) {
       setSelectedCategory(`?category=${category}`);
@@ -63,6 +63,7 @@ const AllBlog = () => {
   useEffect(() => {
     refetch();
   }, [selectedCategory, refetch]);
+  
 
   // functions
 

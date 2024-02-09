@@ -37,16 +37,16 @@ const AddBlog = () => {
       const photoUrl = e.target.photo.value;
       const category = e.target.category.value;
       const published = new Date();
-      const authorEmail = user?.email;
+      const authorId = user?.uid;
       const authorName = user?.displayName;
       const authorImg = user?.photoURL;
       const data = {
         title,
         photoUrl,
         category,
+        authorId,
         content,
         published,
-        authorEmail,
         authorName,
         authorImg,
       };

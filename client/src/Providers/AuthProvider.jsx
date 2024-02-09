@@ -43,6 +43,7 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
+
   //  current user
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -54,6 +55,8 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
       if (currentUser) {
+
+        console.log(currentUser.uid);
         // post use to backend
         axios
           .post("https://blog-website-server-theta.vercel.app/jwt", user)

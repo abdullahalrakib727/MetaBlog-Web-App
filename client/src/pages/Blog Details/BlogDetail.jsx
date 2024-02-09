@@ -52,7 +52,7 @@ const BlogDetail = () => {
     authorImg,
     authorName,
     published,
-    authorEmail,
+    authorId,
     content,
   } = data;
 
@@ -210,7 +210,7 @@ const BlogDetail = () => {
                 <div className="bg-[#F6F6F7]">
                   {user && (
                     <div className="">
-                      {authorEmail === user?.email ? (
+                      {authorId === user?.uid ? (
                         <p
                           className="bg-white text-center text-red-500 pb-5 font-semibold text-lg"
                           type="warning"

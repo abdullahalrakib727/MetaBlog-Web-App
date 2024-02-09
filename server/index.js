@@ -70,9 +70,9 @@ async function run() {
       res.send("Blog Zone Server is Running");
     });
 
-    const blogsCollection = client.db("Blogs").collection("allBlogs");
-    const CommentsCollection = client.db("Blogs").collection("comments");
-    const wishlistCollection = client.db("Blogs").collection("wishlist");
+    const blogsCollection = client.db("MetaBlogDB").collection("allBlogs");
+    const CommentsCollection = client.db("MetaBlogDB").collection("comments");
+    const wishlistCollection = client.db("MetaBlogDB").collection("wishlist");
 
     //  auth related api
     app.post("/jwt", async (req, res) => {
@@ -144,8 +144,6 @@ async function run() {
         if (req.query?.category) {
           query = { category: req.query.category };
         }
-
-        console.log(query);
 
         const blogs = await blogsCollection
           .find(query)
