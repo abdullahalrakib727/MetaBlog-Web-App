@@ -6,7 +6,7 @@ const Banner = () => {
   const { blogs } = useBlogData();
 
   return (
-    <Link to={`/all/${blogs[1]?._id}`}>
+    <Link to={`/blogs/${blogs[1]?._id}`}>
       {/* // TODO will add featured blog here later instead of blogs[1] */}
       <div className="relative">
         <img

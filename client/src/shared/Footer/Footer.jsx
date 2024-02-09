@@ -1,17 +1,19 @@
+import { Link } from "react-router-dom";
 import FooterDarkLogo from "../../components/Svgs/FooterDarkLogo";
 import FooterLogoLight from "../../components/Svgs/FooterLogoLight";
 
 const Footer = () => {
   return (
-    <div className=" bg-[#F6F6F7] dark:bg-[#141624] p-2">
-      <footer className="footer py-10 px-4 lg:py-16 text-base-content max-w-[1216px] mx-auto">
+    <footer className=" bg-[#F6F6F7] dark:bg-[#141624] p-2">
+      <div className="footer py-10 px-4 lg:py-16 text-base-content max-w-[1216px] mx-auto">
         <div className="grid md:grid-cols-3 gap-10">
           <nav className="flex flex-col">
             <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
               About
             </header>
             <p className="mt-2 mb-6 text-[#696A75] dark:text-[#97989F]">
-            MetaBlog is a platform for bloggers to explore and discuss various topics, promoting engaging conversations and knowledge sharing.
+              MetaBlog is a platform for bloggers to explore and discuss various
+              topics, promoting engaging conversations and knowledge sharing.
             </p>
             <p>
               <span className="text-[#181A2A] dark:text-white font-normal text-base">
@@ -32,51 +34,72 @@ const Footer = () => {
               </span>
             </p>
           </nav>
-         <div className="flex gap-10">
-         <nav className="flex flex-col gap-2">
-            <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
-              Quick Link
-            </header>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Home
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              About
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Archived
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Author
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Contact
-            </a>
-          </nav>
-          <nav className="flex flex-col gap-2">
-            <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
-              Category
-            </header>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Lifestyle
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Technology
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Travel
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Business
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Economy
-            </a>
-            <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
-              Sports
-            </a>
-          </nav>
-         </div>
+          <div className="flex gap-10">
+            <nav className="flex flex-col gap-2">
+              <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
+                Quick Link
+              </header>
+              <Link
+                to="/"
+                className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]"
+              >
+                Home
+              </Link>
+              <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+                About
+              </a>
+              <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+                Archived
+              </a>
+              <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+                Author
+              </a>
+              <a className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]">
+                Contact
+              </a>
+            </nav>
+            <nav className="flex flex-col gap-2">
+              <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
+                Category
+              </header>
+              <Link
+                to={`/blogs?category=Lifestyle`}
+                className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]"
+              >
+                Lifestyle
+              </Link>
+              <Link
+                to={`/blogs?category=Technology`}
+                className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]"
+              >
+                Technology
+              </Link>
+              <Link
+                to={`/blogs?category=Travel`}
+                className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]"
+              >
+                Travel
+              </Link>
+              <Link
+                to={`/blogs?category=Business`}
+                className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]"
+              >
+                Business
+              </Link>
+              <Link
+                to={`/blogs?category=Economy`}
+                className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]"
+              >
+                Economy
+              </Link>
+              <Link
+                to={`/blogs?category=Sports`}
+                className="link link-hover dark:text-[#BABABF] text-[#3B3C4A]"
+              >
+                Sports
+              </Link>
+            </nav>
+          </div>
         </div>
         {/* <form>
       <header className="footer-title">Newsletter</header> 
@@ -90,16 +113,16 @@ const Footer = () => {
         </div>
       </fieldset>
     </form> */}
-      </footer>
-      <footer className="footer  py-8 border-t dark:border-[#242535]  bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
+      </div>
+      <div className="footer  py-8 border-t dark:border-[#242535]  bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
         <aside className="items-center grid-flow-col">
           {/* logo */}
           <div className="flex items-center gap-2">
             <div className="relative">
-              <FooterLogoLight/>
-             <div className="absolute bottom-0 hidden dark:flex">
-             <FooterDarkLogo/>
-             </div>
+              <FooterLogoLight />
+              <div className="absolute bottom-0 hidden dark:flex">
+                <FooterDarkLogo />
+              </div>
             </div>
             <div className="dark:text-white">
               <p className="text-xl ">
@@ -116,8 +139,8 @@ const Footer = () => {
             <a className="cursor-pointer">Cookie Policy</a>
           </div>
         </nav>
-      </footer>
-    </div>
+      </div>
+    </footer>
   );
 };
 

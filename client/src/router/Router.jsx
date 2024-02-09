@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AddBlog from "../pages/AddBlog/AddBlog";
 
-import AllBlog from "../pages/All Blog/AllBlog";
+
 import BlogDetail from "../pages/Blog Details/BlogDetail";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home/Home";
@@ -12,6 +12,7 @@ import Update from "../pages/Update Blog/Update";
 
 import PrivateRoute from "./PrivateRoute";
 import Root from "../layout/Root";
+import AllBlog from "../pages/All Blog/AllBlog";
 
 const router = createBrowserRouter([
   {
@@ -31,11 +32,11 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/all",
+        path: "/blogs",
         element: <AllBlog></AllBlog>,
       },
       {
-        path: "/all/:id",
+        path: "/blogs/:id",
         element: (
           <PrivateRoute>
             <BlogDetail></BlogDetail>
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
             <Profile></Profile>
           </PrivateRoute>
         ),
-      },
+      }
     ],
   },
 ]);

@@ -64,7 +64,7 @@ const Update = () => {
               toast.success("Blog has been updated!");
               refetch();
               setTimeout(() => {
-                navigate(`/all/${item?._id}`);
+                navigate(`/blogs/${item?._id}`);
               }, 3000);
             }
           });

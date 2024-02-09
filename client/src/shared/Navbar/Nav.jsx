@@ -66,7 +66,7 @@ function Nav() {
         </li>
       )}
       <li>
-        <NavLink to="/all">All Blogs</NavLink>
+        <NavLink to="/blogs">All Blogs</NavLink>
       </li>
       {user ? (
         <>

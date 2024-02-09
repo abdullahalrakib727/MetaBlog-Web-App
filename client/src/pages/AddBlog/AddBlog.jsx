@@ -54,7 +54,7 @@ const AddBlog = () => {
 
       if (res.data.insertedId) {
         toast.success("Blog has been added!");
-        navigate("/all");
+        navigate("/blogs");
         form.reset();
       }
     } catch (error) {
