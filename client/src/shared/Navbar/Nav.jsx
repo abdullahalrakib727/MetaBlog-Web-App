@@ -158,7 +158,7 @@ function Nav() {
             <div className="absolute mt-2 bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] z-10 p-2 rounded-xl space-y-1 overflow-x-auto max-h-40">
               {blogs.map((blog) => (
                 <Link
-                  to={`all/${blog._id}`}
+                  to={`blogs/${blog._id}`}
                   onClick={handleReset}
                   className="bg-white border dark:bg-[#242535]  border-[#E8E8EA] dark:border-[#242535]  p-1 rounded-md inline-block"
                   key={blog._id}
