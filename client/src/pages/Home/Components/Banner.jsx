@@ -8,13 +8,13 @@ const Banner = () => {
   return (
     <Link to={`/blogs/${blogs[1]?._id}`}>
       {/* // TODO will add featured blog here later instead of blogs[1] */}
-      <div className="relative">
+      <section className="relative">
         <img
-          className="xl:max-w-[1216px] xl:max-h-[600px] xl:min-w-[1216px] lg:min-h-[600px] lg:rounded-xl"
+          className="xl:max-w-[1216px] xl:max-h-[600px] xl:min-w-[1216px] lg:min-h-[600px] lg:rounded-xl mx-auto"
           src={blogs[1]?.photoUrl}
           alt=""
         />
-        <div className="lg:min-w-[518px] lg:min-h-[304px] rounded-xl  md:-bottom-20 lg:-bottom-20 border left-16 bg-[#FFF] lg:p-10 p-3 md:absolute border-[#E8E8EA] shadow-md shadow-[#181A2A1F] dark:bg-[#181A2A] dark:border-[#242535]">
+        <div className="lg:min-w-[518px] lg:min-h-[304px] rounded-xl  md:-bottom-20 lg:-bottom-20 border left-16 md:left-32 lg:left-24 bg-[#FFF] lg:p-10 p-3 md:absolute border-[#E8E8EA] shadow-md shadow-[#181A2A1F] dark:bg-[#181A2A] dark:border-[#242535]">
           <div className="max-w-[518px]">
             <span className="bg-[#4B6BFB] rounded-md text-white px-2 py-1 text-sm text-center mt-2 lg:mt-0">
               {blogs[1]?.category}
@@ -39,7 +39,7 @@ const Banner = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </Link>
   );
 };
