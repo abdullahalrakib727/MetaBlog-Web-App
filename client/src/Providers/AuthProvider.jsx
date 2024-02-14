@@ -54,6 +54,7 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setLoading(false);
       if (currentUser) {
+        
         // post use to backend
         axios
           .post("https://blog-website-server-theta.vercel.app/jwt", user)
