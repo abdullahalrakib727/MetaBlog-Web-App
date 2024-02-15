@@ -1,19 +1,21 @@
 import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
+
 import { useCallback, useContext, useEffect, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
 
-import LightLogoSvg from "../../components/Svgs/LightLogoSvg";
 import "./Nav.css";
-import ThemeSwitch from "../../components/Theme/ThemeSwitch";
-import DarkLogoSvg from "../../components/Svgs/DarkLogoSvg";
 
-import logo from "../../assets/logos.png";
-import logo2 from "../../assets/lightlogo.png";
+import logo from "../../../assets/Logo.png";
+import logo2 from "../../../assets/lightlogo.png";
 import { debounce } from "lodash";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import ThemeSwitch from "../../Theme/ThemeSwitch";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import DarkLogoSvg from "../../Svgs/DarkLogoSvg";
+import LightLogoSvg from "../../Svgs/LightLogoSvg";
+import { BlogsProps } from "../../../api/useBlogData";
 
-function Nav() {
+const NavBar = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const [value, setValue] = useState("");
   const [blogs, setBlogs] = useState([]);
@@ -36,7 +38,7 @@ function Nav() {
     setBlogs([]);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
 
     if (e.target.value.trim() === "") {
@@ -153,7 +155,7 @@ function Nav() {
           />
           {blogs.length > 0 && (
             <div className="absolute mt-2 bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] z-10 p-2 rounded-xl space-y-1 overflow-x-auto max-h-40">
-              {blogs.map((blog) => (
+              {blogs.map((blog: BlogsProps) => (
                 <Link
                   to={`blogs/${blog._id}`}
                   onClick={handleReset}
@@ -172,5 +174,5 @@ function Nav() {
       </div>
     </nav>
   );
-}
-export default Nav;
+};
+export default NavBar;

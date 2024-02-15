@@ -5,12 +5,14 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
-import { useState } from "react";
+import { FC, useState } from "react";
 import toast from "react-hot-toast";
 
-const UpdateBlog = () => {
+const UpdateBlog:FC = ():JSX.Element => {
+
+
   const params = useParams();
-  const [updatedContent, setUpdatedContent] = useState();
+  const [updatedContent, setUpdatedContent] = useState("");
 
   const { data: item = [], refetch } = useQuery({
     queryKey: ["item", params.id],
@@ -29,11 +31,12 @@ const UpdateBlog = () => {
 
   // ToDo will add react hook form here later
 
-  const handleUpdate = (e) => {
+  const handleUpdate = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const title = e.target.title.value;
-    const photoUrl = e.target.photo.value;
-    const category = e.target.category.value;
+    const form = e.currentTarget as HTMLFormElement;
+    const title = form.blogTitle.value;
+    const photoUrl = form.photo.value;
+    const category = form.category.value;
 
     const updatedBlog = {
       title,
@@ -80,7 +83,7 @@ const UpdateBlog = () => {
         <title>Update | MetaBlog</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
-        <form className="card-body" onSubmit={handleUpdate}>
+        <form className="card-body" onSubmit={(e)=>handleUpdate(e)}>
           <h1 className="text-center dark:text-white text-2xl font-semibold">
             Update : {item?.title}
           </h1>
@@ -90,7 +93,7 @@ const UpdateBlog = () => {
             </label>
             <input
               type="text"
-              name="title"
+              name="blogTitle"
               defaultValue={item?.title}
               className="input border-2 border-[#181A2A] dark:border-white"
               required
@@ -134,7 +137,6 @@ const UpdateBlog = () => {
             </label>
             <JoditEditor
               value={item?.content}
-              dark={true}
               onChange={(newContent) => setUpdatedContent(newContent)}
             />
           </div>

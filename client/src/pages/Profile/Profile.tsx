@@ -12,6 +12,8 @@ import BlogCard from "../../components/BlogCard/BlogCard";
 import { BlogsProps } from "../../api/useBlogData";
 
 const Profile: FC = (): JSX.Element => {
+
+  
   const { user } = useContext(AuthContext);
 
   const axiosPublic = useAxiosPublic();

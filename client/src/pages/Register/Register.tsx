@@ -1,51 +1,48 @@
-import { useContext, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../Providers/AuthProvider";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import toast from "react-hot-toast";
+
 import { useForm } from "react-hook-form";
 
-const Register = () => {
+
+
+interface FormData {
+  name: string;
+  email: string;
+  photo: string;
+  password: string;
+
+}
+
+const Register: FC = (): JSX.Element => {
+  
   const { registerUser, updateUserProfile, sendVerificationEmail } =
     useContext(AuthContext);
+    
   const location = useLocation();
   const navigate = useNavigate();
-  const [showPass, setShowPass] = useState(false);
-  const { register, handleSubmit } = useForm();
 
-  let from = location.state?.from?.pathname || "/";
+  const [showPass, setShowPass] = useState<boolean>(false);
+  const { register, handleSubmit } = useForm<FormData>();
 
-  const onSubmit = (data) => {
+  const from = location.state?.from?.pathname || "/";
+
+  const onSubmit = async (data:FormData) => {
     const name = data?.name;
     const photo = data?.photo;
     const email = data?.email;
     const password = data?.password;
 
-    registerUser(email, password)
-      .then((result) => {
-        result && toast.success("Signup successful!");
-      })
-      .then(() => {
-        sendVerificationEmail();
-        toast.success("Verification email sent");
-      })
-      .then(() => {
-        updateUserProfile(name, photo);
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        error &&
-          toast.error("Wrong Email or Password !!!", {
-            style: {
-              border: "1px solid #FF8303",
-              padding: "16px",
-              color: "white",
-              backgroundColor: "#242320",
-            },
-          });
-      });
+    await registerUser(email, password);
+
+    await sendVerificationEmail();
+
+    await updateUserProfile(name, photo);
+
+    navigate(from, { replace: true });
   };
 
   return (
@@ -73,21 +70,18 @@ const Register = () => {
                 <input
                   className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
                   type="text"
-                  name="name"
                   placeholder="Name"
                   {...register("name", { required: true })}
                 />
                 <input
                   className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium"
                   type="email"
-                  name="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
                 <input
                   className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium"
                   type="text"
-                  name="photo"
                   placeholder="Photo URL"
                   {...register("photo", { required: true })}
                 />
@@ -95,7 +89,6 @@ const Register = () => {
                   <input
                     className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
-                    name="password"
                     id=""
                     placeholder="Password"
                     {...register("password", { required: true })}
@@ -103,12 +96,12 @@ const Register = () => {
                   {showPass ? (
                     <FaRegEyeSlash
                       className="absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500"
-                      onClick={() => setShowPass((prev) => setShowPass(!prev))}
+                      onClick={() => setShowPass((prev) => !prev)}
                     />
                   ) : (
                     <FaRegEye
                       className="absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500"
-                      onClick={() => setShowPass((prev) => setShowPass(!prev))}
+                      onClick={() => setShowPass((prev) => !prev)}
                     />
                   )}
                 </div>
@@ -117,7 +110,9 @@ const Register = () => {
                 </button>
               </form>
               <div className="mt-5 text-sm border-b border-gray-400 py-4">
-                <a href="#" className="text-black dark:text-white">Forgot your password ?</a>
+                <a href="#" className="text-black dark:text-white">
+                  Forgot your password ?
+                </a>
               </div>
               <div className="text-xs mt-3 flex justify-between items-center">
                 <p>If you already have an account...</p>

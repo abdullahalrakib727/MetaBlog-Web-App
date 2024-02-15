@@ -28,7 +28,6 @@ const useBlogData = (): BlogData => {
       const res = await axios.get(
         "https://blog-website-server-theta.vercel.app/blogs"
       );
-      console.log(res.data.data);
       return res.data.data;
     },
   });

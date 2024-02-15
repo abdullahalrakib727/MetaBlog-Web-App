@@ -3,6 +3,8 @@ import { FC } from "react";
 import toast from "react-hot-toast";
 
 const Contact:FC = ():JSX.Element => {
+
+  
   // todo: will add email js later
 
   const handleSend = (event: React.FormEvent<HTMLFormElement>) => {

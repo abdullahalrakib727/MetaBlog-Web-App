@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const AddBlog:FC = ():JSX.Element => {
+  
   const { user, sendVerificationEmail } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   // const axiosSecure = useAxiosSecure();

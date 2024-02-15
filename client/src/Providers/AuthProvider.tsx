@@ -13,7 +13,6 @@ import {
 import { FC, createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -23,7 +22,7 @@ export interface AuthInfo {
   registerUser: (email: string, password: string) => void;
   updateUserProfile: (name: string, photo: string) => void;
   user: User | null;
-  signInUser: (email: string, password: string) => void;
+  signInUser: (email: string, password: string) => Promise<boolean>;
   logOutUser: () => void;
   loading: boolean;
   handleGoogleSignIn: () => void;
@@ -34,7 +33,7 @@ const defaultAuthInfo: AuthInfo = {
   registerUser: () => {},
   updateUserProfile: () => {},
   user: null,
-  signInUser: () => {},
+  signInUser: () => Promise.resolve(false),
   logOutUser: () => {},
   loading: true,
   handleGoogleSignIn: () => {},
@@ -48,10 +47,8 @@ const auth = getAuth(app);
 const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
 
+  //! Register user
   const registerUser = async (email: string, password: string) => {
     setLoading(true);
     try {
@@ -61,13 +58,16 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
         password
       );
       setLoading(false);
+      toast.success("Signup successful!");
       return userCredential;
     } catch (error) {
-      setLoading(false);
+      setLoading(true);
+      toast.error("Please try again !!!");
       console.error(error);
     }
   };
 
+  // ! Update user profile
   const updateUserProfile = async (name: string, photo: string) => {
     try {
       if (auth.currentUser) {
@@ -81,56 +81,66 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     }
   };
 
+  // ! Sign in user
   const signInUser = async (email: string, password: string) => {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      setLoading(false);
       toast.success("Login successful");
-      return navigate(from, { replace: true });
-    } catch (error) {
       setLoading(false);
+      return true;
+    } catch (error) {
+      setLoading(true);
       console.error(error);
+      toast.error("Invalid credentials !!!");
+      return false;
     }
   };
 
   const provider = new GoogleAuthProvider();
 
+  // ! Google Sign in
   const handleGoogleSignIn = async () => {
+    setLoading(true);
     try {
       await signInWithPopup(auth, provider);
       toast.success("Login Successful!");
-      return navigate(from, { replace: true });
+      return setLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
 
+  // ! Auth state change
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
         setLoading(false);
-        console.log(currentUser);
+        // console.log(currentUser);
       } else {
         setUser(null);
+        setLoading(true);
       }
-      setLoading(false);
     });
     return () => {
       unSubscribe();
     };
   }, []);
 
+  // ! Logout user
   const logOutUser = async () => {
     try {
+      await signOut(auth);
       setUser(null);
-      return await signOut(auth);
+
+      return setLoading(true);
     } catch (error) {
       console.error(error);
     }
   };
 
+  // ! Send verification email
   const sendVerificationEmail = async () => {
     try {
       if (auth.currentUser) {

@@ -6,6 +6,8 @@ import { FC } from "react";
 
 
 const ErrorPage:FC = ():JSX.Element => {
+
+  
     return (
         <section className="max-w-[1216px] min-h-screen mx-auto ">
         <header>

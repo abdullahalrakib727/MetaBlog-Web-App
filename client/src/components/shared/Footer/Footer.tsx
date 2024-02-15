@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
-import FooterDarkLogo from "../../components/Svgs/FooterDarkLogo";
-import FooterLogoLight from "../../components/Svgs/FooterLogoLight";
 
-const Footer = () => {
+
+import { FC } from "react";
+import FooterLogoLight from "../../Svgs/FooterLogoLight";
+import FooterDarkLogo from "../../Svgs/FooterDarkLogo";
+
+const Footer:FC = ():JSX.Element => {
   return (
     <footer className=" bg-[#F6F6F7] dark:bg-[#141624] p-2">
       <div className="footer py-10 px-4 lg:py-16 text-base-content max-w-[1216px] mx-auto">

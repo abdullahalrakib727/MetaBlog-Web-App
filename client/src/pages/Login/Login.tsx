@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { FC, useContext, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
@@ -7,30 +7,35 @@ import { FaGoogle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import { useForm } from "react-hook-form";
 
-
-interface FormData {
+export interface FormData {
   email: string;
   password: string;
 }
 
-
 const Login: FC = (): JSX.Element => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const from = location.state?.from?.pathname || "/";
 
   const [showPass, setShowPass] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<FormData>();
 
   const { signInUser, handleGoogleSignIn } = useContext(AuthContext);
 
-  const handleGoogleLogin = () => {
-    handleGoogleSignIn();
+  const handleGoogleLogin = async () => {
+    await handleGoogleSignIn();
+    navigate(from, { replace: true });
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit =  async(data: FormData) => {
     const email = data?.email;
     const password = data?.password;
 
-    signInUser(email, password);
+    const result =await signInUser(email, password);
+    if (result) {
+      navigate(from, { replace: true });
+    }
   };
 
   return (
