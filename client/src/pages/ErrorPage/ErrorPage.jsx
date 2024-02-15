@@ -10,7 +10,7 @@ const ErrorPage = () => {
         <main>
           <div className="banner-container flex flex-col md:flex-row justify-center items-center gap-5 md:gap-20">
             <div className="">
-              <img  src={image} alt="" />
+              <img  src={image} alt="error-image" />
             </div>
             <div className="banner-text">
               <h1 className="text-[#333] dark:text-white font-space-mono text-5xl font-semibold mb-9 md:mt-20 w-3/4">I have bad news for you</h1>

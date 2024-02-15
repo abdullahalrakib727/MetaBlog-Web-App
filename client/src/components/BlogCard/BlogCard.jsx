@@ -27,7 +27,7 @@ const BlogCard = ({ blog }) => {
             <img
               className="h-full w-full  hover:scale-110 ease-linear transition-transform duration-300 rounded-md"
               src={photoUrl}
-              alt=""
+              alt={title}
             />
           </div>
         </PhotoView>
