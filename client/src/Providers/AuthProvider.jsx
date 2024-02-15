@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -17,76 +16,80 @@ export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+  
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const registerUser = (email, password) => {
+  const registerUser = async (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      setLoading(false);
+      return userCredential;
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
   };
 
-  const updateUserProfile = (name, photo) => {
-    updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: photo,
-    });
+  const updateUserProfile = async (name, photo) => {
+    try {
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: photo,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // sign in user
-  const signInUser = (email, password) => {
+  const signInUser = async (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setLoading(false);
+      return userCredential;
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
   };
 
   const provider = new GoogleAuthProvider();
-  const handleGoogleSignIn = () => {
-    return signInWithPopup(auth, provider);
+
+  const handleGoogleSignIn = async () => {
+    try {
+      return await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  //  current user
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser === null) {
-        setLoading(false);
-      }
-      console.log(currentUser)
-      const userEmail = currentUser?.email || user?.email;
-      const user = { email: userEmail };
       setUser(currentUser);
       setLoading(false);
-      if (currentUser) {
-        
-        // post use to backend
-        axios
-          .post("https://blog-website-server-theta.vercel.app/jwt", user)
-          .then(() => {
-            // console.log(res.data)
-          });
-      } else {
-        axios
-          .post("https://blog-website-server-theta.vercel.app/logout", user, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            console.log(res.data);
-          });
-      }
     });
     return () => {
       unSubscribe();
     };
   }, []);
 
-  // logout user
-  const logOutUser = () => {
-    // setLoading(false);
-    setUser(null);
-    return signOut(auth);
+  const logOutUser = async () => {
+    try {
+      setUser(null);
+      return await signOut(auth);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // send verification email to user
-  const sendVerificationEmail = () => {
-    return sendEmailVerification(auth.currentUser);
+  const sendVerificationEmail = async () => {
+    try {
+      return await sendEmailVerification(auth.currentUser);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const authInfo = {
