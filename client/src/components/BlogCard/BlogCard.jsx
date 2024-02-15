@@ -25,7 +25,7 @@ const BlogCard = ({ blog }) => {
         <PhotoView src={photoUrl}>
           <div className="h-[170px] md:h-[240px] max-w-[360px] overflow-hidden rounded-md">
             <img
-              className="h-full w-full  hover:scale-110 ease-linear transition-transform duration-300 rounded-md"
+              className="h-full w-full  hover:scale-105 ease-out transition-transform duration-300 rounded-md"
               src={photoUrl}
               alt={title}
             />
