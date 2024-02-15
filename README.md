@@ -9,3 +9,4 @@
 - Filter by category : After the slider you have filter option to filter blogs on these category: All blogs, Lifestyle, Technology, Travel, Business, Economy and Sports.
 - Loading skeleton : We also have loading skeleton. When data is being loaded from the server you will be able to see loading skeleton.
 - Update blog : Author will be able to update their blog as well. If you are the author of that blog then you will see an update button at the end of your blog's detail page. By clicking on that button you will be redirect to the update blog page.
+- Delete Blog: Author will be able to delete the blogs that they have created. 
