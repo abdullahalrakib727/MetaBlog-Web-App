@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import Root from "../layout/Root";
 import AllBlog from "../pages/All Blog/AllBlog";
 import UpdateBlog from "../pages/UpdateBlog/UpdateBlog";
+import Contact from "../pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
             <Profile></Profile>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },
