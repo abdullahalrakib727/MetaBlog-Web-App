@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-const ThemeSwitch = () => {
-  const [theme, setTheme] = useState(
+const ThemeSwitch:FC = ():JSX.Element => {
+  const [theme, setTheme] = useState<string|null>(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
 

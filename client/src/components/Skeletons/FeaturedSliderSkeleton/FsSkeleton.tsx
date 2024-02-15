@@ -1,6 +1,7 @@
+import { FC } from "react";
 import "./FsSkeleton.css";
 
-const FsSkeleton = () => {
+const FsSkeleton:FC = ():JSX.Element => {
   return (
     <div className=" background-skeleton h-[450px] py-10 my-12 rounded-xl flex bg-cover bg-no-repeat max-w-[1216px]">
       {/* details */}

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-import Nav from "../shared/Navbar/Nav";
+import NavBar from "../shared/Navbar/NavBar";
 import Footer from "../shared/Footer/Footer";
 
 import { Toaster } from "react-hot-toast";
@@ -9,12 +9,12 @@ import Container from "../components/Container/Container";
 const Root = () => {
   return (
     <>
-      <Nav></Nav>
+      <NavBar></NavBar>
       <div>
         <Toaster position="top-center" reverseOrder={false} />
-      <Container>
-      <Outlet></Outlet>
-      </Container>
+        <Container>
+          <Outlet></Outlet>
+        </Container>
       </div>
       <Footer></Footer>
     </>

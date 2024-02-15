@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { FC, createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
+import toast from "react-hot-toast";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -131,9 +132,11 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     try {
       if (auth.currentUser) {
         const verification = await sendEmailVerification(auth.currentUser);
+        toast.success("Verification email sent");
         return verification;
       }
     } catch (error) {
+      toast.error("Too many requests, please try again later");
       console.error(error);
     }
   };

@@ -16,7 +16,7 @@ const AddBlog = () => {
   // const axiosSecure = useAxiosSecure();
 
   // for jodit editor
-  const [content, setContent] = useState();
+  const [content, setContent] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -24,60 +24,56 @@ const AddBlog = () => {
 
   // Todo : will add react hook form here later
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isSubmitting) {
       return;
     }
 
-    setIsSubmitting(true);
+    const form = e.currentTarget as HTMLFormElement;
+    const title = form.blogTitle.value;
+    const photoUrl = form.photo.value;
+    const category = form.category.value;
+    const published = new Date();
+    const authorId = user?.uid;
+    const authorName = user?.displayName;
+    const authorImg = user?.photoURL;
+    const data = {
+      title,
+      photoUrl,
+      category,
+      authorId,
+      content,
+      published,
+      authorName,
+      authorImg,
+    };
+
     try {
-      const form = e.target;
-      const title = e.target.title.value;
-      const photoUrl = e.target.photo.value;
-      const category = e.target.category.value;
-      const published = new Date();
-      const authorId = user?.uid;
-      const authorName = user?.displayName;
-      const authorImg = user?.photoURL;
-      const data = {
-        title,
-        photoUrl,
-        category,
-        authorId,
-        content,
-        published,
-        authorName,
-        authorImg,
-      };
       const res = await axiosPublic.post("/blogs", data);
+      setIsSubmitting(true);
 
       if (res.data.insertedId) {
         toast.success("Blog has been added!");
+        setIsSubmitting(false);
         form.reset();
         navigate("/blogs");
       }
     } catch (error) {
-      toast.error("error", error);
+      toast.error("Something went wrong!");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleVerification = async () => {
-    await sendVerificationEmail()
-      .then(() => {
-        toast.success("Verification email sent");
-      })
-      .catch(() => {
-        toast.error("Too many requests, please try again later");
-      });
+  const handleVerification = () => {
+    sendVerificationEmail();
   };
 
   //? if user is not verified
 
-  if (user.emailVerified === false) {
+  if (user?.emailVerified === false) {
     return (
       <div className="my-10">
         <Helmet>
@@ -112,7 +108,7 @@ const AddBlog = () => {
           <h1 className="dark:text-white text-center text-2xl font-semibold">
             Write a blog from here
           </h1>
-          <form className="card-body" onSubmit={handleSubmit}>
+          <form className="card-body" onSubmit={(e) => handleSubmit(e)}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-black dark:text-white">
@@ -121,7 +117,7 @@ const AddBlog = () => {
               </label>
               <input
                 type="text"
-                name="title"
+                name="blogTitle"
                 placeholder="Blog's title"
                 className="appearance-none focus:outline-none input bg-gray-200 dark:bg-white dark:border-white"
                 required
@@ -169,7 +165,6 @@ const AddBlog = () => {
               <JoditEditor
                 value={content}
                 onChange={(newContent) => setContent(newContent)}
-                dark={true}
               />
             </div>
             <div className="form-control mt-6">
