@@ -13,7 +13,7 @@ const UpdateBlog = () => {
   const [updatedContent, setUpdatedContent] = useState();
 
   const { data: item = [], refetch } = useQuery({
-    queryKey: ["item"],
+    queryKey: ["item", params.id],
     queryFn: async () => {
       const res = await axios.get(
         `https://blog-website-server-theta.vercel.app/blogs/${params.id}`,
@@ -91,7 +91,7 @@ const UpdateBlog = () => {
             <input
               type="text"
               name="title"
-              placeholder={item?.title}
+              defaultValue={item?.title}
               className="input border-2 border-[#181A2A] dark:border-white"
               required
             />
@@ -103,7 +103,7 @@ const UpdateBlog = () => {
             <input
               type="text"
               name="photo"
-              placeholder={item?.photoUrl}
+              defaultValue={item?.photoUrl}
               className="input border-2 border-[#181A2A] dark:border-white"
               required
             />
@@ -116,7 +116,7 @@ const UpdateBlog = () => {
               </span>
             </label>
             <select
-              defaultValue={item?.category}
+              defaultValue={item.category}
               name="category"
               className="select border-2 border-[#181A2A] dark:border-white w-full"
             >

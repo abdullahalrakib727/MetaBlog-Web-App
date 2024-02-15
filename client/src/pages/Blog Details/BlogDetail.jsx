@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 // import Comment from "./Comments/Comment";
@@ -16,34 +16,27 @@ import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
 import { format, parseISO } from "date-fns";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const { Text } = Typography;
 const { Title } = Typography;
 
 const BlogDetail = () => {
   const { user } = useContext(AuthContext);
-  // const axiosPublic = useAxiosSecure();
   // const axiosSecure = useAxiosSecure();
 
   const axiosPublic = useAxiosPublic();
 
   const params = useParams();
+  const navigate = useNavigate();
 
-  const {
-    data = [],
-    refetch: reload,
-    isLoading,
-  } = useQuery({
-    queryKey: ["data"],
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["blog", params.id],
     queryFn: async () => {
       const res = await axiosPublic.get(`/blogs/${params.id}`);
       return res.data.data;
     },
   });
-
-  useEffect(() => {
-    reload();
-  }, [params.id, reload]);
 
   const {
     _id,
@@ -54,7 +47,7 @@ const BlogDetail = () => {
     published,
     authorId,
     content,
-  } = data;
+  } = data || {};
 
   const applyDarkMode = (tagName, className) => {
     const elements = document.getElementsByTagName(tagName);
@@ -83,6 +76,49 @@ const BlogDetail = () => {
   const publishDate = isValidDate
     ? format(parseISO(published), "MMMM dd, yyyy")
     : null;
+
+  const handleDelete = (id) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axiosPublic.delete(`/blogs/${id}`);
+
+          if (res.data.deletedCount > 0) {
+            swalWithBootstrapButtons.fire({
+              title: "Deleted!",
+              text: "Your Blog has been deleted.",
+              icon: "success",
+            });
+            navigate("/");
+          }
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your Blog is safe :)",
+            icon: "error",
+          });
+        }
+      });
+  };
 
   //  show comment on site
   // const { data: comments = [], refetch } = useQuery({
@@ -192,11 +228,19 @@ const BlogDetail = () => {
             )}
             <div className="mb-10 text-center">
               {authorId === user?.uid && (
-                <Link to={`/update/${_id}`}>
-                  <button className=" py-2 px-4 text-center rounded-md bg-black text-white  normal-case hover:bg-green-500 transition-all duration-300 shadow-md">
-                    Update
+                <div className="flex gap-3 justify-center">
+                  <Link to={`/update/${_id}`}>
+                    <button className=" py-2 px-4 text-center rounded-md bg-black text-white  normal-case hover:bg-white hover:text-black transition-all duration-300 shadow-md">
+                      Update
+                    </button>
+                  </Link>
+                  <button
+                    className=" py-2 px-4 text-center rounded-md bg-green-700 text-white  normal-case hover:bg-red-600 transition-all duration-300 shadow-md"
+                    onClick={() => handleDelete(_id)}
+                  >
+                    Delete
                   </button>
-                </Link>
+                </div>
               )}
             </div>
 
