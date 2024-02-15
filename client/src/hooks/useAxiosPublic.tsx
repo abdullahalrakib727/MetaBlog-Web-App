@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
-const axiosPublic = axios.create({
+const axiosPublic:AxiosInstance = axios.create({
   baseURL: "https://blog-website-server-theta.vercel.app",
 });
 

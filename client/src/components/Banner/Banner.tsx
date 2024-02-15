@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import useBlogData from "../../api/useBlogData";
 import { format, parseISO } from "date-fns";
+import { FC } from "react";
 
-const Banner = () => {
+const Banner: FC = (): JSX.Element => {
+  
   const { blogs } = useBlogData();
 
   return (
@@ -32,7 +34,7 @@ const Banner = () => {
                 {blogs[1]?.authorName}
               </p>
               <p className="ml-2 font-normal text-base text-[#97989F]">
-                {blogs[1]?.published && !isNaN(new Date(blogs[1].published))
+                {blogs[1]?.published && !isNaN(Date.parse(blogs[1].published))
                   ? format(parseISO(blogs[1].published), "MMMM dd, yyyy")
                   : null}
               </p>

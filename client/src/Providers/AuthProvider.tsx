@@ -17,7 +17,7 @@ type AuthProviderProps = {
   children: React.ReactNode;
 };
 
-interface AuthInfo {
+export interface AuthInfo {
   registerUser: (email: string, password: string) => void;
   updateUserProfile: (name: string, photo: string) => void;
   user: User | null;

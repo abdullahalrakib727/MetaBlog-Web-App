@@ -1,22 +1,40 @@
-import { useQuery } from "@tanstack/react-query";
+import { QueryObserverResult, RefetchOptions, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const useBlogData = () => {
+interface BlogsProps {
+  _id: string;
+  title: string;
+  photoUrl: string;
+  category: string;
+  authorName: string;
+  authorImg: string;
+  published: string;
+}
+
+interface BlogData {
+  data: BlogsProps[];
+  isLoading: boolean;
+  refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<BlogsProps[], unknown>>;
+}
+
+const useBlogData = (): BlogData => {
   const {
-    data: blogs = [],
-    isLoading: isLoaded,
+    data = [],
+    isLoading,
     refetch,
-  } = useQuery({
+  } = useQuery<BlogsProps[],unknown>({
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await axios.get(
         "https://blog-website-server-theta.vercel.app/blogs"
       );
+      console.log(res.data.data);
       return res.data.data;
     },
   });
 
-  return { blogs, isLoaded, refetch };
+  return { data, isLoading, refetch };
 };
 
 export default useBlogData;
+

@@ -1,15 +1,15 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
-const axiosSecure = axios.create({
+const axiosSecure:AxiosInstance = axios.create({
   baseURL: "https://blog-website-server-theta.vercel.app",
   withCredentials: true,
 });
 
 const useAxiosSecure = () => {
-  const { logOut } = useAuth();
+  const { logOutUser } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
     axiosSecure.interceptors.response.use(
@@ -19,12 +19,12 @@ const useAxiosSecure = () => {
       (error) => {
         console.log("error tracked in interceptor", error.response);
         if (error.response.status === 401 || error.response.status === 403) {
-          logOut();
+          logOutUser();
           navigate("/login");
         }
       }
     );
-  }, [logOut, navigate]);
+  }, [logOutUser, navigate]);
   return axiosSecure;
 };
 

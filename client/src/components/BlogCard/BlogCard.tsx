@@ -5,12 +5,25 @@ import { format, parseISO } from "date-fns";
 
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
+import { FC } from "react";
 
-const BlogCard = ({ blog }) => {
+interface BlogProps {
+  blog: {
+    _id: string;
+    title: string;
+    photoUrl: string;
+    category: string;
+    authorName: string;
+    authorImg: string;
+    published: string;
+  };
+}
+
+const BlogCard: FC<BlogProps> = ({ blog }): JSX.Element => {
   const { _id, title, photoUrl, category, authorName, authorImg, published } =
     blog;
 
-  const isValidDate = published && !isNaN(new Date(published));
+  const isValidDate = published && !isNaN(Date.parse(published));
 
   const publishDate = isValidDate
     ? format(parseISO(published), "MMMM dd, yyyy")
