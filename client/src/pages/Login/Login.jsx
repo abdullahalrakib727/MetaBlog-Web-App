@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "./login.scss";
+
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
@@ -31,30 +31,12 @@ const Login = () => {
     signInUser(email, password)
       .then((result) => {
         result &&
-          toast.success("Login successful", {
-            style: {
-              border: "1px solid #FF8303",
-              padding: "16px",
-              color: "white",
-              backgroundColor: "#242320",
-            },
-            iconTheme: {
-              primary: "#FF8303",
-              secondary: "#FFFAEE",
-            },
-          });
+          toast.success("Login successful");
         navigate(from, { replace: true });
       })
       .catch((error) => {
         error &&
-          toast.error("Wrong Email or Password !!!", {
-            style: {
-              border: "1px solid #FF8303",
-              padding: "16px",
-              color: "white",
-              backgroundColor: "#242320",
-            },
-          });
+          toast.error("Wrong Email or Password !!!");
       });
   };
 
@@ -108,7 +90,7 @@ const Login = () => {
                     />
                   )}
                 </div>
-                <button className="rounded-xl text-[#F0E3CA]  bg-blue-600 hover:bg-blue-500 py-2 hover:scale-105 duration-300">
+                <button className="rounded-xl text-[#F0E3CA]  bg-blue-600 transition-all hover:bg-blue-500 py-2 hover:scale-105 duration-300">
                   Login
                 </button>
               </form>
@@ -122,7 +104,7 @@ const Login = () => {
               <div className="text-white dark:text-white">
                 <button
                   onClick={() => handleGoogleLogin()}
-                  className=" py-2 w-full rounded-xl mt-5 flex justify-center items-center hover:scale-105 duration-300  bg-blue-600 hover:bg-blue-500 hover:text-[#F0E3CA]"
+                  className=" py-2 w-full rounded-xl mt-5 flex justify-center items-center hover:scale-105 duration-300  bg-blue-600 hover:bg-blue-500 transition-all hover:text-[#F0E3CA]"
                 >
                   <FaGoogle className="w-[25px] mr-1 text-sm" />
                   Login in with google
@@ -136,7 +118,7 @@ const Login = () => {
               <div className="text-xs mt-3 flex justify-between items-center">
                 <p>If you dont have an account....</p>
                 <Link to="/register">
-                  <button className="py-2 px-5 bg-blue-600 rounded-xl hover:bg-blue-500 text-white hover:text-[#F0E3CA] hover:scale-110 duration-300">
+                  <button className="py-2 px-5 bg-blue-600 rounded-xl hover:bg-blue-500 text-white hover:text-[#F0E3CA] transition-all hover:scale-110 duration-300">
                     Signup
                   </button>
                 </Link>

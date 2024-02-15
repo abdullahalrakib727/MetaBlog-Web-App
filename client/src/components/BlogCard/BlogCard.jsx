@@ -6,7 +6,7 @@ import { format, parseISO } from "date-fns";
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 
-const RecentBlogCard = ({ blog }) => {
+const BlogCard = ({ blog }) => {
   const { _id, title, photoUrl, category, authorName, authorImg, published } =
     blog;
 
@@ -60,4 +60,4 @@ const RecentBlogCard = ({ blog }) => {
   );
 };
 
-export default RecentBlogCard;
+export default BlogCard;

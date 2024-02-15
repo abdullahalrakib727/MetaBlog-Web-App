@@ -8,7 +8,7 @@ import JoditEditor from "jodit-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const Update = () => {
+const UpdateBlog = () => {
   const params = useParams();
   const [updatedContent, setUpdatedContent] = useState();
 
@@ -139,7 +139,7 @@ const Update = () => {
             />
           </div>
           <div className="form-control mt-6">
-            <button className="btn  dark:bg-white text-black uppercase">
+            <button className=" py-2 rounded-md text-white bg-[#4B6BFB] hover:bg-blue-400 transition-colors duration-300  dark:bg-[#4B6BFB] uppercase w-32 mx-auto">
               Update
             </button>
           </div>
@@ -149,4 +149,4 @@ const Update = () => {
   );
 };
 
-export default Update;
+export default UpdateBlog;

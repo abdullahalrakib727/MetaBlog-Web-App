@@ -49,6 +49,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser === null) {
         setLoading(false);
       }
+      console.log(currentUser)
       const userEmail = currentUser?.email || user?.email;
       const user = { email: userEmail };
       setUser(currentUser);

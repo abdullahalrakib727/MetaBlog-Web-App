@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useBlogData from "../../../api/useBlogData";
+import useBlogData from "../../api/useBlogData";
 import { format, parseISO } from "date-fns";
 
 const Banner = () => {

@@ -3,11 +3,12 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import Container from "../../components/Container/Container";
 import { ChakraProvider } from "@chakra-ui/react";
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
-import RecentBlogCard from "../Recent Blog/RecentBlogCard";
+
 import { useQuery } from "@tanstack/react-query";
 
 import PdSkeleton from "../../components/Skeletons/ProfileDetailsSkeleton/PdSkeleton";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import BlogCard from "../../components/BlogCard/BlogCard";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -74,11 +75,11 @@ const Profile = () => {
                     <div className="flex justify-center px-4 xl:px-0">
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                         {data.map((blog) => (
-                          <RecentBlogCard
+                          <BlogCard
                             key={blog._id}
                             isLoaded={isLoading}
                             blog={blog}
-                          ></RecentBlogCard>
+                          ></BlogCard>
                         ))}
                       </div>
                     </div>
@@ -86,7 +87,7 @@ const Profile = () => {
                 ) : (
                   <>
                     <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
-                      {"You haven't created any blogs yet"}
+                      {"You haven't wrote any blogs yet"}
                     </h3>
                   </>
                 )}

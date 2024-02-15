@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const AddBlog = () => {
-  const { user } = useContext(AuthContext);
+  const { user, sendVerificationEmail } = useContext(AuthContext);
   // const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
@@ -21,7 +21,7 @@ const AddBlog = () => {
 
   const navigate = useNavigate();
 
-  // ToDo will add react hook form here later
+  // Todo : will add react hook form here later
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,13 +64,46 @@ const AddBlog = () => {
     }
   };
 
+  const handleVerification = async () => {
+    await sendVerificationEmail()
+      .then(() => {
+        toast.success("Verification email sent");
+      })
+      .catch(() => {
+        toast.error("Too many requests, please try again later");
+      });
+  };
+
+  if (user.emailVerified === false) {
+    return (
+      <div className="my-10">
+        <Helmet>
+          <title>Add Blog | MetaBlog</title>
+        </Helmet>
+        <div className="min-h-screen flex justify-center items-center">
+          <div className="card w-full">
+            <h1 className="dark:text-white text-center text-2xl font-semibold">
+              Check your email to verify your account.
+            </h1>
+            <button
+              onClick={handleVerification}
+              className="mt-5 py-2 px-5 inline-block w-32 mx-auto bg-blue-600 rounded-xl hover:bg-blue-500 text-white hover:text-[#F0E3CA] transition-all hover:scale-110 duration-300"
+            >
+              Send Link
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="my-10">
       <Helmet>
         <title>Add Blog | MetaBlog</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
-        <div className="card w-full shadow-md">
+        <div className="card w-full shadow-xl">
           <h1 className="dark:text-white text-center text-2xl font-semibold">
             Write a blog from here
           </h1>
@@ -128,7 +161,7 @@ const AddBlog = () => {
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn  dark:bg-white text-black uppercase">
+              <button className=" py-2 rounded-md text-white bg-[#4B6BFB] hover:bg-blue-400 transition-colors duration-300  dark:bg-[#4B6BFB] uppercase w-32 mx-auto">
                 Add
               </button>
             </div>

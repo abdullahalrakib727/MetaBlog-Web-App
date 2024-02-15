@@ -5,7 +5,7 @@ import { TfiSearch } from "react-icons/tfi";
 
 import LightLogoSvg from "../../components/Svgs/LightLogoSvg";
 import "./Nav.css";
-import ThemeSwitch from "../../components/ThemeSwitch";
+import ThemeSwitch from "../../components/Theme/ThemeSwitch";
 import DarkLogoSvg from "../../components/Svgs/DarkLogoSvg";
 
 import logo from "../../assets/logos.png";

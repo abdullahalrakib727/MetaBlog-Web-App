@@ -8,7 +8,8 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const { registerUser, updateUserProfile } = useContext(AuthContext);
+  const { registerUser, updateUserProfile, sendVerificationEmail } =
+    useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
@@ -24,19 +25,11 @@ const Register = () => {
 
     registerUser(email, password)
       .then((result) => {
-        result &&
-          toast.success("Signup successful!", {
-            style: {
-              border: "1px solid #FF8303",
-              padding: "16px",
-              color: "white",
-              backgroundColor: "#242320",
-            },
-            iconTheme: {
-              primary: "#FF8303",
-              secondary: "#FFFAEE",
-            },
-          });
+        result && toast.success("Signup successful!");
+      })
+      .then(() => {
+        sendVerificationEmail();
+        toast.success("Verification email sent");
       })
       .then(() => {
         updateUserProfile(name, photo);
@@ -119,21 +112,18 @@ const Register = () => {
                     />
                   )}
                 </div>
-                <button className="rounded-xl text-[#F0E3CA]  bg-blue-600 hover:bg-blue-500 py-2 hover:scale-105 duration-300">
-                 Signup
+                <button className="rounded-xl text-[#F0E3CA]  transition-all bg-blue-600 hover:bg-blue-500 py-2 hover:scale-105 duration-300">
+                  Signup
                 </button>
               </form>
-
-              <a href="">
-                <div className="mt-5 text-sm border-b border-gray-400 py-4">
-                  Forgot your password ?
-                </div>
-              </a>
+              <div className="mt-5 text-sm border-b border-gray-400 py-4">
+                <a href="#" className="text-black dark:text-white">Forgot your password ?</a>
+              </div>
               <div className="text-xs mt-3 flex justify-between items-center">
                 <p>If you already have an account...</p>
                 <Link to="/login">
-                  <button className="py-2 px-5 bg-blue-600 rounded-xl hover:bg-blue-500 text-white hover:text-[#F0E3CA] hover:scale-110 duration-300">
-                   login
+                  <button className="py-2 px-5 transition-all bg-blue-600 rounded-xl hover:bg-blue-500 text-white hover:text-[#F0E3CA] hover:scale-110 duration-300">
+                    login
                   </button>
                 </Link>
               </div>

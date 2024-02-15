@@ -4,11 +4,11 @@ import AddBlog from "../pages/AddBlog/AddBlog";
 
 import BlogDetail from "../pages/Blog Details/BlogDetail";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import Home from "../pages/Home/Home/Home";
+import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Profile from "../pages/Profile/Profile";
 import Register from "../pages/Register/Register";
-import Update from "../pages/Update Blog/Update";
+import Update from "../pages/UpdateBlog/UpdateBlog";
 
 import PrivateRoute from "./PrivateRoute";
 import Root from "../layout/Root";

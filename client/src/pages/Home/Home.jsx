@@ -1,9 +1,10 @@
 import { Helmet } from "react-helmet";
-import RecentBlog from "../../Recent Blog/RecentBlog";
-import Banner from "../Components/Banner";
+import RecentBlog from "../Recent Blog/RecentBlog";
+
 
 import { useNavigate } from "react-router-dom";
-import Adds from "../../../components/Adds/Adds";
+import Adds from "../../components/Adds/Adds";
+import Banner from "../../components/Banner/Banner";
 
 const Home = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
 
-import RecentBlogCard from "../Recent Blog/RecentBlogCard";
+
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 import Container from "../../components/Container/Container";
 
@@ -22,6 +22,7 @@ import { format, parseISO } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import FsSkeleton from "../../components/Skeletons/FeaturedSliderSkeleton/FsSkeleton";
+import BlogCard from "../../components/BlogCard/BlogCard";
 
 const AllBlog = () => {
   // hooks
@@ -166,7 +167,7 @@ const AllBlog = () => {
               {allBlogs?.length > 0 ? (
                 <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
                   {allBlogs.map((blog) => (
-                    <RecentBlogCard key={blog._id} blog={blog}></RecentBlogCard>
+                    <BlogCard key={blog._id} blog={blog}></BlogCard>
                   ))}
                 </div>
               ) : (
