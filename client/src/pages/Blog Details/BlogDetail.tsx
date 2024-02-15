@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { FC, useContext, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -19,9 +19,13 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
 const { Text } = Typography;
-const { Title } = Typography;
+const { Title } = Typography
 
-const BlogDetail = () => {
+;
+
+const BlogDetail:FC = ():JSX.Element => {
+
+
   const { user } = useContext(AuthContext);
   // const axiosSecure = useAxiosSecure();
 
@@ -49,7 +53,7 @@ const BlogDetail = () => {
     content,
   } = data || {};
 
-  const applyDarkMode = (tagName, className) => {
+  const applyDarkMode = (tagName: string, className: string) => {
     const elements = document.getElementsByTagName(tagName);
     const elementsArray = Array.from(elements);
     elementsArray.forEach((element) => {
@@ -71,13 +75,13 @@ const BlogDetail = () => {
     applyDarkMode("td", "dark:text-white");
   }, [content]);
 
-  const isValidDate = published && !isNaN(new Date(published));
+  const isValidDate = published && !isNaN(Date.parse(published));
 
   const publishDate = isValidDate
     ? format(parseISO(published), "MMMM dd, yyyy")
     : null;
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",
@@ -183,7 +187,10 @@ const BlogDetail = () => {
 
           <Typography>
             {isLoading ? (
-              <Skeleton count={2}></Skeleton>
+              <>
+                <Skeleton />
+                <Skeleton />
+              </>
             ) : (
               <Title
                 className="font-bold p-2 lg:p-0 dark:text-white lg:mt-8 text-center"

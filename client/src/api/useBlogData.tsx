@@ -1,7 +1,7 @@
 import { QueryObserverResult, RefetchOptions, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-interface BlogsProps {
+export interface BlogsProps {
   _id: string;
   title: string;
   photoUrl: string;

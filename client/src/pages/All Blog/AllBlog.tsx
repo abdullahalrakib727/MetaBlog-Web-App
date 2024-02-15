@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { ChakraProvider } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
-
 
 import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 import Container from "../../components/Container/Container";
@@ -23,8 +22,9 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import FsSkeleton from "../../components/Skeletons/FeaturedSliderSkeleton/FsSkeleton";
 import BlogCard from "../../components/BlogCard/BlogCard";
+import { BlogsProps } from "../../api/useBlogData";
 
-const AllBlog = () => {
+const AllBlog: FC = (): JSX.Element => {
   // hooks
 
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const AllBlog = () => {
 
   // functions
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "") {
       setSelectedCategory("");
       navigate("/blogs");
@@ -96,7 +96,7 @@ const AllBlog = () => {
               modules={[Autoplay]}
               className="mySwiper"
             >
-              {data.map((blog) => (
+              {data.map((blog: BlogsProps) => (
                 <SwiperSlide key={blog._id} style={{ borderRadius: "12px" }}>
                   <Link to={`/blogs/${blog._id}`}>
                     <div className="max-w-[1216px] overflow-hidden rounded-xl">
@@ -125,7 +125,7 @@ const AllBlog = () => {
                             </h6>
                             <p className="text-base font-normal">
                               {blog.published &&
-                              !isNaN(new Date(blog.published))
+                              !isNaN(Date.parse(blog.published))
                                 ? format(
                                     parseISO(blog.published),
                                     "MMMM dd, yyyy"
@@ -166,7 +166,7 @@ const AllBlog = () => {
             <div className="flex justify-center">
               {allBlogs?.length > 0 ? (
                 <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-                  {allBlogs.map((blog) => (
+                  {allBlogs.map((blog: BlogsProps) => (
                     <BlogCard key={blog._id} blog={blog}></BlogCard>
                   ))}
                 </div>

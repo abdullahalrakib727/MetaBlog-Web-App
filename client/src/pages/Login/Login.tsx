@@ -1,43 +1,36 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { useContext, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
 import { FaGoogle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { toast } from "react-hot-toast";
+
 import { useForm } from "react-hook-form";
 
-const Login = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [showPass, setShowPass] = useState(false);
-  const { register, handleSubmit } = useForm();
 
-  let from = location.state?.from?.pathname || "/";
+interface FormData {
+  email: string;
+  password: string;
+}
+
+
+const Login: FC = (): JSX.Element => {
+
+
+  const [showPass, setShowPass] = useState<boolean>(false);
+  const { register, handleSubmit } = useForm<FormData>();
 
   const { signInUser, handleGoogleSignIn } = useContext(AuthContext);
 
   const handleGoogleLogin = () => {
-    handleGoogleSignIn().then(() => {
-      toast.success("Login Successful!");
-      navigate(from, { replace: true });
-    });
+    handleGoogleSignIn();
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormData) => {
     const email = data?.email;
     const password = data?.password;
 
-    signInUser(email, password)
-      .then((result) => {
-        result &&
-          toast.success("Login successful");
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        error &&
-          toast.error("Wrong Email or Password !!!");
-      });
+    signInUser(email, password);
   };
 
   return (
@@ -65,7 +58,6 @@ const Login = () => {
                 <input
                   className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
                   type="email"
-                  name="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
@@ -73,7 +65,6 @@ const Login = () => {
                   <input
                     className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
-                    name="password"
                     id=""
                     placeholder="Password"
                     {...register("password", { required: true })}
@@ -81,12 +72,12 @@ const Login = () => {
                   {showPass ? (
                     <FaRegEyeSlash
                       className="absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500"
-                      onClick={() => setShowPass((prev) => setShowPass(!prev))}
+                      onClick={() => setShowPass((prev) => !prev)}
                     />
                   ) : (
                     <FaRegEye
                       className="absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500"
-                      onClick={() => setShowPass((prev) => setShowPass(!prev))}
+                      onClick={() => setShowPass((prev) => !prev)}
                     />
                   )}
                 </div>

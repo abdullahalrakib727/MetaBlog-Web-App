@@ -13,6 +13,7 @@ import {
 import { FC, createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -47,6 +48,9 @@ const auth = getAuth(app);
 const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const registerUser = async (email: string, password: string) => {
     setLoading(true);
@@ -80,13 +84,10 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const signInUser = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await signInWithEmailAndPassword(auth, email, password);
       setLoading(false);
-      return userCredential;
+      toast.success("Login successful");
+      return navigate(from, { replace: true });
     } catch (error) {
       setLoading(false);
       console.error(error);
@@ -97,7 +98,9 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
 
   const handleGoogleSignIn = async () => {
     try {
-      return await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider);
+      toast.success("Login Successful!");
+      return navigate(from, { replace: true });
     } catch (error) {
       console.error(error);
     }

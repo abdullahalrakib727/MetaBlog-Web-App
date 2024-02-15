@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import image from "../../assets/images/Scarecrow.png"
 import './ErrorPage.css'
-const ErrorPage = () => {
+import { FC } from "react";
+
+
+
+const ErrorPage:FC = ():JSX.Element => {
     return (
         <section className="max-w-[1216px] min-h-screen mx-auto ">
         <header>

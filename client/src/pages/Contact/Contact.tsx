@@ -1,12 +1,11 @@
 import { Container } from "@chakra-ui/react";
+import { FC } from "react";
 import toast from "react-hot-toast";
 
-const Contact = () => {
+const Contact:FC = ():JSX.Element => {
+  // todo: will add email js later
 
-
-// todo: will add email js later
-
-  const handleSend = (event) => {
+  const handleSend = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     toast.success("Message Sent Successfully");
   };
@@ -25,7 +24,10 @@ const Contact = () => {
               soon as possible.
             </p>
 
-            <form className="w-full max-w-lg" onSubmit={(event)=>handleSend(event)}>
+            <form
+              className="w-full max-w-lg"
+              onSubmit={(event) => handleSend(event)}
+            >
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                   <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 dark:text-white">
@@ -33,7 +35,6 @@ const Contact = () => {
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-               
                     type="text"
                     placeholder="John"
                     required
@@ -45,7 +46,6 @@ const Contact = () => {
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              
                     type="text"
                     placeholder="Doe"
                     required
@@ -59,7 +59,6 @@ const Contact = () => {
                   </label>
                   <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-               
                     type="email"
                     placeholder="john@example.com"
                     required
@@ -73,9 +72,8 @@ const Contact = () => {
                   </label>
                   <textarea
                     className="appearance-none block w-full bg-gray-200 text-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:shadow-outline"
-        
                     placeholder="Write your message here..."
-                    rows="6"
+                    rows={6}
                     required
                   ></textarea>
                 </div>

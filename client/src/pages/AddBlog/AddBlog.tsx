@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import { Helmet } from "react-helmet";
 import { AuthContext } from "../../Providers/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -10,7 +10,7 @@ import JoditEditor from "jodit-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const AddBlog = () => {
+const AddBlog:FC = ():JSX.Element => {
   const { user, sendVerificationEmail } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   // const axiosSecure = useAxiosSecure();
