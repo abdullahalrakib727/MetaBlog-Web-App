@@ -1,6 +1,7 @@
 
-import useAxiosPublic from '../hooks/useAxiosPublic';
+
 import { useQuery } from '@tanstack/react-query';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const useRecentBlogs = () => {
 
