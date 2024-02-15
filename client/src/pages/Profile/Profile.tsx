@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Container from "../../components/Container/Container";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -9,8 +9,9 @@ import { useQuery } from "@tanstack/react-query";
 import PdSkeleton from "../../components/Skeletons/ProfileDetailsSkeleton/PdSkeleton";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import BlogCard from "../../components/BlogCard/BlogCard";
+import { BlogsProps } from "../../api/useBlogData";
 
-const Profile = () => {
+const Profile: FC = (): JSX.Element => {
   const { user } = useContext(AuthContext);
 
   const axiosPublic = useAxiosPublic();
@@ -18,7 +19,7 @@ const Profile = () => {
   const { data = [], isLoading } = useQuery({
     queryKey: ["blogByUser", user?.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/blogs?authorId=${user.uid}`);
+      const res = await axiosPublic.get(`/blogs?authorId=${user?.uid}`);
       return res.data.data;
     },
   });
@@ -37,7 +38,7 @@ const Profile = () => {
               <div className="flex items-center gap-4 mb-6">
                 <img
                   className="max-w-[64px] max-h-[64px] object-contain rounded-full"
-                  src={user?.photoURL}
+                  src={user?.photoURL || ""}
                   alt="user-image"
                 />
                 <div>
@@ -74,12 +75,8 @@ const Profile = () => {
                     </h3>
                     <div className="flex justify-center px-4 xl:px-0">
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
-                        {data.map((blog) => (
-                          <BlogCard
-                            key={blog._id}
-                            isLoaded={isLoading}
-                            blog={blog}
-                          ></BlogCard>
+                        {data.map((blog: BlogsProps) => (
+                          <BlogCard key={blog._id} blog={blog}></BlogCard>
                         ))}
                       </div>
                     </div>
