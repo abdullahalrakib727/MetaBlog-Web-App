@@ -2,6 +2,10 @@ import { Container } from "@chakra-ui/react";
 import toast from "react-hot-toast";
 
 const Contact = () => {
+
+
+// todo: will add email js later
+
   const handleSend = (event) => {
     event.preventDefault();
     toast.success("Message Sent Successfully");
@@ -12,10 +16,10 @@ const Contact = () => {
       <div className="min-h-[calc(100vh-523px)] my-5 flex justify-center items-center">
         <div className="w-11/12 mx-auto bg-slate-100 dark:bg-[#242535] py-5 rounded-md">
           <div className="flex flex-col items-center mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-4 dark:text-white">
+            <h1 className="text-3xl font-bold mb-4 text-blue-600 dark:text-white text-center">
               Contact Us
             </h1>
-            <p className="text-gray-600 my-8 text-center md:w-1/2 mx-auto dark:text-white">
+            <p className="text-gray-600 my-8 text-center md:w-1/2 mx-auto dark:text-white text-sm">
               Have a question, suggestion, or just want to say hi? We'd love to
               hear from you! Fill out the form below and well get back to you as
               soon as possible.

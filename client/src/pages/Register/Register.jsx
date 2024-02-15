@@ -71,21 +71,21 @@ const Register = () => {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <input
-                  className="p-2 mt-8 border rounded-xl text-black font-medium"
+                  className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
                   type="text"
                   name="name"
                   placeholder="Name"
                   {...register("name", { required: true })}
                 />
                 <input
-                  className="p-2 border rounded-xl text-black font-medium"
+                  className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium"
                   type="email"
                   name="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
                 <input
-                  className="p-2 border rounded-xl text-black font-medium"
+                  className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium"
                   type="text"
                   name="photo"
                   placeholder="Photo URL"
@@ -93,7 +93,7 @@ const Register = () => {
                 />
                 <div className="relative">
                   <input
-                    className="p-2 border rounded-xl w-full text-black font-medium"
+                    className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
                     name="password"
                     id=""

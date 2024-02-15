@@ -1,6 +1,7 @@
 ## Features
 
 - Firebase authentication : Secure and trusted authentication system by google. As one of it's feature is that you won't be able to create multiple account with same email.
+- Verification: You won't be able to create blog without verifying your email address. An email with verification link will be sent to your provided email address from firebase after successful registration.
 - Jodit editor which is a powerful editor for writing blog. You have full freedom to customize and add blog as you prefer.
 - Darkmode : We have Darkmode on this web app. You just need to click on the toggle button and dark mode will be applied throughout this website.
 - Live Searchbar : We also have a searchbar at the navbar. You can type any words and it will show you blogs related to your typed words if it exits on our web app database.

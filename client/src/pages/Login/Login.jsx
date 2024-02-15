@@ -63,7 +63,7 @@ const Login = () => {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <input
-                  className="p-2 mt-8 border rounded-xl text-black font-medium"
+                  className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -71,7 +71,7 @@ const Login = () => {
                 />
                 <div className="relative">
                   <input
-                    className="p-2 border rounded-xl w-full text-black font-medium"
+                    className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
                     name="password"
                     id=""
