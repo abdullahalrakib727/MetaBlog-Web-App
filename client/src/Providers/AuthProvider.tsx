@@ -116,18 +116,15 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        setLoading(false);
-        // console.log(currentUser);
       } else {
         setUser(null);
-        setLoading(true);
       }
+      setLoading(false); 
     });
     return () => {
       unSubscribe();
     };
   }, []);
-
   // ! Logout user
   const logOutUser = async () => {
     try {

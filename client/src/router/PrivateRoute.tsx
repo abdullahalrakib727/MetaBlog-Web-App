@@ -5,25 +5,22 @@ import { AuthContext } from "../Providers/AuthProvider";
 
 interface PrivateRouteProps {
   children: React.ReactNode;
-
 }
 
-
-const PrivateRoute:FC<PrivateRouteProps> = ({ children }) => {
+const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
   const { loading, user } = useContext(AuthContext);
   const location = useLocation();
+
   if (loading) {
     return (
       <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>
     );
   }
-  if (user) {
-    return children;
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return (
-    <Navigate to="/login" state={{ from: location }} replace/>
-  );
+  if (user) return children;
 };
 
 export default PrivateRoute;
