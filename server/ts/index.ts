@@ -19,6 +19,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://meta-blog-app.vercel.app",
+      "https://blog-website-server-theta.vercel.app"
     ],
     credentials: true,
   })
