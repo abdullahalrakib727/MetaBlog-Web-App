@@ -11,10 +11,10 @@ export interface BlogsProps {
   published: string;
 }
 
-interface BlogData {
+export interface BlogData {
   data: BlogsProps[];
   isLoading: boolean;
-  refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<BlogsProps[], unknown>>;
+  refetch?: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<BlogsProps[], unknown>>;
 }
 
 const useBlogData = (): BlogData => {

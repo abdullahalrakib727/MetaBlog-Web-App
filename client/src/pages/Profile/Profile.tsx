@@ -19,7 +19,7 @@ const Profile: FC = (): JSX.Element => {
   const axiosPublic = useAxiosPublic();
 
   const { data = [], isLoading } = useQuery({
-    queryKey: ["blogByUser", user?.email],
+    queryKey: ["blogByUser", user?.uid],
     queryFn: async () => {
       const res = await axiosPublic.get(`/blogs?authorId=${user?.uid}`);
       return res.data.data;

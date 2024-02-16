@@ -6,20 +6,14 @@ import { format, parseISO } from "date-fns";
 import "aos/dist/aos.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { FC } from "react";
+import { BlogsProps } from "../../api/useBlogData";
 
-interface BlogProps {
-  blog: {
-    _id: string;
-    title: string;
-    photoUrl: string;
-    category: string;
-    authorName: string;
-    authorImg: string;
-    published: string;
-  };
+interface BlogCardProps {
+  blog: BlogsProps;
 }
 
-const BlogCard: FC<BlogProps> = ({ blog }): JSX.Element => {
+const BlogCard: FC<BlogCardProps> = ({ blog }): JSX.Element => {
+  
   const { _id, title, photoUrl, category, authorName, authorImg, published } =
     blog;
 

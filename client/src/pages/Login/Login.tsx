@@ -32,9 +32,9 @@ const Login: FC = (): JSX.Element => {
     const email = data?.email;
     const password = data?.password;
 
-    const result =await signInUser(email, password);
+    const result = await signInUser(email, password);
     if (result) {
-      navigate(from, { replace: true });
+    return  navigate(from, { replace: true });
     }
   };
 
