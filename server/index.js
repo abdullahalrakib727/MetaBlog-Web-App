@@ -6,15 +6,12 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.PORT || 5000;
 
-// environment variables
-
 // middleware
 app.use(
   cors({
     origin: [
       "https://blog-zone-web.netlify.app",
       "http://localhost:5173",
-      "http://localhost:5174",
       "https://meta-blog-app.vercel.app",
     ],
     credentials: true,
@@ -41,28 +38,23 @@ const client = new MongoClient(uri, {
   },
 });
 
-// verify token
+//* token verification middleware
+const verifyToken = async (req, res, next) => {
+  const token = await req.cookies?.token;
+  if (!token) {
+    return res.status(401).send("Access Denied");
+  }
 
-// const verifyToken = async (req, res, next) => {
-//   const token = req?.cookies?.token;
-//   // console.log('token inside verify token',token);
-
-//   if (!token) {
-//     res.status(401).send({ message: "unauthorized" });
-//   }
-//   jwt.verify(token, process.env.ACCESS_TOKEN, (error, decoded) => {
-//     // error
-//     if (error) {
-//       console.log(error);
-//       return res.status(401).send({ message: "unauthorized" });
-//     }
-
-//     console.log(decoded);
-//     // decoded
-//     req.user = decoded;
-//     next();
-//   });
-// };
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
+    console.log("decoded", verified);
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(403).send("Invalid Token");
+  }
+};
 
 async function run() {
   try {
@@ -71,25 +63,23 @@ async function run() {
     });
 
     const blogsCollection = client.db("MetaBlogDB").collection("allBlogs");
-    const CommentsCollection = client.db("MetaBlogDB").collection("comments");
-    const wishlistCollection = client.db("MetaBlogDB").collection("wishlist");
 
-    //  auth related api
+    //!  auth related api
     app.post("/jwt", async (req, res) => {
       const user = req.body;
-
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN, {
-        expiresIn: "1h",
-      });
-
+      console.log("jwt", req.body);
+      const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" });
       res
         .cookie("token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+          maxAge: 3600000,
         })
         .send({ success: true });
     });
+
+    //
 
     app.post("/logout", async (req, res) => {
       const user = req.body;
@@ -97,7 +87,7 @@ async function run() {
       res.clearCookie("token", { maxAge: 0 }).send({ message: true });
     });
 
-    //*  blogs related api
+    //!  blogs related api
 
     // ? search api
     app.get("/blogs/search", async (req, res) => {
@@ -122,7 +112,7 @@ async function run() {
         const blogs = await blogsCollection
           .find()
           .project({ authorEmail: 0 })
-          .sort({ published : -1 })
+          .sort({ published: -1 })
           .limit(9)
           .toArray();
         return res.status(200).send({ total: blogs.length, data: blogs });
@@ -176,6 +166,7 @@ async function run() {
         const query = { _id: new ObjectId(id) };
 
         const result = await blogsCollection.findOne(query);
+
         return res.status(200).send({ success: true, data: result });
       } catch (error) {
         return res.status(500).send({ message: error.message });
@@ -184,10 +175,22 @@ async function run() {
 
     // ? update blog api
 
-    app.patch("/blogs/:id", async (req, res) => {
+    app.patch("/blogs/:id", verifyToken, async (req, res) => {
+      // console.log("user in the valid token", req.user);
       try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
+
+        // search the blog that is going to be updated
+
+        const searchedBlog = await blogsCollection.findOne(query);
+
+        // verify authorId of the searched blog with the authorId of the user
+
+        if (req.user.userId !== searchedBlog.authorId) {
+          return res.status(403).send({ message: "Unauthorized access" });
+        }
+
         const options = { upsert: true };
         const updatedBlog = req.body;
         const blog = {
@@ -207,10 +210,21 @@ async function run() {
 
     // ? delete blog api
 
-    app.delete("/blogs/:id", async (req, res) => {
+    app.delete("/blogs/:id", verifyToken, async (req, res) => {
       try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
+
+        // search the blog that is going to be deleted
+
+        const searchedBlog = await blogsCollection.findOne(query);
+
+        // verify authorId of the searched blog with the authorId of the user
+
+        if (req.user.userId !== searchedBlog.authorId) {
+          return res.status(403).send({ message: "Unauthorized access" });
+        }
+
         const result = await blogsCollection.deleteOne(query);
         return res.status(200).send(result);
       } catch (error) {
@@ -218,80 +232,8 @@ async function run() {
       }
     });
 
-    //  comments related api
-
-    app.post("/comments", async (req, res) => {
-      const comment = req.body;
-      const result = await CommentsCollection.insertOne(comment);
-      res.send(result);
-    });
-
-    app.get("/comments", async (req, res) => {
-      const cursor = CommentsCollection.find();
-      const result = await cursor.toArray();
-      res.send(result);
-    });
-
-    app.patch("/comments/:id", async (req, res) => {
-      const id = req.params.id;
-
-      const query = { _id: new ObjectId(id) };
-      const updatedComment = req.body;
-      const comment = {
-        $set: {
-          comment: updatedComment.comment,
-        },
-      };
-      const result = await CommentsCollection.updateOne(query, comment);
-      res.send(result);
-    });
-
-    app.delete("/comments/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await CommentsCollection.deleteOne(query);
-      res.send(result);
-    });
-
-    //  wishlist related api
-
-    app.post("/wishlist", async (req, res) => {
-      const wishlist = req.body;
-      const result = await wishlistCollection.insertOne(wishlist);
-      res.send(result);
-    });
-
-    app.get("/wishlist", async (req, res) => {
-      // if (req.query.email !== req.user.email) {
-      //   return res.status(403).send({ message: "forbidden" });
-      // }
-
-      let query = {};
-      if (req.query?.email) {
-        query = { email: req.query.email };
-      }
-      const cursor = wishlistCollection.find(query);
-      const result = await cursor.toArray();
-      res.send(result);
-    });
-
-    app.delete("/wishlist/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await wishlistCollection.deleteOne(query);
-      res.send(result);
-    });
-
-    // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
-    // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    // console.log(
-    //   "Pinged your deployment. You successfully connected to MongoDB!"
-    // );
   } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
   }
 }
 run().catch(console.dir);
