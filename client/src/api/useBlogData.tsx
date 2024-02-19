@@ -1,5 +1,9 @@
-import { QueryObserverResult, RefetchOptions, useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  useQuery,
+} from "@tanstack/react-query";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export interface BlogsProps {
   _id: string;
@@ -14,20 +18,22 @@ export interface BlogsProps {
 export interface BlogData {
   data: BlogsProps[];
   isLoading: boolean;
-  refetch?: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<BlogsProps[], unknown>>;
+  refetch?: (
+    options?: RefetchOptions | undefined
+  ) => Promise<QueryObserverResult<BlogsProps[], unknown>>;
 }
 
 const useBlogData = (): BlogData => {
+const axiosPublic = useAxiosPublic();
+
   const {
     data = [],
     isLoading,
     refetch,
-  } = useQuery<BlogsProps[],unknown>({
+  } = useQuery<BlogsProps[], unknown>({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await axios.get(
-        "https://blog-website-server-theta.vercel.app/blogs"
-      );
+      const res = await axiosPublic.get("/blogs");
       return res.data.data;
     },
   });
@@ -37,3 +43,4 @@ const useBlogData = (): BlogData => {
 
 export default useBlogData;
 
+// https://blog-website-server-theta.vercel.app/

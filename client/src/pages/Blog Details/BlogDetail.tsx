@@ -5,29 +5,22 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
-
-// import Comment from "./Comments/Comment";
-
 import { Skeleton } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Typography } from "antd";
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
 import { format, parseISO } from "date-fns";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const { Text } = Typography;
-const { Title } = Typography
+const { Title } = Typography;
 
-;
-
-const BlogDetail:FC = ():JSX.Element => {
-
-
+const BlogDetail: FC = (): JSX.Element => {
   const { user } = useContext(AuthContext);
-  // const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
   const axiosPublic = useAxiosPublic();
 
@@ -101,7 +94,7 @@ const BlogDetail:FC = ():JSX.Element => {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
-          const res = await axiosPublic.delete(`/blogs/${id}`);
+          const res = await axiosSecure.delete(`/blogs/${id}`);
 
           if (res.data.deletedCount > 0) {
             swalWithBootstrapButtons.fire({
@@ -123,54 +116,6 @@ const BlogDetail:FC = ():JSX.Element => {
         }
       });
   };
-
-  //  show comment on site
-  // const { data: comments = [], refetch } = useQuery({
-  //   queryKey: ["comments"],
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get(
-  //       `https://blog-website-server-theta.vercel.app/comments?blog_id=${_id}`,
-  //       { withCredentials: true }
-  //     );
-  //     return res.data.data;
-  //   },
-  // });
-
-  //  add a comment
-
-  // const handleAddComment = async (e) => {
-  //   e.preventDefault();
-  //   const form = e.target;
-  //   const commenter = user?.displayName;
-  //   const commenterImg = user?.photoURL;
-  //   const commenterEmail = user?.email;
-  //   const comment = e.target.comment.value;
-  //   const published = new Date();
-  //   if (comment) {
-  //     const commentData = {
-  //       blog_id: _id,
-  //       parent_id: null,
-  //       commenter,
-  //       commenterImg,
-  //       comment,
-  //       commenterEmail,
-  //       published,
-  //     };
-
-  //     const res = await axiosSecure.post("/comments", commentData);
-  //     if (res.data.insertedId) {
-  //       form.reset();
-  //       // refetch();
-  //     }
-  //   }
-  // };
-
-  // let comments = ["abc"];
-
-  // const filteredComments = comments
-  //   .filter((comment) => comment.blog_id == _id)
-  //   .sort((a, b) => new Date(b.published) - new Date(a.published));
-
   if (isLoading) {
     return (
       <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>

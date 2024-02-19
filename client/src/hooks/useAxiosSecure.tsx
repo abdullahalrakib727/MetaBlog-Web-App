@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
-const axiosSecure:AxiosInstance = axios.create({
+const axiosSecure: AxiosInstance = axios.create({
   baseURL: "https://blog-website-server-theta.vercel.app",
   withCredentials: true,
 });

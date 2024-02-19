@@ -7,12 +7,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const UpdateBlog:FC = ():JSX.Element => {
-
-
+const UpdateBlog: FC = (): JSX.Element => {
   const params = useParams();
   const [updatedContent, setUpdatedContent] = useState("");
+  const axiosSecure = useAxiosSecure();
 
   const { data: item = [], refetch } = useQuery({
     queryKey: ["item", params.id],
@@ -31,7 +31,7 @@ const UpdateBlog:FC = ():JSX.Element => {
 
   // ToDo will add react hook form here later
 
-  const handleUpdate = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
     const title = form.blogTitle.value;
@@ -53,16 +53,11 @@ const UpdateBlog:FC = ():JSX.Element => {
       denyButtonText: `Don't save`,
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .patch(
-            `https://blog-website-server-theta.vercel.app/blogs/${item?._id}`,
-            updatedBlog,
-            {
-              withCredentials: true,
-            }
-          )
+        axiosSecure
+          .patch(`/blogs/${item?._id}`, updatedBlog, {
+            withCredentials: true,
+          })
           .then((res) => {
-            // console.log(res.data);
             if (res.data.data.modifiedCount > 0) {
               toast.success("Blog has been updated!");
               refetch();
@@ -83,7 +78,7 @@ const UpdateBlog:FC = ():JSX.Element => {
         <title>Update | MetaBlog</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
-        <form className="card-body" onSubmit={(e)=>handleUpdate(e)}>
+        <form className="card-body" onSubmit={(e) => handleUpdate(e)}>
           <h1 className="text-center dark:text-white text-2xl font-semibold">
             Update : {item?.title}
           </h1>

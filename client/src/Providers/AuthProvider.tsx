@@ -13,6 +13,7 @@ import {
 import { FC, createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -47,6 +48,8 @@ const auth = getAuth(app);
 const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const axiosPublic = useAxiosPublic();
 
   //! Register user
   const registerUser = async (email: string, password: string) => {
@@ -85,7 +88,21 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const signInUser = async (email: string, password: string) => {
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      const loggedUser = result.user;
+      console.log(loggedUser);
+
+      const userId = loggedUser?.uid;
+
+      //? sending user data to server
+      await axiosPublic.post(
+        "/jwt",
+        { userId },
+        {
+          withCredentials: true,
+        }
+      );
+
       toast.success("Login successful");
       setLoading(false);
       return true;
@@ -103,14 +120,25 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const userId = result.user?.uid;
+
+      // Send user data to server
+      await axiosPublic.post(
+        "/jwt",
+        { userId },
+        {
+          withCredentials: true,
+        }
+      );
+
       toast.success("Login Successful!");
-      return setLoading(false);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
-
   // ! Auth state change
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -119,7 +147,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
       } else {
         setUser(null);
       }
-      setLoading(false); 
+      setLoading(false);
     });
     return () => {
       unSubscribe();
