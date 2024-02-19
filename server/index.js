@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 // routes
 app.get("/", (req, res) => {
-  res.send("Blog Zone Server is Running");
+  res.send("MetaBlog server is Running");
 });
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
