@@ -48,10 +48,8 @@ const verifyToken = async (req, res, next) => {
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
-    console.log("decoded", verified);
     next();
   } catch (error) {
-    console.log(error);
     return res.status(403).send("Invalid Token");
   }
 };
@@ -59,7 +57,7 @@ const verifyToken = async (req, res, next) => {
 async function run() {
   try {
     app.get("/", (req, res) => {
-      res.send("Blog Zone Server is Running");
+      res.send("MetaBlog Server is Running");
     });
 
     const blogsCollection = client.db("MetaBlogDB").collection("allBlogs");
@@ -67,7 +65,6 @@ async function run() {
     //!  auth related api
     app.post("/jwt", async (req, res) => {
       const user = req.body;
-      console.log("jwt", req.body);
       const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" });
       res
         .cookie("token", token, {
@@ -83,7 +80,6 @@ async function run() {
 
     app.post("/logout", async (req, res) => {
       const user = req.body;
-      console.log(user);
       res.clearCookie("token", { maxAge: 0 }).send({ message: true });
     });
 
@@ -176,7 +172,6 @@ async function run() {
     // ? update blog api
 
     app.patch("/blogs/:id", verifyToken, async (req, res) => {
-      // console.log("user in the valid token", req.user);
       try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
