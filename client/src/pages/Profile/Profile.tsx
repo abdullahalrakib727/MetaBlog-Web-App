@@ -7,13 +7,11 @@ import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 
 import PdSkeleton from "../../components/Skeletons/ProfileDetailsSkeleton/PdSkeleton";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../api/useAxiosPublic";
 import BlogCard from "../../components/BlogCard/BlogCard";
 import { BlogsProps } from "../../api/useBlogData";
 
 const Profile: FC = (): JSX.Element => {
-
-  
   const { user } = useContext(AuthContext);
 
   const axiosPublic = useAxiosPublic();

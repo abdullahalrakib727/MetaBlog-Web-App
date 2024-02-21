@@ -10,7 +10,7 @@ import logo2 from "../../../assets/lightlogo.png";
 import { debounce } from "lodash";
 import ThemeSwitch from "../../Theme/ThemeSwitch";
 import { AuthContext } from "../../../Providers/AuthProvider";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../../api/useAxiosPublic";
 import DarkLogoSvg from "../../Svgs/DarkLogoSvg";
 import LightLogoSvg from "../../Svgs/LightLogoSvg";
 import { BlogsProps } from "../../../api/useBlogData";

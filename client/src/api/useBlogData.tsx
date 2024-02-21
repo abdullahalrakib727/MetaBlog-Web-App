@@ -3,7 +3,7 @@ import {
   RefetchOptions,
   useQuery,
 } from "@tanstack/react-query";
-import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosPublic from "./useAxiosPublic";
 
 export interface BlogsProps {
   _id: string;
@@ -24,7 +24,7 @@ export interface BlogData {
 }
 
 const useBlogData = (): BlogData => {
-const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
 
   const {
     data = [],
@@ -42,5 +42,3 @@ const axiosPublic = useAxiosPublic();
 };
 
 export default useBlogData;
-
-// https://blog-website-server-theta.vercel.app/

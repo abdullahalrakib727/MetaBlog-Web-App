@@ -11,9 +11,9 @@ import { Typography } from "antd";
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
 import { format, parseISO } from "date-fns";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../api/useAxiosPublic";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../api/useAxiosSecure";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -195,48 +195,6 @@ const BlogDetail: FC = (): JSX.Element => {
                 </div>
               )}
             </div>
-
-            {/* comment section */}
-            {/* <section>
-              <p className="text-xl font-semibold dark:text-white">
-                Comments :
-              </p>
-
-              {filteredComments.length > 0 && (
-                <div className="bg-[#F6F6F7]">
-                  {user && (
-                    <div className="">
-                      {authorId === user?.uid ? (
-                        <p
-                          className="bg-white text-center text-red-500 pb-5 font-semibold text-lg"
-                          type="warning"
-                        >
-                          Can not comment to your own blog
-                        </p>
-                      ) : (
-                        <form
-                          className="pt-5 pl-10"
-                          onSubmit={handleAddComment}
-                        >
-                          <textarea
-                            name="comment"
-                            className="textarea textarea-info"
-                            placeholder="Add a comment"
-                          ></textarea>
-                          <br />
-                          <button className="btn">Comment</button>
-                        </form>
-                      )}
-                    </div>
-                  )}
-                  <div className="pb-5 pt-5">
-                    {filteredComments.map((c) => (
-                      <Comment refetch={refetch} key={c._id} c={c}></Comment>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </section> */}
           </Typography>
         </div>
       </div>

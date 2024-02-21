@@ -13,7 +13,7 @@ import {
 import { FC, createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import toast from "react-hot-toast";
-import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosPublic from "../api/useAxiosPublic";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -90,7 +90,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const loggedUser = result.user;
-      console.log(loggedUser);
 
       const userId = loggedUser?.uid;
 
@@ -139,6 +138,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
       setLoading(false);
     }
   };
+
   // ! Auth state change
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -153,6 +153,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
       unSubscribe();
     };
   }, []);
+
   // ! Logout user
   const logOutUser = async () => {
     try {

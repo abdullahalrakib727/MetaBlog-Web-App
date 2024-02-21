@@ -19,7 +19,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../api/useAxiosPublic";
 import FsSkeleton from "../../components/Skeletons/FeaturedSliderSkeleton/FsSkeleton";
 import BlogCard from "../../components/BlogCard/BlogCard";
 import { BlogsProps } from "../../api/useBlogData";

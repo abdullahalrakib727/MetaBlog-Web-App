@@ -1,28 +1,24 @@
 import Swal from "sweetalert2";
 
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Helmet } from "react-helmet";
 import { useNavigate, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../api/useAxiosSecure";
+import useAxiosPublic from "../../api/useAxiosPublic";
 
 const UpdateBlog: FC = (): JSX.Element => {
   const params = useParams();
   const [updatedContent, setUpdatedContent] = useState("");
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
   const { data: item = [], refetch } = useQuery({
     queryKey: ["item", params.id],
     queryFn: async () => {
-      const res = await axios.get(
-        `https://blog-website-server-theta.vercel.app/blogs/${params.id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axiosPublic.get(`/blogs/${params.id}`);
       return res.data.data;
     },
   });

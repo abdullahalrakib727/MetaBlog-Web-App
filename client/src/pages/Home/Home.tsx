@@ -1,14 +1,17 @@
 import { Helmet } from "react-helmet";
 import RecentBlog from "../Recent Blog/RecentBlog";
 
-
 import { useNavigate } from "react-router-dom";
 import Adds from "../../components/Adds/Adds";
 import Banner from "../../components/Banner/Banner";
 import { FC } from "react";
+import useBlogData from "../../api/useBlogData";
+import BannerSkeleton from "../../components/Skeletons/BannerSkeleton/BannerSkeleton";
 
-const Home:FC = ():JSX.Element => {
-  
+const Home: FC = (): JSX.Element => {
+  const { isLoading } = useBlogData();
+
+
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -21,7 +24,7 @@ const Home:FC = ():JSX.Element => {
         <title>MetaBlog</title>
       </Helmet>
       <section className="mb-10 mt-14 md:mb-[144px]">
-        <Banner></Banner>
+        {isLoading ? <BannerSkeleton /> : <Banner></Banner>}
       </section>
       <section className="flex mb-10 lg:mb-20  justify-center">
         <Adds />
