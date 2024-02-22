@@ -13,6 +13,7 @@ import Root from "../layout/Root";
 import AllBlog from "../pages/All Blog/AllBlog";
 import UpdateBlog from "../pages/UpdateBlog/UpdateBlog";
 import Contact from "../pages/Contact/Contact";
+import Dashboard from "../layout/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -51,17 +52,29 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+     
       {
-        path: "/profile",
+        path: "/contact",
+        element: <Contact />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/dashboard/tag",
+        element: <h1 className="h-screen">Hello from dashboard</h1>,
+      },
+      {
+        path: "/dashboard",
         element: (
           <PrivateRoute>
             <Profile></Profile>
           </PrivateRoute>
         ),
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
       },
     ],
   },

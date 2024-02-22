@@ -70,10 +70,13 @@ const NavBar = () => {
       <li>
         <NavLink to="/blogs">All Blogs</NavLink>
       </li>
+      <li>
+        <NavLink to="/contact">Contact</NavLink>
+      </li>
       {user ? (
         <>
           <li>
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li onClick={() => logOutUser()}>
             <NavLink to="/login">Logout</NavLink>
@@ -86,9 +89,6 @@ const NavBar = () => {
           </li>
         </>
       )}
-      <li>
-        <NavLink to="/contact">Contact</NavLink>
-      </li>
     </>
   );
 

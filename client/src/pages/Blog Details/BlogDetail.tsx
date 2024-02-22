@@ -27,7 +27,7 @@ const BlogDetail: FC = (): JSX.Element => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { data = [], isLoading } = useQuery({
+  const { data = {}, isLoading } = useQuery({
     queryKey: ["blog", params.id],
     queryFn: async () => {
       const res = await axiosPublic.get(`/blogs/${params.id}`);

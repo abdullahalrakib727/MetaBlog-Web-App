@@ -42,7 +42,7 @@ const AllBlog: FC = (): JSX.Element => {
     data: allBlogs = [],
     refetch,
     isLoading: isLoaded,
-  } = useQuery({
+  } = useQuery<BlogsProps[],unknown>({
     queryKey: ["all-blogs", selectedCategory],
     queryFn: async () => {
       const res = await axiosPublic.get(`/blogs${selectedCategory}`);
@@ -166,7 +166,7 @@ const AllBlog: FC = (): JSX.Element => {
             <div className="flex justify-center">
               {allBlogs?.length > 0 ? (
                 <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-                  {allBlogs.map((blog: BlogsProps) => (
+                  {allBlogs.map((blog) => (
                     <BlogCard key={blog._id} blog={blog}></BlogCard>
                   ))}
                 </div>
