@@ -25,15 +25,15 @@ import BlogCard from "../../components/BlogCard/BlogCard";
 import { BlogsProps } from "../../api/useBlogData";
 
 const AllBlog: FC = (): JSX.Element => {
-  // hooks
+  //* hooks
 
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get("category");
 
-  // data fetching
+  //* data fetching
 
   const axiosPublic = useAxiosPublic();
   const { data, isLoading } = useRecentBlogs();
@@ -42,7 +42,7 @@ const AllBlog: FC = (): JSX.Element => {
     data: allBlogs = [],
     refetch,
     isLoading: isLoaded,
-  } = useQuery<BlogsProps[],unknown>({
+  } = useQuery<BlogsProps[], unknown>({
     queryKey: ["all-blogs", selectedCategory],
     queryFn: async () => {
       const res = await axiosPublic.get(`/blogs${selectedCategory}`);
@@ -50,7 +50,7 @@ const AllBlog: FC = (): JSX.Element => {
     },
   });
 
-  // hooks
+  //* hooks
 
   useEffect(() => {
     if (category) {
@@ -62,7 +62,7 @@ const AllBlog: FC = (): JSX.Element => {
     refetch();
   }, [selectedCategory, refetch]);
 
-  // functions
+  //* functions
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "") {
