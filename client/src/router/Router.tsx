@@ -21,26 +21,26 @@ const router = createBrowserRouter([
     element: <Root></Root>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
-      { path: "/", element: <Home></Home> },
-      { path: "/login", element: <Login></Login> },
-      { path: "/register", element: <Register></Register> },
+      { path: "/", element: <Home /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
       {
         path: "/add",
         element: (
           <PrivateRoute>
-            <AddBlog></AddBlog>
+            <AddBlog />
           </PrivateRoute>
         ),
       },
       {
         path: "/blogs",
-        element: <AllBlog></AllBlog>,
+        element: <AllBlog />,
       },
       {
         path: "/blogs/:id",
         element: (
           <PrivateRoute>
-            <BlogDetail></BlogDetail>
+            <BlogDetail />
           </PrivateRoute>
         ),
       },
@@ -48,11 +48,11 @@ const router = createBrowserRouter([
         path: "/update/:id",
         element: (
           <PrivateRoute>
-            <UpdateBlog></UpdateBlog>
+            <UpdateBlog />
           </PrivateRoute>
         ),
       },
-     
+
       {
         path: "/contact",
         element: <Contact />,
@@ -62,17 +62,13 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
-    errorElement: <ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage />,
     children: [
-      {
-        path: "/dashboard/tag",
-        element: <h1 className="h-screen">Hello from dashboard</h1>,
-      },
       {
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <Profile></Profile>
+            <Profile />
           </PrivateRoute>
         ),
       },
