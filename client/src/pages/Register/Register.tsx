@@ -110,9 +110,7 @@ const Register: FC = (): JSX.Element => {
                 </button>
               </form>
               <div className="mt-5 text-sm border-b border-gray-400 py-4">
-                <a href="#" className="text-black dark:text-white">
-                  Forgot your password ?
-                </a>
+              <Link to="/forget" className="text-black dark:text-white">Forgot your password ?</Link>
               </div>
               <div className="text-xs mt-3 flex justify-between items-center">
                 <p>If you already have an account...</p>

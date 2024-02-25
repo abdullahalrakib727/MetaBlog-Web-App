@@ -5,6 +5,7 @@ import {
   getAuth,
   onAuthStateChanged,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -28,6 +29,7 @@ export interface AuthInfo {
   loading: boolean;
   handleGoogleSignIn: () => void;
   sendVerificationEmail: () => void;
+  sendResetPasswordEmail: (email: string) => void;
 }
 
 const defaultAuthInfo: AuthInfo = {
@@ -39,6 +41,7 @@ const defaultAuthInfo: AuthInfo = {
   loading: true,
   handleGoogleSignIn: () => {},
   sendVerificationEmail: () => {},
+  sendResetPasswordEmail: () => {},
 };
 
 export const AuthContext = createContext<AuthInfo>(defaultAuthInfo);
@@ -180,6 +183,21 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     }
   };
 
+  // ! Send reset Password mail
+
+  const sendResetPasswordEmail = async (email: string) => {
+    setLoading(true);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Reset password email sent!");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error("Too many requests, please try again later");
+        console.error(error);
+      }
+    }
+  };
+
   const authInfo = {
     registerUser,
     updateUserProfile,
@@ -189,6 +207,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     loading,
     handleGoogleSignIn,
     sendVerificationEmail,
+    sendResetPasswordEmail,
   };
 
   return (

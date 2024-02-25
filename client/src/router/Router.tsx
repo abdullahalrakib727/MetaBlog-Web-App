@@ -14,6 +14,7 @@ import AllBlog from "../pages/All Blog/AllBlog";
 import UpdateBlog from "../pages/UpdateBlog/UpdateBlog";
 import Contact from "../pages/Contact/Contact";
 import Dashboard from "../layout/Dashboard";
+import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
+      { path: "/forget", element: <ForgetPassword /> },
       {
         path: "/add",
         element: (

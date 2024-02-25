@@ -28,13 +28,13 @@ const Login: FC = (): JSX.Element => {
     navigate(from, { replace: true });
   };
 
-  const onSubmit =  async(data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     const email = data?.email;
     const password = data?.password;
 
     const result = await signInUser(email, password);
     if (result) {
-    return  navigate(from, { replace: true });
+      return navigate(from, { replace: true });
     }
   };
 
@@ -106,11 +106,9 @@ const Login: FC = (): JSX.Element => {
                   Login in with google
                 </button>
               </div>
-              <a href="">
-                <div className="mt-10 text-sm border-b border-gray-400 py-4">
-                  Forgot your password ?
-                </div>
-              </a>
+              <div className="mt-10 text-sm border-b border-gray-400 py-4">
+                <Link to="/forget" className="text-black dark:text-white">Forgot your password ?</Link>
+              </div>
               <div className="text-xs mt-3 flex justify-between items-center">
                 <p>If you dont have an account....</p>
                 <Link to="/register">
