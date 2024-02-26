@@ -1,10 +1,8 @@
-import { Container } from "@chakra-ui/react";
 import { FC } from "react";
 import toast from "react-hot-toast";
+import Container from "../../components/Container/Container";
 
-const Contact:FC = ():JSX.Element => {
-
-  
+const Contact: FC = (): JSX.Element => {
   // todo: will add email js later
 
   const handleSend = (event: React.FormEvent<HTMLFormElement>) => {

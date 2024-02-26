@@ -107,7 +107,9 @@ const Login: FC = (): JSX.Element => {
                 </button>
               </div>
               <div className="mt-10 text-sm border-b border-gray-400 py-4">
-                <Link to="/forget" className="text-black dark:text-white">Forgot your password ?</Link>
+                <Link to="/forget" className="text-black dark:text-white">
+                  Forgot your password ?
+                </Link>
               </div>
               <div className="text-xs mt-3 flex justify-between items-center">
                 <p>If you dont have an account....</p>
