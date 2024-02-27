@@ -1,3 +1,25 @@
+# About This Project
+
+This project is created with MERN stack. Previously I had used javascript on the frontend/client. But I have switched to typescript after learning how to use typescript with React.
+
+I have discontinued working on javascript one. I will be working on this typescript version from now on. If you want to check out the javascript version then go to this link : <a href="https://github.com/alrakib1/MetaBlog-Js" target="_blank">MetaBlog Javascript version</a>
+
+## Installation
+
+I have used pnpm on this project. If you already have pnpm on your device just use this command after cloning this repo on both client and server folder respectively :
+
+### For Pnpm :
+
+```bash
+  pnpm install
+```
+
+### For Npm : 
+
+```bash
+  npm install
+```
+
 ## Features
 
 - Firebase authentication : Secure and trusted authentication system by google. As one of it's feature is that you won't be able to create multiple account with same email.
@@ -9,4 +31,4 @@
 - Filter by category : After the slider you have filter option to filter blogs on these category: All blogs, Lifestyle, Technology, Travel, Business, Economy and Sports.
 - Loading skeleton : We also have loading skeleton. When data is being loaded from the server you will be able to see loading skeleton.
 - Update blog : Author will be able to update their blog as well. If you are the author of that blog then you will see an update button at the end of your blog's detail page. By clicking on that button you will be redirect to the update blog page.
-- Delete Blog: Author will be able to delete the blogs that they have created. 
+- Delete Blog: Author will be able to delete the blogs that they have created.
