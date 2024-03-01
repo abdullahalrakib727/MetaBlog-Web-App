@@ -76,12 +76,22 @@ async function run() {
         .send({ success: true });
     });
 
-    //
+    // remove cookie from the browser
 
-    app.post("/logout", async (req, res) => {
-      const user = req.body;
-      res.clearCookie("token", { maxAge: 0 }).send({ message: true });
-    });
+    app.get('/logout', async (req, res) => {
+      try {
+        res
+          .clearCookie('token', {
+            maxAge: 0,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+          })
+          .send({ success: true })
+        console.log('Logout successful')
+      } catch (err) {
+        res.status(500).send(err)
+      }
+    })
 
     //!  blogs related api
 
