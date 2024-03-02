@@ -62,14 +62,14 @@ const Login: FC = (): JSX.Element => {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <input
-                  className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium dark:text-white"
+                  className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
                   type="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
                 <div className="relative">
                   <input
-                    className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium dark:text-white"
+                    className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
                     id=""
                     placeholder="Password"

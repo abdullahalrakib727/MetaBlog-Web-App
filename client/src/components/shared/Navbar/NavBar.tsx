@@ -85,7 +85,7 @@ const NavBar = () => {
             <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li onClick={handleLogOut}>
-            <NavLink to="/login">Logout</NavLink>
+            <p>Logout</p>
           </li>
         </>
       ) : (

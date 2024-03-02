@@ -82,7 +82,10 @@ const AddBlog: FC = (): JSX.Element => {
         <div className="min-h-screen flex justify-center items-center">
           <div className="card w-full">
             <h1 className="dark:text-white text-center text-2xl font-semibold">
-              Check your email to verify your account.
+              You can't add blog without verifying your email address.
+              <br />
+              Check
+              your email to verify your account.
             </h1>
             <button
               onClick={handleVerification}

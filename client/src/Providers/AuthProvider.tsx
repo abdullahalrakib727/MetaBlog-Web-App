@@ -162,8 +162,8 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     try {
       await signOut(auth);
 
-      await axiosPublic.post("/logout");
-
+      const res = await axiosPublic.post("/logout");
+      console.log(res.data);
       setUser(null);
 
       return setLoading(true);

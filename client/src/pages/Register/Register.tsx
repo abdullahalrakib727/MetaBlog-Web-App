@@ -6,22 +6,19 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import { useForm } from "react-hook-form";
-
-
+import { ImSpinner } from "react-icons/im";
 
 interface FormData {
   name: string;
   email: string;
   photo: string;
   password: string;
-
 }
 
 const Register: FC = (): JSX.Element => {
-  
-  const { registerUser, updateUserProfile, sendVerificationEmail } =
+  const { registerUser, updateUserProfile, sendVerificationEmail, loading } =
     useContext(AuthContext);
-    
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -30,7 +27,7 @@ const Register: FC = (): JSX.Element => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const onSubmit = async (data:FormData) => {
+  const onSubmit = async (data: FormData) => {
     const name = data?.name;
     const photo = data?.photo;
     const email = data?.email;
@@ -74,7 +71,7 @@ const Register: FC = (): JSX.Element => {
                   {...register("name", { required: true })}
                 />
                 <input
-                  className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium"
+                  className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium "
                   type="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
@@ -106,11 +103,17 @@ const Register: FC = (): JSX.Element => {
                   )}
                 </div>
                 <button className="rounded-xl text-[#F0E3CA]  transition-all bg-blue-600 hover:bg-blue-500 py-2 hover:scale-105 duration-300">
-                  Signup
+                  {loading ? (
+                    <ImSpinner className="animate-spin m-auto" />
+                  ) : (
+                    "Signup"
+                  )}
                 </button>
               </form>
               <div className="mt-5 text-sm border-b border-gray-400 py-4">
-              <Link to="/forget" className="text-black dark:text-white">Forgot your password ?</Link>
+                <Link to="/forget" className="text-black dark:text-white">
+                  Forgot your password ?
+                </Link>
               </div>
               <div className="text-xs mt-3 flex justify-between items-center">
                 <p>If you already have an account...</p>
