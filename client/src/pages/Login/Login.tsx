@@ -4,6 +4,7 @@ import { FC, useContext, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
 import { FaGoogle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { ImSpinner } from "react-icons/im";
 
 import { useForm } from "react-hook-form";
 
@@ -21,7 +22,7 @@ const Login: FC = (): JSX.Element => {
   const [showPass, setShowPass] = useState<boolean>(false);
   const { register, handleSubmit } = useForm<FormData>();
 
-  const { signInUser, handleGoogleSignIn } = useContext(AuthContext);
+  const { signInUser, handleGoogleSignIn, loading } = useContext(AuthContext);
 
   const handleGoogleLogin = async () => {
     await handleGoogleSignIn();
@@ -61,14 +62,14 @@ const Login: FC = (): JSX.Element => {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <input
-                  className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
+                  className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium dark:text-white"
                   type="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
                 <div className="relative">
                   <input
-                    className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
+                    className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium dark:text-white"
                     type={showPass ? "text" : "password"}
                     id=""
                     placeholder="Password"
@@ -86,8 +87,11 @@ const Login: FC = (): JSX.Element => {
                     />
                   )}
                 </div>
-                <button className="rounded-xl text-[#F0E3CA]  bg-blue-600 transition-all hover:bg-blue-500 py-2 hover:scale-105 duration-300">
-                  Login
+                <button
+                  type="submit"
+                  className="rounded-xl text-[#F0E3CA]  bg-blue-600 transition-all hover:bg-blue-500 py-2 hover:scale-105 duration-300"
+                >
+                  {loading ? <ImSpinner className="animate-spin m-auto" /> : "Login"}
                 </button>
               </form>
               <div className="mt-10 grid grid-cols-3 text-gray-500 items-center">

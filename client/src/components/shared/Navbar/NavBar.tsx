@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { useCallback, useContext, useEffect, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
@@ -19,6 +19,7 @@ const NavBar = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const [value, setValue] = useState("");
   const [blogs, setBlogs] = useState([]);
+  const navigate = useNavigate();
 
   const axiosPublic = useAxiosPublic();
 
@@ -44,7 +45,7 @@ const NavBar = () => {
     if (e.target.value.trim() === "") {
       clearSearchResults();
     } else {
-      debouncedHandleSearch(); // Use the debounced function
+      debouncedHandleSearch();
     }
   };
 
@@ -55,6 +56,11 @@ const NavBar = () => {
   const handleReset = () => {
     setValue("");
     clearSearchResults();
+  };
+
+  const handleLogOut = async () => {
+    await logOutUser();
+    await navigate("/");
   };
 
   const navLinks = (
@@ -78,7 +84,7 @@ const NavBar = () => {
           <li>
             <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
-          <li onClick={() => logOutUser()}>
+          <li onClick={handleLogOut}>
             <NavLink to="/login">Logout</NavLink>
           </li>
         </>
