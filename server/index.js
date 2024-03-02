@@ -78,7 +78,7 @@ async function run() {
 
     // remove cookie from the browser
 
-    app.get('/logout', async (req, res) => {
+    app.post('/logout', async (req, res) => {
       try {
         res
           .clearCookie('token', {

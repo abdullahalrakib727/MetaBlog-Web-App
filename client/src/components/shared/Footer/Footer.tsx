@@ -105,6 +105,7 @@ const Footer:FC = ():JSX.Element => {
           </div>
         </div>
         {/* <form>
+        //! will add newsletter functionality later
       <header className="footer-title">Newsletter</header> 
       <fieldset className="form-control w-80">
         <label className="label">

@@ -105,7 +105,6 @@ const BlogDetail: FC = (): JSX.Element => {
             navigate("/");
           }
         } else if (
-          /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
         ) {
           swalWithBootstrapButtons.fire({

@@ -25,6 +25,7 @@ import BlogCard from "../../components/BlogCard/BlogCard";
 import { BlogsProps } from "../../api/useBlogData";
 
 const AllBlog: FC = (): JSX.Element => {
+  
   //* hooks
 
   const navigate = useNavigate();

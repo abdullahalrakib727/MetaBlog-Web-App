@@ -161,6 +161,9 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const logOutUser = async () => {
     try {
       await signOut(auth);
+
+      await axiosPublic.post("/logout");
+
       setUser(null);
 
       return setLoading(true);
@@ -189,7 +192,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     setLoading(true);
     try {
       await sendPasswordResetEmail(auth, email);
-      toast.success("Reset password email sent!");
+      toast.success("We have sent you a reset password mail!");
     } catch (error) {
       if (error instanceof Error) {
         toast.error("Too many requests, please try again later");
