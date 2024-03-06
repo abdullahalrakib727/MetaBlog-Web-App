@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import NotVerified from "../../components/NotVerified/NotVerified";
 
 import useAddBlog from "../../hooks/useAddBlog";
-import AddBlogForm from "../../components/AddBlogForm/AddBlogForm";
+import BlogFrom from "../../components/AddBlogForm/BlogForm";
 
 const AddBlog: FC = (): JSX.Element => {
   const { user, content, setContent, isSubmitting, handleSubmit } =
@@ -32,7 +32,8 @@ const AddBlog: FC = (): JSX.Element => {
           <h1 className="dark:text-white text-center text-2xl font-semibold">
             Write a blog from here
           </h1>
-          <AddBlogForm
+          <BlogFrom
+            buttonText="Add Blog"
             content={content}
             setContent={setContent}
             isSubmitting={isSubmitting}
