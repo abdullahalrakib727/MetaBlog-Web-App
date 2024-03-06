@@ -15,6 +15,9 @@ I have used pnpm on this project. If you already have pnpm on your device just u
 ```
 
 ### For Npm : 
+#### Delete the file named Pnpm-lock.yaml and use the following command on both client and server folder: 
+
+
 
 ```bash
   npm install
