@@ -14,7 +14,6 @@ const UpdateBlog: FC = (): JSX.Element => {
     handleUpdate,
   } = useUpdateBlog();
 
-  console.log(item.title);
 
   return (
     <div className="card w-full shadow-md min-h-screen my-10">

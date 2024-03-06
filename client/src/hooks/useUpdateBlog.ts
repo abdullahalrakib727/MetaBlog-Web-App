@@ -22,8 +22,8 @@ export default function useUpdateBlog() {
   });
 
   const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
-    setIsSubmitting(true);
     e.preventDefault();
+    setIsSubmitting(true);
     const form = e.currentTarget as HTMLFormElement;
     const title = form.blogTitle.value;
     const photoUrl = form.photo.value;
@@ -42,9 +42,9 @@ export default function useUpdateBlog() {
       showCancelButton: true,
       confirmButtonText: "Save",
       denyButtonText: `Don't save`,
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosSecure
+        await axiosSecure
           .patch(`/blogs/${item?._id}`, updatedBlog, {
             withCredentials: true,
           })
