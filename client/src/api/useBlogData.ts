@@ -13,6 +13,7 @@ export interface BlogsProps {
   authorName: string;
   authorImg: string;
   published: string;
+  content?: string;
 }
 
 export interface BlogData {

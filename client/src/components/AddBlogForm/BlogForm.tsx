@@ -1,7 +1,12 @@
 import JoditEditor from "jodit-react";
 import { FaSpinner } from "react-icons/fa";
+import { BlogsProps } from "../../api/useBlogData";
+
+
+
 
 interface BlogFormProps {
+  item?: BlogsProps ;
   buttonText: string;
   content: string;
   setContent: (content: string) => void;
@@ -9,7 +14,10 @@ interface BlogFormProps {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
+
+
 const BlogFrom = ({
+  item,
   buttonText,
   content,
   setContent,
@@ -27,6 +35,7 @@ const BlogFrom = ({
           name="blogTitle"
           placeholder="Blog's title"
           className="appearance-none focus:outline-none input bg-gray-200 dark:bg-white dark:border-white"
+          defaultValue={item?.title || ""}
           required
         />
       </div>
@@ -41,6 +50,7 @@ const BlogFrom = ({
           name="photo"
           placeholder="Thumbnail link"
           className="appearance-none focus:outline-none input bg-gray-200 dark:bg-white dark:border-white"
+          defaultValue={item?.photoUrl || ""}
           required
         />
       </div>
@@ -53,6 +63,7 @@ const BlogFrom = ({
         <select
           name="category"
           className="appearance-none focus:outline-none select bg-gray-200 dark:bg-white dark:border-white w-full"
+          defaultValue={item?.category || ""}
           required
         >
           <option value="Lifestyle">Life Style</option>
@@ -68,7 +79,7 @@ const BlogFrom = ({
           <span className="label-text text-black dark:text-white">Body</span>
         </label>
         <JoditEditor
-          value={content}
+         value={item?.content || content || ""}
           onChange={(newContent) => setContent(newContent)}
         />
       </div>

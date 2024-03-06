@@ -18,11 +18,7 @@ export default function useAddBlog(){
   
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-  
-      if (isSubmitting) {
-        return;
-      }
-  
+      setIsSubmitting(true);
       const form = e.currentTarget as HTMLFormElement;
       const title = form.blogTitle.value;
       const photoUrl = form.photo.value;
@@ -44,7 +40,6 @@ export default function useAddBlog(){
   
       try {
         const res = await axiosPublic.post("/blogs", data);
-        setIsSubmitting(true);
   
         if (res.data.insertedId) {
           toast.success("Blog has been added!");

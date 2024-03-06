@@ -4,23 +4,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../api/useAxiosSecure";
 import toast from "react-hot-toast";
+import { BlogsProps } from "../api/useBlogData";
 
 export default function useUpdateBlog() {
-
   const params = useParams();
   const axiosSecure = useAxiosSecure();
   const [updatedContent, setUpdatedContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const { data: item = {}, refetch } = useQuery({
+  const { data: item = {} as BlogsProps, refetch } = useQuery<BlogsProps>({
     queryKey: ["item", params.id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/blogs/${params.id}`);
       return res.data.data;
     },
   });
-
 
   const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
     setIsSubmitting(true);
@@ -66,7 +65,11 @@ export default function useUpdateBlog() {
     });
   };
 
-
-return { item, updatedContent, setUpdatedContent, isSubmitting, handleUpdate };
-
+  return {
+    item,
+    updatedContent,
+    setUpdatedContent,
+    isSubmitting,
+    handleUpdate,
+  };
 }
