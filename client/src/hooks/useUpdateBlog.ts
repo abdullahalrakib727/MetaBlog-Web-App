@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { BlogsProps } from "../api/useBlogData";
 
 export default function useUpdateBlog() {
+  
   const params = useParams();
   const axiosSecure = useAxiosSecure();
   const [updatedContent, setUpdatedContent] = useState("");
@@ -53,9 +54,7 @@ export default function useUpdateBlog() {
               toast.success("Blog has been updated!");
               setIsSubmitting(false);
               refetch();
-              setTimeout(() => {
-                navigate(`/blogs/${item?._id}`);
-              }, 3000);
+              navigate(`/blogs/${item?._id}`);
             }
           });
       } else if (result.isDenied) {

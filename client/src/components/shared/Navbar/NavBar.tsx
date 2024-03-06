@@ -1,66 +1,23 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
-
-import { useCallback, useContext, useEffect, useState } from "react";
-import { TfiSearch } from "react-icons/tfi";
-
+import { Link, NavLink } from "react-router-dom";
 import "./Nav.css";
-
 import logo from "../../../assets/Logo.png";
 import logo2 from "../../../assets/lightlogo.png";
-import { debounce } from "lodash";
 import ThemeSwitch from "../../Theme/ThemeSwitch";
-import { AuthContext } from "../../../Providers/AuthProvider";
-import useAxiosPublic from "../../../api/useAxiosPublic";
 import DarkLogoSvg from "../../Svgs/DarkLogoSvg";
 import LightLogoSvg from "../../Svgs/LightLogoSvg";
-import { BlogsProps } from "../../../api/useBlogData";
+import useSearchBar from "../../../hooks/useSearchBar";
+import useAuth from "../../../hooks/useAuth";
+import SearchBar from "../../SearchBar/SearchBar";
 
 const NavBar = () => {
-  const { user, logOutUser } = useContext(AuthContext);
-  const [value, setValue] = useState("");
-  const [blogs, setBlogs] = useState([]);
-  const navigate = useNavigate();
+  const { user, logOutUser } = useAuth();
 
-  const axiosPublic = useAxiosPublic();
+  const { handleInputChange, handleReset, blogs, navigate, handleSearch } =
+    useSearchBar();
 
-  const handleSearch = useCallback(async () => {
-    if (value.trim() === "") {
-      clearSearchResults();
-      return;
-    }
-
-    const res = await axiosPublic.get(`/blogs/search?include=${value}`);
-    setBlogs(res.data.data);
-  }, [value, axiosPublic]);
-
-  const debouncedHandleSearch = debounce(handleSearch, 300);
-
-  const clearSearchResults = () => {
-    setBlogs([]);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-
-    if (e.target.value.trim() === "") {
-      clearSearchResults();
-    } else {
-      debouncedHandleSearch();
-    }
-  };
-
-  useEffect(() => {
-    handleSearch();
-  }, [value, handleSearch]);
-
-  const handleReset = () => {
-    setValue("");
-    clearSearchResults();
-  };
-
-  const handleLogOut = async () => {
-    await logOutUser();
-    await navigate("/");
+  const handleLogOut = () => {
+    logOutUser();
+    navigate("/");
   };
 
   const navLinks = (
@@ -148,34 +105,12 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <div className="dropdown dropdown-end  mr-2 relative">
-          <input
-            type="text"
-            onChange={(e) => handleInputChange(e)}
-            placeholder="Search"
-            className="border px-3 py-1 bg-[#F4F4F5] dark:text-[#A1A1AA] dark:bg-[#242535] dark:border-none rounded-md w-full max-w-xs"
-          />
-          <TfiSearch
-            onClick={handleSearch}
-            className="absolute dark:text-[#52525B] bottom-2 right-2 cursor-pointer overflow-hidden"
-          />
-          {blogs.length > 0 && (
-            <div className="absolute mt-2 bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] z-10 p-2 rounded-xl space-y-1 overflow-x-auto max-h-40">
-              {blogs.map((blog: BlogsProps) => (
-                <Link
-                  to={`blogs/${blog._id}`}
-                  onClick={handleReset}
-                  className="bg-white border dark:bg-[#242535]  border-[#E8E8EA] dark:border-[#242535]  p-1 rounded-md inline-block"
-                  key={blog._id}
-                >
-                  {blog.title.length > 40
-                    ? blog.title.slice(0, 40) + "..."
-                    : blog.title}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
+        <SearchBar
+          blogs={blogs}
+          onChange={handleInputChange}
+          onSearch={handleSearch}
+          onReset={handleReset}
+        />
         <ThemeSwitch />
       </div>
     </nav>
