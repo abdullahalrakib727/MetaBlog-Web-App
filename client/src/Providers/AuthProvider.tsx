@@ -21,7 +21,7 @@ type AuthProviderProps = {
 };
 
 export interface AuthInfo {
-  registerUser: (email: string, password: string) => void;
+  registerUser: (email: string, password: string) => Promise<boolean>;
   updateUserProfile: (name: string, photo: string) => void;
   user: User | null;
   signInUser: (email: string, password: string) => Promise<boolean>;
@@ -33,7 +33,7 @@ export interface AuthInfo {
 }
 
 const defaultAuthInfo: AuthInfo = {
-  registerUser: () => {},
+  registerUser: () => Promise.resolve(false),
   updateUserProfile: () => {},
   user: null,
   signInUser: () => Promise.resolve(false),
@@ -58,18 +58,23 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
   const registerUser = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await createUserWithEmailAndPassword(auth, email, password);
       setLoading(false);
       toast.success("Signup successful!");
-      return userCredential;
+      return true;
     } catch (error) {
       setLoading(true);
-      toast.error("Please try again !!!");
-      console.error(error);
+      if (
+        (error as Error).message ===
+        "Firebase: Error (auth/email-already-in-use)."
+      ) {
+        toast.error("Email already in use");
+        return false;
+      } else {
+        toast.error("Something went Wrong.Please try again !!!");
+        console.error(error);
+        return false;
+      }
     }
   };
 
@@ -162,8 +167,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
     try {
       await signOut(auth);
 
-      const res = await axiosPublic.post("/logout");
-      console.log(res.data);
+      await axiosPublic.post("/logout");
       setUser(null);
 
       return setLoading(true);

@@ -16,7 +16,9 @@ interface FormData {
 }
 
 const Register: FC = (): JSX.Element => {
-  const { registerUser, updateUserProfile, sendVerificationEmail, loading } =
+  const [loading, setLoading] = useState(false);
+
+  const { registerUser, updateUserProfile, sendVerificationEmail } =
     useContext(AuthContext);
 
   const location = useLocation();
@@ -28,18 +30,21 @@ const Register: FC = (): JSX.Element => {
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = async (data: FormData) => {
+    setLoading(true);
     const name = data?.name;
     const photo = data?.photo;
     const email = data?.email;
     const password = data?.password;
 
-    await registerUser(email, password);
-
-    await sendVerificationEmail();
-
-    await updateUserProfile(name, photo);
-
-    navigate(from, { replace: true });
+    const res = await registerUser(email, password);
+    if (res) {
+      await updateUserProfile(name, photo);
+      await sendVerificationEmail();
+      setLoading(false);
+      navigate(from, { replace: true });
+    } else {
+      setLoading(false);
+    }
   };
 
   return (
