@@ -10,9 +10,6 @@ import BlogByUser from "../../components/BlogByUser/BlogByUser";
 import useAuth from "../../hooks/useAuth";
 
 const Profile: FC = (): JSX.Element => {
-
-
-
   const { user } = useAuth();
 
   const axiosSecure = useAxiosSecure();
@@ -38,8 +35,8 @@ const Profile: FC = (): JSX.Element => {
             <div className="flex flex-col justify-center items-center max-w-[648px] lg:max-h-[284px] mx-auto">
               <div className="flex items-center gap-4 mb-6">
                 <img
-                  className="max-w-[64px] max-h-[64px] object-contain rounded-full"
-                  src={user?.photoURL || ""}
+                  className="min-w-[64px] min-h-[64px] max-w-[64px] max-h-[64px] object-cover rounded-full"
+                  src={ user?.photoURL || "https://i.ibb.co/Ydc2Yyb/download.png"}
                   alt="user-image"
                 />
                 <div>
@@ -51,7 +48,7 @@ const Profile: FC = (): JSX.Element => {
                   </p>
                 </div>
               </div>
-              <p className="text-center text-[#3B3C4A] text-lg dark:text-[#BABABF]">
+              <p className="w-full text-[#3B3C4A] text-lg text-justify dark:text-[#BABABF]">
                 Meet {user?.displayName}, a passionate writer and blogger with a
                 love for technology and travel. {user?.displayName} holds a
                 degree in Computer Science and has spent years working in the
@@ -63,7 +60,7 @@ const Profile: FC = (): JSX.Element => {
         )}
         {/* User's post section */}
 
-       <BlogByUser isLoading={isLoading} data={data} />
+        <BlogByUser isLoading={isLoading} data={data} />
       </div>
     </Container>
   );

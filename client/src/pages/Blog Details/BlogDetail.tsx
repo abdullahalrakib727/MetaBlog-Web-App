@@ -46,7 +46,7 @@ const BlogDetail: FC = (): JSX.Element => {
             <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
               <div className="p-1 ">
                 <div className="flex justify-center gap-2 items-center">
-                  <img src={authorImg} alt="" className="w-10 rounded-full" />
+                  <img src={authorImg} alt="" className="w-10 object-cover h-10 rounded-full" />
                   <p className="text-lg dark:text-[#696A75] font-bold">
                     {authorName}
                   </p>

@@ -55,7 +55,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }): JSX.Element => {
       <div className="flex gap-3 items-center mt-auto dark:text-[#97989F]">
         <img
           src={authorImg}
-          className="max-w-[36px] max-h-[36px] rounded-full"
+          className="max-w-[36px] max-h-[36px] min-w-[36px] min-h-[36px] object-cover rounded-full"
           alt=""
         />
         <p className="text-[#97989F] text-base font-medium">{authorName}</p>

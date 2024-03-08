@@ -1,51 +1,22 @@
-import { FC, useContext, useState } from "react";
+import { FC } from "react";
 import { Helmet } from "react-helmet";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { AuthContext } from "../../Providers/AuthProvider";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
-import { useForm } from "react-hook-form";
 import { ImSpinner } from "react-icons/im";
-
-interface FormData {
-  name: string;
-  email: string;
-  photo: string;
-  password: string;
-}
+import { useRegister } from "../../hooks/useRegister";
 
 const Register: FC = (): JSX.Element => {
-  const [loading, setLoading] = useState(false);
-
-  const { registerUser, updateUserProfile, sendVerificationEmail } =
-    useContext(AuthContext);
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const [showPass, setShowPass] = useState<boolean>(false);
-  const { register, handleSubmit } = useForm<FormData>();
-
-  const from = location.state?.from?.pathname || "/";
-
-  const onSubmit = async (data: FormData) => {
-    setLoading(true);
-    const name = data?.name;
-    const photo = data?.photo;
-    const email = data?.email;
-    const password = data?.password;
-
-    const res = await registerUser(email, password);
-    if (res) {
-      await updateUserProfile(name, photo);
-      await sendVerificationEmail();
-      setLoading(false);
-      navigate(from, { replace: true });
-    } else {
-      setLoading(false);
-    }
-  };
+  const {
+    loading,
+    showPass,
+    register,
+    handleSubmit,
+    onSubmit,
+    setShowPass,
+    errors,
+  } = useRegister();
 
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -73,27 +44,38 @@ const Register: FC = (): JSX.Element => {
                   className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
                   type="text"
                   placeholder="Name"
-                  {...register("name", { required: true })}
+                  {...register("name", { required: "Name is required" })}
                 />
+                {errors.name && (
+                  <p className="text-red-700 ">{errors.name.message}</p>
+                )}
                 <input
                   className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium "
                   type="email"
                   placeholder="Email"
-                  {...register("email", { required: true })}
+                  {...register("email", { required: "Email is required" })}
                 />
+                {errors.email && (
+                  <p className="text-red-700 ">{errors.email.message}</p>
+                )}
                 <input
                   className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium"
                   type="text"
                   placeholder="Photo URL"
-                  {...register("photo", { required: true })}
+                  {...register("photo", { required: "Photo is required" })}
                 />
+                {errors.photo && (
+                  <p className="text-red-700 ">{errors.photo.message}</p>
+                )}
                 <div className="relative">
                   <input
                     className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
                     id=""
                     placeholder="Password"
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                   />
                   {showPass ? (
                     <FaRegEyeSlash
@@ -107,6 +89,9 @@ const Register: FC = (): JSX.Element => {
                     />
                   )}
                 </div>
+                {errors.password && (
+                  <p className="text-red-700 ">{errors.password.message}</p>
+                )}
                 <button className="rounded-xl text-[#F0E3CA]  transition-all bg-blue-600 hover:bg-blue-500 py-2 hover:scale-105 duration-300">
                   {loading ? (
                     <ImSpinner className="animate-spin m-auto" />
