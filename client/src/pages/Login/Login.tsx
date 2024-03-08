@@ -1,43 +1,23 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { FC, useContext, useState } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { FC } from "react";
+
 import { Helmet } from "react-helmet";
 import { FaGoogle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { ImSpinner } from "react-icons/im";
-
-import { useForm } from "react-hook-form";
-
-export interface FormData {
-  email: string;
-  password: string;
-}
+import useLogin from "../../hooks/useLogin";
 
 const Login: FC = (): JSX.Element => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const from = location.state?.from?.pathname || "/";
-
-  const [showPass, setShowPass] = useState<boolean>(false);
-  const { register, handleSubmit } = useForm<FormData>();
-
-  const { signInUser, handleGoogleSignIn, loading } = useContext(AuthContext);
-
-  const handleGoogleLogin = async () => {
-    await handleGoogleSignIn();
-    navigate(from, { replace: true });
-  };
-
-  const onSubmit = async (data: FormData) => {
-    const email = data?.email;
-    const password = data?.password;
-
-    const result = await signInUser(email, password);
-    if (result) {
-      return navigate(from, { replace: true });
-    }
-  };
+  const {
+    register,
+    handleSubmit,
+    errors,
+    showPass,
+    setShowPass,
+    handleGoogleLogin,
+    onSubmit,
+    loading,
+  } = useLogin();
 
   return (
     <div className=" min-h-screen flex justify-center items-center">
@@ -65,15 +45,20 @@ const Login: FC = (): JSX.Element => {
                   className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium"
                   type="email"
                   placeholder="Email"
-                  {...register("email", { required: true })}
+                  {...register("email", { required: "Email is required" })}
                 />
+                {errors.email && (
+                  <p className="text-red-700">{errors.email.message}</p>
+                )}
                 <div className="relative">
                   <input
                     className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
                     id=""
                     placeholder="Password"
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                   />
                   {showPass ? (
                     <FaRegEyeSlash
@@ -87,11 +72,18 @@ const Login: FC = (): JSX.Element => {
                     />
                   )}
                 </div>
+                {errors.password && (
+                  <p className="text-red-700">{errors.password.message}</p>
+                )}
                 <button
                   type="submit"
                   className="rounded-xl text-[#F0E3CA]  bg-blue-600 transition-all hover:bg-blue-500 py-2 hover:scale-105 duration-300"
                 >
-                  {loading ? <ImSpinner className="animate-spin m-auto" /> : "Login"}
+                  {loading ? (
+                    <ImSpinner className="animate-spin m-auto" />
+                  ) : (
+                    "Login"
+                  )}
                 </button>
               </form>
               <div className="mt-10 grid grid-cols-3 text-gray-500 items-center">

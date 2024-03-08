@@ -1,17 +1,9 @@
-import { FC, useEffect, useState } from "react";
 
-const ThemeSwitch:FC = ():JSX.Element => {
-  const [theme, setTheme] = useState<string|null>(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-  );
+import { FC } from "react";
+import { useTheme } from "../../Providers/ThemeProvider";
 
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
+const ThemeSwitch: FC = (): JSX.Element => {
+  const { theme, setTheme } = useTheme();
 
   const handleSwitch = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
