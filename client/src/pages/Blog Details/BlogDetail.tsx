@@ -1,120 +1,23 @@
-import { FC, useContext, useEffect } from "react";
+import { FC } from "react";
 import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { Link } from "react-router-dom";
 import { Skeleton } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { Typography } from "antd";
+
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
-import { format, parseISO } from "date-fns";
-import useAxiosPublic from "../../api/useAxiosPublic";
-import Swal from "sweetalert2";
-import useAxiosSecure from "../../api/useAxiosSecure";
 
-const { Text } = Typography;
-const { Title } = Typography;
+
+import useBlogDetail from "../../hooks/useBlogDetail";
+
+
 
 const BlogDetail: FC = (): JSX.Element => {
-  const { user } = useContext(AuthContext);
-  const axiosSecure = useAxiosSecure();
 
-  const axiosPublic = useAxiosPublic();
-
-  const params = useParams();
-  const navigate = useNavigate();
-
-  const { data = {}, isLoading } = useQuery({
-    queryKey: ["blog", params.id],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/blogs/${params.id}`);
-      return res.data.data;
-    },
-  });
-
-  const {
-    _id,
-    title,
-    photoUrl,
-    authorImg,
-    authorName,
-    published,
-    authorId,
-    content,
-  } = data || {};
-
-  const applyDarkMode = (tagName: string, className: string) => {
-    const elements = document.getElementsByTagName(tagName);
-    const elementsArray = Array.from(elements);
-    elementsArray.forEach((element) => {
-      element.classList.add(className);
-    });
-  };
-
-  useEffect(() => {
-    applyDarkMode("strong", "dark:text-white");
-    applyDarkMode("h1", "dark:text-white");
-    applyDarkMode("h2", "dark:text-white");
-    applyDarkMode("h3", "dark:text-white");
-    applyDarkMode("h4", "dark:text-white");
-    applyDarkMode("h5", "dark:text-white");
-    applyDarkMode("h6", "dark:text-white");
-    applyDarkMode("p", "dark:text-[#BABABF]");
-    applyDarkMode("a", "dark:text-white");
-    applyDarkMode("span", "dark:text-white");
-    applyDarkMode("td", "dark:text-white");
-  }, [content]);
-
-  const isValidDate = published && !isNaN(Date.parse(published));
-
-  const publishDate = isValidDate
-    ? format(parseISO(published), "MMMM dd, yyyy")
-    : null;
-
-  const handleDelete = (id: string) => {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: "btn btn-success",
-        cancelButton: "btn btn-danger",
-      },
-      buttonsStyling: false,
-    });
-    swalWithBootstrapButtons
-      .fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true,
-      })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          const res = await axiosSecure.delete(`/blogs/${id}`);
-
-          if (res.data.deletedCount > 0) {
-            swalWithBootstrapButtons.fire({
-              title: "Deleted!",
-              text: "Your Blog has been deleted.",
-              icon: "success",
-            });
-            navigate("/");
-          }
-        } else if (
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire({
-            title: "Cancelled",
-            text: "Your Blog is safe :)",
-            icon: "error",
-          });
-        }
-      });
-  };
+const {isLoading,handleDelete,publishDate,authorName,authorImg,title,photoUrl,content,authorId,_id,user,data} = useBlogDetail();
+ 
   if (isLoading) {
     return (
       <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>
@@ -123,33 +26,31 @@ const BlogDetail: FC = (): JSX.Element => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Details | MetaBlog</title>
+      </Helmet>
       <div className=" mb-10">
         <div className=" mt-10 p-2 lg:p-10">
-          <Helmet>
-            <title>Details | MetaBlog</title>
-          </Helmet>
-
-          <Typography>
+          <article>
             {isLoading ? (
               <>
                 <Skeleton />
                 <Skeleton />
               </>
             ) : (
-              <Title
-                className="font-bold p-2 lg:p-0 dark:text-white lg:mt-8 text-center"
-                level={2}
+              <h2
+                className="font-semibold p-2 lg:p-0 dark:text-white lg:mt-8 text-center text-3xl"
               >
                 {title}
-              </Title>
+              </h2>
             )}
             <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
               <div className="p-1 ">
                 <div className="flex justify-center gap-2 items-center">
                   <img src={authorImg} alt="" className="w-10 rounded-full" />
-                  <Text strong className="text-lg dark:text-[#696A75]">
+                  <p className="text-lg dark:text-[#696A75] font-bold">
                     {authorName}
-                  </Text>
+                  </p>
                 </div>
               </div>
               {publishDate ? (
@@ -194,7 +95,7 @@ const BlogDetail: FC = (): JSX.Element => {
                 </div>
               )}
             </div>
-          </Typography>
+          </article>
         </div>
       </div>
     </Container>
