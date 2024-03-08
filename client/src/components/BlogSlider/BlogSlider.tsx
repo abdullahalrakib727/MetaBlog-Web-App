@@ -50,7 +50,7 @@ const BlogSlider = ({ isLoading, data }: BlogSliderProps) => {
                         <img
                           src={blog.authorImg}
                           alt="author-image"
-                          className="max-w-[36px] max-h-[36px] rounded-full"
+                          className="max-w-[36px] max-h-[36px] min-w-[36px] min-h-[36px]  object-cover rounded-full"
                         />
                         <h6 className="font-medium text-base">
                           {blog.authorName}

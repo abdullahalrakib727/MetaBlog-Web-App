@@ -1,5 +1,4 @@
 import { format, parseISO } from "date-fns";
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "./useAuth";
 import useAxiosSecure from "../api/useAxiosSecure";
@@ -34,31 +33,6 @@ const useBlogDetail = () => {
       content,
     } = data || {};
   
-    const applyDarkMode = (tagName: string, className: string) => {
-      const elements = document.getElementsByTagName(tagName);
-      const elementsArray = Array.from(elements);
-      elementsArray.forEach((element) => {
-        element.classList.add(className);
-      });
-    };
-  
-    useEffect(() => {
-      applyDarkMode("strong", "dark:text-white");
-      applyDarkMode("h1", "dark:text-white");
-      applyDarkMode("h2", "dark:text-white");
-      applyDarkMode("h3", "dark:text-white");
-      applyDarkMode("h4", "dark:text-white");
-      applyDarkMode("h5", "dark:text-white");
-      applyDarkMode("h6", "dark:text-white");
-      applyDarkMode("p", "dark:text-[#BABABF]");
-      applyDarkMode("a", "dark:text-white");
-      applyDarkMode("span", "dark:text-white");
-      applyDarkMode("td", "dark:text-white");
-      applyDarkMode("article", "dark:text-white");
-      applyDarkMode("button", "dark:text-white");
-      applyDarkMode("textarea", "dark:text-white");
-    }, [content]);
-  
     const isValidDate = published && !isNaN(Date.parse(published));
   
     const publishDate = isValidDate
@@ -70,8 +44,9 @@ const useBlogDetail = () => {
         customClass: {
           confirmButton: "btn btn-success",
           cancelButton: "btn btn-danger",
+          popup: "dark:bg-[#242535] dark:text-white",
         },
-        buttonsStyling: false,
+        buttonsStyling: true,
       });
       swalWithBootstrapButtons
         .fire({

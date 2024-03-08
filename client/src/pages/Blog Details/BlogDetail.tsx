@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
-
+import styles from './BlogDetail.module.css';
 import useBlogDetail from "../../hooks/useBlogDetail";
 
 const BlogDetail: FC = (): JSX.Element => {
@@ -28,7 +28,7 @@ const BlogDetail: FC = (): JSX.Element => {
 
   if (isLoading) {
     return (
-      <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>
+      <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg dark:text-white"></span>
     );
   }
 
@@ -58,7 +58,7 @@ const BlogDetail: FC = (): JSX.Element => {
               <PhotoProvider className="px-2 lg:px-0">
                 <PhotoView src={photoUrl}>
                   <img
-                    className="hover:cursor-zoom-in w-full max-h-[500px]"
+                    className="hover:cursor-zoom-in w-full max-h-[570px] object-cover"
                     src={photoUrl}
                     alt="Thumbnail"
                   />
@@ -66,7 +66,7 @@ const BlogDetail: FC = (): JSX.Element => {
               </PhotoProvider>
             </div>
             {data?.content && (
-              <div className="mb-10 overflow-auto dark:bg-[#181A2A]">
+              <div  className={`${styles.blogDetail} mb-10 overflow-auto dark:bg-[#181A2A]`}>
                 {HTMLReactParser(
                   `<div class="dark:bg-[#181A2A] overflow-auto dark:text-white">${content}</div>`
                 )}

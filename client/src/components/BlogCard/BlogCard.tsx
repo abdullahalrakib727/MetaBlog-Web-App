@@ -32,7 +32,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }): JSX.Element => {
         <PhotoView src={photoUrl}>
           <div className="h-[170px] md:h-[240px] max-w-[360px] overflow-hidden rounded-md">
             <img
-              className="h-full w-full  hover:scale-105 ease-out transition-transform duration-300 rounded-md"
+              className="h-full w-full  hover:scale-105 ease-out transition-transform duration-300 rounded-md object-cover"
               src={photoUrl}
               alt={title}
             />

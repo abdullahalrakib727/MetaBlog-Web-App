@@ -1,0 +1,20 @@
+/* BlogDetail.module.css */
+.blogDetail.dark h1,
+.blogDetail.dark h2,
+.blogDetail.dark h3,
+.blogDetail.dark h4,
+.blogDetail.dark h5,
+.blogDetail.dark h6,
+.blogDetail.dark p,
+.blogDetail.dark a,
+.blogDetail.dark li,
+.blogDetail.dark blockquote,
+.blogDetail.dark code,
+.blogDetail.dark article,
+.blogDetail.dark section,
+.blogDetail.dark aside,
+.blogDetail.dark footer,
+.blogDetail.dark header,
+.blogDetail.dark pre{
+  color: white;
+}
