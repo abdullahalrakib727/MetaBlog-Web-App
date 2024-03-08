@@ -1,8 +1,14 @@
 import { CiEdit } from "react-icons/ci";
 import useAuth from "../../hooks/useAuth";
+import { useState } from "react";
 
 const AboutUser = () => {
   const { user } = useAuth();
+  const [edit, setEdit] = useState(false);
+
+  const handleEdit = () => {
+    setEdit((prev) => !prev);
+  };
 
   return (
     <section className="max-w-[1216px] lg:max-h-[344px] bg-[#F6F6F7] dark:bg-[#242535] dark:text-white p-12 rounded-xl my-12">
@@ -23,14 +29,31 @@ const AboutUser = () => {
           </div>
         </div>
         <div className="relative">
-          <CiEdit className="absolute right-0 -mt-5" />
-          <p className="text-justify text-[#3B3C4A] text-lg dark:text-[#BABABF]">
-            Meet {user?.displayName}, a passionate writer and blogger with a
-            love for technology and travel. {user?.displayName} holds a degree
-            in Computer Science and has spent years working in the tech
-            industry, gaining a deep understanding of the impact technology has
-            on our lives.
-          </p>
+          <button onClick={handleEdit}>
+            <CiEdit className="absolute right-0 -mt-5" />
+          </button>
+          {edit ? (
+            <div>
+              <textarea
+                name=""
+                id=""
+                cols={70}
+                rows={5}
+                placeholder="Write something about yourself"
+                className="w-full appearance-none focus:outline-none mt-2 dark:text-black p-2 border rounded-md text-black font-medium"
+              ></textarea>
+            </div>
+          ) : (
+            <>
+              <p className="text-justify text-[#3B3C4A] text-lg dark:text-[#BABABF]">
+                Meet {user?.displayName}, a passionate writer and blogger with a
+                love for technology and travel. {user?.displayName} holds a
+                degree in Computer Science and has spent years working in the
+                tech industry, gaining a deep understanding of the impact
+                technology has on our lives.
+              </p>
+            </>
+          )}
         </div>
       </div>
     </section>
