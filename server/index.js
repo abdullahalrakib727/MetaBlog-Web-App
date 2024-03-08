@@ -165,7 +165,7 @@ async function run() {
       }
     });
 
-    app.get("/blogs/:id", async (req, res) => {
+    app.get("/blogs/:id",verifyToken, async (req, res) => {
       try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };

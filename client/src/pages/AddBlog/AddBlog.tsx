@@ -4,7 +4,8 @@ import { Helmet } from "react-helmet";
 import NotVerified from "../../components/NotVerified/NotVerified";
 
 import useAddBlog from "../../hooks/useAddBlog";
-import BlogFrom from "../../components/AddBlogForm/BlogForm";
+import BlogFrom from "../../components/BlogForm/BlogForm";
+
 
 const AddBlog: FC = (): JSX.Element => {
   const { user, content, setContent, isSubmitting, handleSubmit } =

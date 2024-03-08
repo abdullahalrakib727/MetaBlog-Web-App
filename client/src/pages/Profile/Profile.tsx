@@ -1,25 +1,23 @@
-import { FC, useContext } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { FC } from "react";
+
 import Container from "../../components/Container/Container";
 import { ChakraProvider } from "@chakra-ui/react";
-import CardSkeleton from "../../components/Skeletons/CardSkeleton/CardSkeleton";
-
 import { useQuery } from "@tanstack/react-query";
-
 import PdSkeleton from "../../components/Skeletons/ProfileDetailsSkeleton/PdSkeleton";
-import useAxiosPublic from "../../api/useAxiosPublic";
-import BlogCard from "../../components/BlogCard/BlogCard";
 import { BlogsProps } from "../../api/useBlogData";
+import useAxiosSecure from "../../api/useAxiosSecure";
+import BlogByUser from "../../components/BlogByUser/BlogByUser";
+import useAuth from "../../hooks/useAuth";
 
 const Profile: FC = (): JSX.Element => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-  const { data = [], isLoading } = useQuery({
+  const { data = [] as BlogsProps[], isLoading } = useQuery({
     queryKey: ["blogByUser", user?.uid],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/blogs?authorId=${user?.uid}`);
+      const res = await axiosSecure.get(`/blogs?authorId=${user?.uid}`);
       return res.data.data;
     },
   });
@@ -37,8 +35,8 @@ const Profile: FC = (): JSX.Element => {
             <div className="flex flex-col justify-center items-center max-w-[648px] lg:max-h-[284px] mx-auto">
               <div className="flex items-center gap-4 mb-6">
                 <img
-                  className="max-w-[64px] max-h-[64px] object-contain rounded-full"
-                  src={user?.photoURL || ""}
+                  className="min-w-[64px] min-h-[64px] max-w-[64px] max-h-[64px] object-cover rounded-full"
+                  src={ user?.photoURL || "https://i.ibb.co/Ydc2Yyb/download.png"}
                   alt="user-image"
                 />
                 <div>
@@ -50,7 +48,7 @@ const Profile: FC = (): JSX.Element => {
                   </p>
                 </div>
               </div>
-              <p className="text-center text-[#3B3C4A] text-lg dark:text-[#BABABF]">
+              <p className="w-full text-[#3B3C4A] text-lg text-justify dark:text-[#BABABF]">
                 Meet {user?.displayName}, a passionate writer and blogger with a
                 love for technology and travel. {user?.displayName} holds a
                 degree in Computer Science and has spent years working in the
@@ -62,36 +60,7 @@ const Profile: FC = (): JSX.Element => {
         )}
         {/* User's post section */}
 
-        <section className="mb-24">
-          <ChakraProvider>
-            {isLoading ? (
-              <CardSkeleton />
-            ) : (
-              <>
-                {data.length > 0 ? (
-                  <>
-                    <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
-                      Blogs by you
-                    </h3>
-                    <div className="flex justify-center px-4 xl:px-0">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
-                        {data.map((blog: BlogsProps) => (
-                          <BlogCard key={blog._id} blog={blog}></BlogCard>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
-                      {"You haven't wrote any blogs yet"}
-                    </h3>
-                  </>
-                )}
-              </>
-            )}
-          </ChakraProvider>
-        </section>
+        <BlogByUser isLoading={isLoading} data={data} />
       </div>
     </Container>
   );

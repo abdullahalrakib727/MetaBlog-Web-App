@@ -2,8 +2,9 @@ import { Helmet } from "react-helmet";
 
 import { FC } from "react";
 
-import BlogFrom from "../../components/AddBlogForm/BlogForm";
+
 import useUpdateBlog from "../../hooks/useUpdateBlog";
+import BlogFrom from "../../components/BlogForm/BlogForm";
 
 const UpdateBlog: FC = (): JSX.Element => {
   const {
