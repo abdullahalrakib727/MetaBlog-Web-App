@@ -1,0 +1,49 @@
+import { ChakraProvider } from '@chakra-ui/react';
+import CardSkeleton from '../Skeletons/CardSkeleton/CardSkeleton';
+import { BlogsProps } from '../../api/useBlogData';
+import BlogCard from '../BlogCard/BlogCard';
+
+
+interface BlogByUserProps {
+    isLoading: boolean;
+    data: BlogsProps[];
+
+}
+
+
+const BlogByUser = ({isLoading,data}:BlogByUserProps) => {
+    return (
+        <section className="mb-24">
+        <ChakraProvider>
+          {isLoading ? (
+            <CardSkeleton />
+          ) : (
+            <>
+              {data.length > 0 ? (
+                <>
+                  <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
+                    Blogs by you
+                  </h3>
+                  <div className="flex justify-center px-4 xl:px-0">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
+                      {data.map((blog) => (
+                        <BlogCard key={blog._id} blog={blog}></BlogCard>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
+                    {"You haven't wrote any blogs yet"}
+                  </h3>
+                </>
+              )}
+            </>
+          )}
+        </ChakraProvider>
+      </section>
+    );
+};
+
+export default BlogByUser;

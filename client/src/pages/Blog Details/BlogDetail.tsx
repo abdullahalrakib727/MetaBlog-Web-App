@@ -4,20 +4,28 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { Link } from "react-router-dom";
-import { Skeleton } from "@chakra-ui/react";
 
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
 
-
 import useBlogDetail from "../../hooks/useBlogDetail";
 
-
-
 const BlogDetail: FC = (): JSX.Element => {
+  const {
+    isLoading,
+    handleDelete,
+    publishDate,
+    authorName,
+    authorImg,
+    title,
+    photoUrl,
+    content,
+    authorId,
+    _id,
+    user,
+    data,
+  } = useBlogDetail();
 
-const {isLoading,handleDelete,publishDate,authorName,authorImg,title,photoUrl,content,authorId,_id,user,data} = useBlogDetail();
- 
   if (isLoading) {
     return (
       <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg"></span>
@@ -32,18 +40,9 @@ const {isLoading,handleDelete,publishDate,authorName,authorImg,title,photoUrl,co
       <div className=" mb-10">
         <div className=" mt-10 p-2 lg:p-10">
           <article>
-            {isLoading ? (
-              <>
-                <Skeleton />
-                <Skeleton />
-              </>
-            ) : (
-              <h2
-                className="font-semibold p-2 lg:p-0 dark:text-white lg:mt-8 text-center text-3xl"
-              >
-                {title}
-              </h2>
-            )}
+            <h2 className="font-semibold p-2 lg:p-0 dark:text-white lg:mt-8 text-center text-3xl">
+              {title}
+            </h2>
             <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
               <div className="p-1 ">
                 <div className="flex justify-center gap-2 items-center">
@@ -53,13 +52,8 @@ const {isLoading,handleDelete,publishDate,authorName,authorImg,title,photoUrl,co
                   </p>
                 </div>
               </div>
-              {publishDate ? (
-                <div className="dark:text-[#696A75]">{publishDate}</div>
-              ) : (
-                <Skeleton></Skeleton>
-              )}
+              <div className="dark:text-[#696A75]">{publishDate}</div>
             </div>
-
             <div className=" mb-10 px-2 w-full">
               <PhotoProvider className="px-2 lg:px-0">
                 <PhotoView src={photoUrl}>
