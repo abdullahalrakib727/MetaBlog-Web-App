@@ -10,7 +10,7 @@ interface BlogByUserProps {
 
 const BlogByUser = ({ isLoading, data }: BlogByUserProps) => {
   return (
-    <section className="mb-24">
+    <section className="mb-24 w-full">
       <ChakraProvider>
         {isLoading ? (
           <CardSkeleton />
@@ -21,7 +21,7 @@ const BlogByUser = ({ isLoading, data }: BlogByUserProps) => {
                 <h3 className="text-2xl px-4 xl:px-0 font-bold my-5 dark:text-white ">
                   Blogs by you
                 </h3>
-                <div className="flex justify-center px-4 xl:px-0">
+                <div className="flex justify-center px-4 xl:px-0 w-full">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {data.map((blog) => (
                       <BlogCard key={blog._id} blog={blog}></BlogCard>

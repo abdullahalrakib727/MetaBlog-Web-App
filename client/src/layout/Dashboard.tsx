@@ -1,8 +1,9 @@
 import { Toaster } from "react-hot-toast";
 import NavBar from "../components/shared/Navbar/NavBar";
-import { Container } from "@chakra-ui/react";
+
 import { Outlet } from "react-router-dom";
 import Footer from "../components/shared/Footer/Footer";
+import Container from "../components/Container/Container";
 
 
 
