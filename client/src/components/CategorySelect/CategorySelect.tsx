@@ -19,7 +19,6 @@ const CategorySelect = ({ category, handleChange }: CategorySelectProps) => {
         <option value="Economy">Economy</option>
         <option value="Sports">Sports</option>
       </select>
-      B
     </div>
   );
 };
