@@ -101,7 +101,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
 
       const userId = loggedUser?.uid;
 
-      //? sending user data to server
+      //? sending user data to server for cookie
       await axiosPublic.post(
         "/jwt",
         { userId },
@@ -130,7 +130,8 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
       const result = await signInWithPopup(auth, provider);
       const userId = result.user?.uid;
 
-      // Send user data to server
+      // Send user data to server for cookie
+
       await axiosPublic.post(
         "/jwt",
         { userId },
@@ -149,9 +150,18 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
 
   // ! Auth state change
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        await axiosPublic.post("/users", {
+          uid: currentUser.uid,
+          email: currentUser.email,
+          photo: currentUser.photoURL,
+          name: currentUser.displayName,
+          role: "user",
+        });
+
+        setLoading(false);
       } else {
         setUser(null);
       }

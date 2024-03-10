@@ -1,8 +1,12 @@
-# About This Project
+# About MetaBlog
 
-This project is created with MERN stack. Previously I had used javascript on the frontend/client. But I have switched to typescript after learning how to use typescript with React.
+MetaBlog is where you will be able to write your heart's content. Our commitment to prioritizing user security ensures that your blogs are safe, so you can focus on what's more important. We have used user friendly interface. MetaBlog is all about making writing and sharing fun, so come on board and let your creativity shine!
 
-I have discontinued working on javascript one. I will be working on this typescript version from now on. If you want to check out the javascript version then go to this link : <a href="https://github.com/alrakib1/MetaBlog-Js" target="_blank">MetaBlog Javascript version</a>
+## About This Project
+
+This project is created using MERN stack technology. Previously, I had used Javascript on the frontend/client. But after learning how to use Typescript with react, I have switched to Typescript. I intend to add more new features to this webapp.
+
+I have discontinued working on Javascript version as I will be working with Typescript version from now on. If you want to check out the Javascript version then go to this link : <a href="https://github.com/alrakib1/MetaBlog-Js" target="_blank">MetaBlog Javascript version</a>
 
 ## Installation
 
@@ -14,10 +18,9 @@ I have used pnpm on this project. If you already have pnpm on your device just u
   pnpm install
 ```
 
-### For Npm : 
-#### Delete the file named Pnpm-lock.yaml and use the following command on both client and server folder: 
+### For Npm :
 
-
+#### Delete the file named Pnpm-lock.yaml and use the following command on both client and server folder:
 
 ```bash
   npm install
@@ -35,3 +38,7 @@ I have used pnpm on this project. If you already have pnpm on your device just u
 - Loading skeleton : We also have loading skeleton. When data is being loaded from the server you will be able to see loading skeleton.
 - Update blog : Author will be able to update their blog as well. If you are the author of that blog then you will see an update button at the end of your blog's detail page. By clicking on that button you will be redirect to the update blog page.
 - Delete Blog: Author will be able to delete the blogs that they have created.
+
+## Authors
+
+- [@alrakib1](https://www.github.com/alrakib1)

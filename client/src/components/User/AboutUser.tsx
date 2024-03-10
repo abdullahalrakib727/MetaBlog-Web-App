@@ -1,14 +1,11 @@
 import { CiEdit } from "react-icons/ci";
-import useAuth from "../../hooks/useAuth";
-import { useState } from "react";
+import { MdOutlineCancel, MdOutlineSave } from "react-icons/md";
+import { Box, ChakraProvider, SkeletonText } from "@chakra-ui/react";
+import useAboutUser from "../../hooks/useAboutUser";
 
 const AboutUser = () => {
-  const { user } = useAuth();
-  const [edit, setEdit] = useState(false);
-
-  const handleEdit = () => {
-    setEdit((prev) => !prev);
-  };
+  const { data, isLoading, edit, handleEdit, handleSave, about, user } =
+    useAboutUser();
 
   return (
     <section className="max-w-[1216px] lg:max-h-[344px] bg-[#F6F6F7] dark:bg-[#242535] dark:text-white p-12 rounded-xl my-12">
@@ -16,7 +13,11 @@ const AboutUser = () => {
         <div className="flex items-center gap-4 mb-6">
           <img
             className="max-w-[64px] max-h-[64px] object-contain rounded-full"
-            src={user?.photoURL || ""}
+            src={
+              user?.photoURL ||
+              data.photo ||
+              "https://i.ibb.co/Ydc2Yyb/download.png"
+            }
             alt="user-image"
           />
           <div>
@@ -24,34 +25,61 @@ const AboutUser = () => {
               {user?.displayName}
             </h4>
             <p className="text-[#696A75] font-normal text-sm dark:text-[#BABABF]">
-              Role
+              {data.role}
             </p>
           </div>
         </div>
         <div className="relative">
-          <button onClick={handleEdit}>
-            <CiEdit className="absolute right-0 -mt-5" />
-          </button>
+          {!edit && (
+            <button onClick={handleEdit}>
+              <CiEdit className="absolute text-lg dark:text-white right-0 -mt-5" />
+            </button>
+          )}
           {edit ? (
-            <div>
+            <form onSubmit={handleSave}>
+              <button type="submit">
+                <MdOutlineSave className="absolute text-lg dark:text-white right-6 -mt-44" />
+              </button>
+              <button type="button" onClick={handleEdit}>
+                <MdOutlineCancel className="absolute text-lg dark:text-white right-0 -mt-44" />
+              </button>
               <textarea
+                ref={about}
                 name=""
                 id=""
                 cols={70}
                 rows={5}
+                defaultValue={data.bio}
                 placeholder="Write something about yourself"
-                className="w-full appearance-none focus:outline-none mt-2 dark:text-black p-2 border rounded-md text-black font-medium"
+                className="w-full appearance-none focus:outline-none mt-2 dark:text-black p-2 border rounded-md text-black font-medium max-h-36"
               ></textarea>
-            </div>
+            </form>
           ) : (
             <>
-              <p className="text-justify text-[#3B3C4A] text-lg dark:text-[#BABABF]">
-                Meet {user?.displayName}, a passionate writer and blogger with a
-                love for technology and travel. {user?.displayName} holds a
-                degree in Computer Science and has spent years working in the
-                tech industry, gaining a deep understanding of the impact
-                technology has on our lives.
-              </p>
+              {isLoading ? (
+                <ChakraProvider>
+                  <Box
+                    padding="2"
+                    boxShadow="lg"
+                    className="bg-white dark:bg-[#242535] w-72 md:w-[500px]"
+                  >
+                    <SkeletonText
+                      mt="0"
+                      noOfLines={5}
+                      spacing="3"
+                      skeletonHeight="2"
+                    />
+                  </Box>
+                </ChakraProvider>
+              ) : (
+                <>
+                  {data.bio ? (
+                    <p className="text-[#181A2A] dark:text-white">{data.bio}</p>
+                  ) : (
+                    <p>Please write something about you</p>
+                  )}
+                </>
+              )}
             </>
           )}
         </div>

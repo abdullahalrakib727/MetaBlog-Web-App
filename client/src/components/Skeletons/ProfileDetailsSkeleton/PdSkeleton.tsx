@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 
 const PdSkeleton: FC = (): JSX.Element => {
   return (
-    <section className="max-w-[1216px] max-h-[344px] bg-[#F6F6F7] p-12 rounded-xl mb-12">
+    <section className="max-w-[1216px] max-h-[344px] bg-[#F6F6F7] dark:bg-[#242535] p-12 rounded-xl mb-12">
       <div className="flex flex-col justify-center items-center max-w-[648px] max-h-[284px] mx-auto">
         <div className="flex items-center gap-4 mb-6">
           <SkeletonCircle size="14" />
