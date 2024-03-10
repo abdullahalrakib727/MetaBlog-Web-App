@@ -236,12 +236,17 @@ async function run() {
       }
     });
 
-
-    // ? users related api
+    // ! users related api
 
     app.post("/users", async (req, res) => {
       try {
         const user = req.body;
+
+        const userExists = await usersCollection.findOne({ email: user.email });
+        if (userExists) {
+          return res.send({ message: "User already exists" });
+        }
+
         const result = await usersCollection.insertOne(user);
         return res.status(201).send(result);
       } catch (error) {
@@ -258,11 +263,33 @@ async function run() {
       }
     });
 
-    app.put("/users/:id", verifyToken, async (req, res) => {
+    app.get("/users/:id", async (req, res) => {
       try {
         const id = req.params.id;
-        const query = { _id: new ObjectId(id) };
+        const query = { uid: id };
+        const user = await usersCollection.findOne(query, {
+          projection: { email: 0, _id: 0 },
+        });
+
+        return res.status(200).send({ success: true, data: user });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+    app.put("/users/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+        const query = { uid: id };
         const user = req.body;
+
+        if (req.body.bio) {
+          const result = await usersCollection.updateOne(query, {
+            $set: { bio: user.bio },
+          });
+          return res.status(200).send({ success: true, data: result });
+        }
+
         const result = await usersCollection.updateOne(query, { $set: user });
         return res.status(200).send({ success: true, data: result });
       } catch (error) {
@@ -270,8 +297,7 @@ async function run() {
       }
     });
 
-
-    app.delete("/users/:id", verifyToken, async (req, res) => {
+    app.delete("/users/:id", async (req, res) => {
       try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
