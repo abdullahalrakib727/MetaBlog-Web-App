@@ -61,7 +61,7 @@ async function run() {
     });
 
     const blogsCollection = client.db("MetaBlogDB").collection("allBlogs");
-
+    const usersCollection = client.db("MetaBlogDB").collection("users");
     //!  auth related api
     app.post("/jwt", async (req, res) => {
       const user = req.body;
@@ -78,19 +78,19 @@ async function run() {
 
     // remove cookie from the browser
 
-    app.post('/logout', async (req, res) => {
+    app.post("/logout", async (req, res) => {
       try {
         res
-          .clearCookie('token', {
+          .clearCookie("token", {
             maxAge: 0,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
           })
-          .send({ success: true })
+          .send({ success: true });
       } catch (err) {
-        res.status(500).send(err)
+        res.status(500).send(err);
       }
-    })
+    });
 
     //!  blogs related api
 
@@ -165,7 +165,7 @@ async function run() {
       }
     });
 
-    app.get("/blogs/:id",verifyToken, async (req, res) => {
+    app.get("/blogs/:id", verifyToken, async (req, res) => {
       try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
@@ -231,6 +231,52 @@ async function run() {
 
         const result = await blogsCollection.deleteOne(query);
         return res.status(200).send(result);
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+
+    // ? users related api
+
+    app.post("/users", async (req, res) => {
+      try {
+        const user = req.body;
+        const result = await usersCollection.insertOne(user);
+        return res.status(201).send(result);
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+    app.get("/users", async (req, res) => {
+      try {
+        const users = await usersCollection.find().toArray();
+        return res.status(200).send({ success: true, data: users });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+    app.put("/users/:id", verifyToken, async (req, res) => {
+      try {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const user = req.body;
+        const result = await usersCollection.updateOne(query, { $set: user });
+        return res.status(200).send({ success: true, data: result });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+
+    app.delete("/users/:id", verifyToken, async (req, res) => {
+      try {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await usersCollection.deleteOne(query);
+        return res.status(200).send({ success: true, data: result });
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }

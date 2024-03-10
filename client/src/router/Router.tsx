@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AddBlog from "../pages/AddBlog/AddBlog";
 
-import BlogDetail from "../pages/Blog Details/BlogDetail";
+import BlogDetail from "../pages/BlogDetails/BlogDetail";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -10,7 +10,7 @@ import Register from "../pages/Register/Register";
 
 import PrivateRoute from "./PrivateRoute";
 import Root from "../layout/Root";
-import AllBlog from "../pages/All Blog/AllBlog";
+import AllBlog from "../pages/AllBlog/AllBlog";
 import UpdateBlog from "../pages/UpdateBlog/UpdateBlog";
 import Contact from "../pages/Contact/Contact";
 import Dashboard from "../layout/Dashboard";

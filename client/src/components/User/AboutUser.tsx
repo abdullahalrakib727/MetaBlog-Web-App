@@ -1,13 +1,27 @@
 import { CiEdit } from "react-icons/ci";
+import { MdOutlineCancel, MdOutlineSave } from "react-icons/md";
 import useAuth from "../../hooks/useAuth";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const AboutUser = () => {
+
+const auth = useAuth();
+
+console.log(auth.user?.uid);
+
   const { user } = useAuth();
   const [edit, setEdit] = useState(false);
+  const about = useRef<HTMLTextAreaElement>(null);
 
   const handleEdit = () => {
     setEdit((prev) => !prev);
+  };
+
+  const handleSave = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log(about.current?.value);
+    setEdit((prev) => !prev);
+
   };
 
   return (
@@ -16,7 +30,7 @@ const AboutUser = () => {
         <div className="flex items-center gap-4 mb-6">
           <img
             className="max-w-[64px] max-h-[64px] object-contain rounded-full"
-            src={user?.photoURL || ""}
+            src={user?.photoURL || "https://i.ibb.co/Ydc2Yyb/download.png"}
             alt="user-image"
           />
           <div>
@@ -29,20 +43,29 @@ const AboutUser = () => {
           </div>
         </div>
         <div className="relative">
-          <button onClick={handleEdit}>
-            <CiEdit className="absolute right-0 -mt-5" />
-          </button>
+          {!edit && (
+            <button onClick={handleEdit}>
+              <CiEdit className="absolute dark:text-white right-0 -mt-5" />
+            </button>
+          )}
           {edit ? (
-            <div>
+            <form onSubmit={handleSave}>
+              <button type="submit">
+                <MdOutlineSave className="absolute dark:text-white right-6 -mt-44" />
+              </button>
+              <button type="button" onClick={handleEdit}>
+                <MdOutlineCancel className="absolute dark:text-white right-0 -mt-44" />
+              </button>
               <textarea
+                ref={about}
                 name=""
                 id=""
                 cols={70}
                 rows={5}
                 placeholder="Write something about yourself"
-                className="w-full appearance-none focus:outline-none mt-2 dark:text-black p-2 border rounded-md text-black font-medium"
+                className="w-full appearance-none focus:outline-none mt-2 dark:text-black p-2 border rounded-md text-black font-medium max-h-36"
               ></textarea>
-            </div>
+            </form>
           ) : (
             <>
               <p className="text-justify text-[#3B3C4A] text-lg dark:text-[#BABABF]">

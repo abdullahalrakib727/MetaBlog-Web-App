@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import RecentBlog from "../Recent Blog/RecentBlog";
+import RecentBlog from "../RecentBlog/RecentBlog";
 
 import { useNavigate } from "react-router-dom";
 import Adds from "../../components/Adds/Adds";
