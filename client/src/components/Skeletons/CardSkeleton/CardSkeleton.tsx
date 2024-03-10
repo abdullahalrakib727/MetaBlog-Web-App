@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 const CardSkeleton: FC = (): JSX.Element => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -14,7 +14,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -23,7 +23,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -32,7 +32,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -41,7 +41,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -50,7 +50,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -59,7 +59,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -68,7 +68,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
@@ -77,7 +77,7 @@ const CardSkeleton: FC = (): JSX.Element => {
           <Skeleton height="20px" width="100px" />
         </div>
       </Box>
-      <Box padding="6" boxShadow="lg" bg="white">
+      <Box padding="6" boxShadow="lg" className="bg-white dark:bg-[#242535]">
         <Skeleton height="170px" />
         <SkeletonText mt="3" noOfLines={3} spacing="3" skeletonHeight="5" />
         <div className="flex items-center gap-4">
