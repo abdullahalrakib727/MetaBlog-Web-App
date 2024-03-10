@@ -32,16 +32,16 @@ const AboutUser = () => {
         <div className="relative">
           {!edit && (
             <button onClick={handleEdit}>
-              <CiEdit className="absolute dark:text-white right-0 -mt-5" />
+              <CiEdit className="absolute text-lg dark:text-white right-0 -mt-5" />
             </button>
           )}
           {edit ? (
             <form onSubmit={handleSave}>
               <button type="submit">
-                <MdOutlineSave className="absolute dark:text-white right-6 -mt-44" />
+                <MdOutlineSave className="absolute text-lg dark:text-white right-6 -mt-44" />
               </button>
               <button type="button" onClick={handleEdit}>
-                <MdOutlineCancel className="absolute dark:text-white right-0 -mt-44" />
+                <MdOutlineCancel className="absolute text-lg dark:text-white right-0 -mt-44" />
               </button>
               <textarea
                 ref={about}

@@ -277,11 +277,15 @@ async function run() {
       }
     });
 
-    app.put("/users/:id", async (req, res) => {
+    app.put("/users/:id", verifyToken, async (req, res) => {
       try {
         const id = req.params.id;
         const query = { uid: id };
         const user = req.body;
+
+        if (req.user.userId !== id) {
+          return res.status(403).send({ message: "Unauthorized access" });
+        }
 
         if (req.body.bio) {
           const result = await usersCollection.updateOne(query, {
@@ -297,10 +301,15 @@ async function run() {
       }
     });
 
-    app.delete("/users/:id", async (req, res) => {
+    app.delete("/users/:id", verifyToken, async (req, res) => {
       try {
         const id = req.params.id;
-        const query = { _id: new ObjectId(id) };
+        const query = { uid: id };
+
+        if (req.user.userId !== id) {
+          return res.status(403).send({ message: "Unauthorized access" });
+        }
+
         const result = await usersCollection.deleteOne(query);
         return res.status(200).send({ success: true, data: result });
       } catch (error) {
