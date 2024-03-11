@@ -9,8 +9,11 @@ import HTMLReactParser from "html-react-parser";
 import styles from "./BlogDetail.module.css";
 import useBlogDetail from "../../hooks/useBlogDetail";
 import LikeDisLike from "../../components/LikeDisLike/LikeDisLike";
+import useAxiosSecure from "../../api/useAxiosSecure";
 
 const BlogDetail: FC = (): JSX.Element => {
+  const axiosSecure = useAxiosSecure();
+
   const {
     isLoading,
     handleDelete,
@@ -28,12 +31,24 @@ const BlogDetail: FC = (): JSX.Element => {
   const [like, setLike] = useState<number>(0);
   const [disLike, setDisLike] = useState<number>(0);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    await axiosSecure.post("/reactions", {
+      userId: user?.uid,
+      postId: _id,
+      isLike: true,
+    });
+
     setLike(like + 1);
     if (disLike > 0) setDisLike(disLike - 1);
   };
 
-  const handleDisLike = () => {
+  const handleDisLike = async () => {
+    await axiosSecure.post("/reactions", {
+      userId: user?.uid,
+      postId: _id,
+      isLike: false,
+    });
+
     setDisLike(disLike + 1);
     if (like > 0) setLike(like - 1);
   };

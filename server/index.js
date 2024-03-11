@@ -60,8 +60,12 @@ async function run() {
       res.send("MetaBlog Server is Running");
     });
 
+    // ! Database collection
     const blogsCollection = client.db("MetaBlogDB").collection("allBlogs");
     const usersCollection = client.db("MetaBlogDB").collection("users");
+    const reactionsCollection = client.db("MetaBlogDB").collection("reactions");
+    const postsCollection = client.db("MetaBlogDB").collection("posts");
+
     //!  auth related api
     app.post("/jwt", async (req, res) => {
       const user = req.body;
@@ -312,6 +316,58 @@ async function run() {
 
         const result = await usersCollection.deleteOne(query);
         return res.status(200).send({ success: true, data: result });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+    // ! Likes related api
+
+    app.post("/reactions", verifyToken, async (req, res) => {
+      try {
+        const userId = req.user.userId;
+        const postId = req.body.postId;
+        const isLike = req.body.isLike;
+
+        let like = 0;
+        let dislike = 0;
+
+        if (isLike) {
+          (like = 1), (dislike = 0);
+        } else {
+          (like = 0), (dislike = 1);
+        }
+
+        const existingReaction = await reactionsCollection.findOne({
+          userId,
+          postId,
+        });
+        if (existingReaction) {
+          await reactionsCollection.updateOne(
+            { _id: existingReaction._id },
+            {
+              $set: {
+                isLike: isLike,
+                isDislike: !isLike,
+                like,
+                dislike,
+              },
+            }
+          );
+        } else {
+          const reaction = {
+            userId,
+            postId,
+            isLike,
+            isDislike: !isLike,
+            like,
+            dislike,
+          };
+          await reactionsCollection.insertOne(reaction);
+        }
+        return res
+          .status(201)
+          .send({ success: true, message: "Reaction added" });
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }
