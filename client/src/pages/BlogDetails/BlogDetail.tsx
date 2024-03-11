@@ -1,14 +1,14 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { Link } from "react-router-dom";
-
 import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
-import styles from './BlogDetail.module.css';
+import styles from "./BlogDetail.module.css";
 import useBlogDetail from "../../hooks/useBlogDetail";
+import LikeDisLike from "../../components/LikeDisLike/LikeDisLike";
 
 const BlogDetail: FC = (): JSX.Element => {
   const {
@@ -25,6 +25,18 @@ const BlogDetail: FC = (): JSX.Element => {
     user,
     data,
   } = useBlogDetail();
+  const [like, setLike] = useState<number>(0);
+  const [disLike, setDisLike] = useState<number>(0);
+
+  const handleLike = () => {
+    setLike(like + 1);
+    if (disLike > 0) setDisLike(disLike - 1);
+  };
+
+  const handleDisLike = () => {
+    setDisLike(disLike + 1);
+    if (like > 0) setLike(like - 1);
+  };
 
   if (isLoading) {
     return (
@@ -37,23 +49,35 @@ const BlogDetail: FC = (): JSX.Element => {
       <Helmet>
         <title>Details | MetaBlog</title>
       </Helmet>
-      <div className=" mb-10">
+      <section className=" mb-10">
         <div className=" mt-10 p-2 lg:p-10">
           <article>
             <h2 className="font-semibold p-2 lg:p-0 dark:text-white lg:mt-8 text-center text-3xl">
               {title}
             </h2>
-            <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
-              <div className="p-1 ">
-                <div className="flex justify-center gap-2 items-center">
-                  <img src={authorImg} alt="" className="w-10 object-cover h-10 rounded-full" />
-                  <p className="text-lg dark:text-[#696A75] font-bold">
-                    {authorName}
-                  </p>
+            <section className="flex justify-between items-center">
+              <div className="flex flex-col md:flex-row  items-center gap-5 my-5 ">
+                <div className="p-1 ">
+                  <div className="flex justify-center gap-2 items-center">
+                    <img
+                      src={authorImg}
+                      alt={"image of " + title}
+                      className="w-10 object-cover h-10 rounded-full"
+                    />
+                    <p className="text-lg dark:text-[#696A75] font-bold">
+                      {authorName}
+                    </p>
+                  </div>
                 </div>
+                <div className="dark:text-[#696A75]">{publishDate}</div>
               </div>
-              <div className="dark:text-[#696A75]">{publishDate}</div>
-            </div>
+              <LikeDisLike
+                like={like}
+                disLike={disLike}
+                addLike={handleLike}
+                addDisLike={handleDisLike}
+              />
+            </section>
             <div className=" mb-10 px-2 w-full">
               <PhotoProvider className="px-2 lg:px-0">
                 <PhotoView src={photoUrl}>
@@ -66,7 +90,9 @@ const BlogDetail: FC = (): JSX.Element => {
               </PhotoProvider>
             </div>
             {data?.content && (
-              <div  className={`${styles.blogDetail} mb-10 overflow-auto dark:bg-[#181A2A]`}>
+              <div
+                className={`${styles.blogDetail} mb-10 overflow-auto dark:bg-[#181A2A]`}
+              >
                 {HTMLReactParser(
                   `<div class="dark:bg-[#181A2A] overflow-auto dark:text-white">${content}</div>`
                 )}
@@ -91,7 +117,7 @@ const BlogDetail: FC = (): JSX.Element => {
             </div>
           </article>
         </div>
-      </div>
+      </section>
     </Container>
   );
 };
