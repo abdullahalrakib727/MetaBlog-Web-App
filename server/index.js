@@ -343,12 +343,13 @@ async function run() {
           postId,
         });
         if (existingReaction) {
+          if (existingReaction.userId !== userId) {
+            return res.status(403).send({ message: "Unauthorized access" });
+          }
           await reactionsCollection.updateOne(
             { _id: existingReaction._id },
             {
               $set: {
-                isLike: isLike,
-                isDislike: !isLike,
                 like,
                 dislike,
               },
@@ -358,8 +359,6 @@ async function run() {
           const reaction = {
             userId,
             postId,
-            isLike,
-            isDislike: !isLike,
             like,
             dislike,
           };
@@ -368,6 +367,36 @@ async function run() {
         return res
           .status(201)
           .send({ success: true, message: "Reaction added" });
+      } catch (error) {
+        return res.status(500).send({ message: error.message });
+      }
+    });
+
+    app.get("/reactions/:id", verifyToken, async (req, res) => {
+      try {
+        const postId = req.params.id;
+        const userId = req.user.userId;
+
+        const result = await reactionsCollection.findOne({ userId });
+
+        const reactionsCursor = await reactionsCollection.aggregate([
+          {
+            $match: { postId },
+          },
+          {
+            $group: {
+              _id: null,
+              likes: { $sum: "$like" },
+              dislikes: { $sum: "$dislike" },
+            },
+          },
+        ]);
+
+        const reactionsArray = await reactionsCursor.toArray();
+        const reactions = await reactionsArray[0];
+        return res
+          .status(200)
+          .send({ success: true, data: { result, reactions } });
       } catch (error) {
         return res.status(500).send({ message: error.message });
       }
