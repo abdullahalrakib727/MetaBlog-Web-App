@@ -8,7 +8,7 @@ interface LikeDisLikeProps {
   addDisLike: () => void;
 }
 
-const LikeDisLike = ({
+const Reactions = ({
   like,
   disLike,
   addLike,
@@ -32,4 +32,4 @@ const LikeDisLike = ({
   );
 };
 
-export default LikeDisLike;
+export default Reactions;

@@ -8,9 +8,10 @@ import Container from "../../components/Container/Container";
 import HTMLReactParser from "html-react-parser";
 import styles from "./BlogDetail.module.css";
 import useBlogDetail from "../../hooks/useBlogDetail";
-import LikeDisLike from "../../components/LikeDisLike/LikeDisLike";
-import useAxiosSecure from "../../api/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+
+import useReaction from "../../hooks/useReaction";
+import Reactions from "../../components/Reactions/Reactions";
+
 
 const BlogDetail: FC = (): JSX.Element => {
   const {
@@ -28,37 +29,7 @@ const BlogDetail: FC = (): JSX.Element => {
     data,
   } = useBlogDetail();
 
-  const axiosSecure = useAxiosSecure();
-
-  const { data: reactionData = {}, refetch } = useQuery({
-    queryKey: ["reactions", _id],
-    queryFn: async () => {
-      const { data } = await axiosSecure.get(`/reactions/${_id}`);
-      return data.data;
-    },
-  });
-
-
-  const like = reactionData?.reactions?.likes || 0;
-  const disLike = reactionData?.reactions?.dislikes || 0;
-
-  const handleLike = async () => {
-    await axiosSecure.post("/reactions", {
-      userId: user?.uid,
-      postId: _id,
-      isLike: true,
-    });
-    refetch();
-  };
-
-  const handleDisLike = async () => {
-    await axiosSecure.post("/reactions", {
-      userId: user?.uid,
-      postId: _id,
-      isLike: false,
-    });
-    refetch();
-  };
+  const { like, disLike, handleLike, handleDisLike } = useReaction();
 
   if (isLoading) {
     return (
@@ -93,7 +64,7 @@ const BlogDetail: FC = (): JSX.Element => {
                 </div>
                 <div className="dark:text-[#696A75]">{publishDate}</div>
               </div>
-              <LikeDisLike
+              <Reactions
                 like={like}
                 disLike={disLike}
                 addLike={handleLike}
