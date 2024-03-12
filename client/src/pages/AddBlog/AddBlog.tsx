@@ -8,7 +8,7 @@ import BlogFrom from "../../components/BlogForm/BlogForm";
 
 
 const AddBlog: FC = (): JSX.Element => {
-  const { user, content, setContent, isSubmitting, handleSubmit } =
+  const { user, content, setContent, handleSubmit, register, errors, onSubmit, loading} =
     useAddBlog();
 
   //? if user is not verified
@@ -37,8 +37,11 @@ const AddBlog: FC = (): JSX.Element => {
             buttonText="Add Blog"
             content={content}
             setContent={setContent}
-            isSubmitting={isSubmitting}
             handleSubmit={handleSubmit}
+           Submit={onSubmit}
+            register={register}
+            errors={errors}
+            loading={loading}
           />
         </div>
       </div>
