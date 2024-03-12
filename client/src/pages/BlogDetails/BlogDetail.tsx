@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Helmet } from "react-helmet";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -10,10 +10,9 @@ import styles from "./BlogDetail.module.css";
 import useBlogDetail from "../../hooks/useBlogDetail";
 import LikeDisLike from "../../components/LikeDisLike/LikeDisLike";
 import useAxiosSecure from "../../api/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const BlogDetail: FC = (): JSX.Element => {
-  const axiosSecure = useAxiosSecure();
-
   const {
     isLoading,
     handleDelete,
@@ -28,8 +27,20 @@ const BlogDetail: FC = (): JSX.Element => {
     user,
     data,
   } = useBlogDetail();
-  const [like, setLike] = useState<number>(0);
-  const [disLike, setDisLike] = useState<number>(0);
+
+  const axiosSecure = useAxiosSecure();
+
+  const { data: reactionData = {}, refetch } = useQuery({
+    queryKey: ["reactions", _id],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/reactions/${_id}`);
+      return data.data;
+    },
+  });
+
+
+  const like = reactionData?.reactions?.likes || 0;
+  const disLike = reactionData?.reactions?.dislikes || 0;
 
   const handleLike = async () => {
     await axiosSecure.post("/reactions", {
@@ -37,9 +48,7 @@ const BlogDetail: FC = (): JSX.Element => {
       postId: _id,
       isLike: true,
     });
-
-    setLike(like + 1);
-    if (disLike > 0) setDisLike(disLike - 1);
+    refetch();
   };
 
   const handleDisLike = async () => {
@@ -48,9 +57,7 @@ const BlogDetail: FC = (): JSX.Element => {
       postId: _id,
       isLike: false,
     });
-
-    setDisLike(disLike + 1);
-    if (like > 0) setLike(like - 1);
+    refetch();
   };
 
   if (isLoading) {
