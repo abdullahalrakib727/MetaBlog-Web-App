@@ -6,6 +6,19 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 
 
+
+interface BlogData {
+  _id: string;
+  title: string;
+  photoUrl: string;
+  authorImg: string;
+  authorName: string;
+  published: string;
+  authorId: string;
+  content: string;
+}
+
+
 const useBlogDetail = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -14,7 +27,7 @@ const useBlogDetail = () => {
     const params = useParams();
     const navigate = useNavigate();
   
-    const { data = {}, isLoading } = useQuery({
+    const { data = {} as BlogData, isLoading } = useQuery<BlogData>({
       queryKey: ["blog", params.id],
       queryFn: async () => {
         const res = await axiosSecure.get(`/blogs/${params.id}`);
