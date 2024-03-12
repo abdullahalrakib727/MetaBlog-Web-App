@@ -38,6 +38,7 @@ I have used pnpm on this project. If you already have pnpm on your device just u
 - Loading skeleton : We also have loading skeleton. When data is being loaded from the server you will be able to see loading skeleton.
 - Update blog : Author will be able to update their blog as well. If you are the author of that blog then you will see an update button at the end of your blog's detail page. By clicking on that button you will be redirect to the update blog page.
 - Delete Blog: Author will be able to delete the blogs that they have created.
+- Reactions : You will be able to like or dislike a blog from it's details page.
 
 ## Authors
 
