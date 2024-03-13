@@ -6,10 +6,17 @@ import NotVerified from "../../components/NotVerified/NotVerified";
 import useAddBlog from "../../hooks/useAddBlog";
 import BlogFrom from "../../components/BlogForm/BlogForm";
 
-
 const AddBlog: FC = (): JSX.Element => {
-  const { user, content, setContent, handleSubmit, register, errors, onSubmit, loading} =
-    useAddBlog();
+  const {
+    user,
+    content,
+    setContent,
+    handleSubmit,
+    register,
+    errors,
+    onSubmit,
+    loading,
+  } = useAddBlog();
 
   //? if user is not verified
 
@@ -38,7 +45,7 @@ const AddBlog: FC = (): JSX.Element => {
             content={content}
             setContent={setContent}
             handleSubmit={handleSubmit}
-           Submit={onSubmit}
+            Submit={onSubmit}
             register={register}
             errors={errors}
             loading={loading}

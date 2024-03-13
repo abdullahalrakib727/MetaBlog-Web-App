@@ -5,13 +5,13 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../api/useAxiosSecure";
 import toast from "react-hot-toast";
 import { BlogsProps } from "../api/useBlogData";
+import { FieldValues, useForm } from "react-hook-form";
 
 export default function useUpdateBlog() {
-  
   const params = useParams();
   const axiosSecure = useAxiosSecure();
   const [updatedContent, setUpdatedContent] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { data: item = {} as BlogsProps, refetch } = useQuery<BlogsProps>({
@@ -22,13 +22,17 @@ export default function useUpdateBlog() {
     },
   });
 
-  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    const form = e.currentTarget as HTMLFormElement;
-    const title = form.blogTitle.value;
-    const photoUrl = form.photo.value;
-    const category = form.category.value;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data: FieldValues) => {
+    setLoading(true);
+    const title = data.title;
+    const photoUrl = data.photoUrl;
+    const category = data.category;
 
     const updatedBlog = {
       title,
@@ -52,13 +56,13 @@ export default function useUpdateBlog() {
           .then((res) => {
             if (res.data.data.modifiedCount > 0) {
               toast.success("Blog has been updated!");
-              setIsSubmitting(false);
+              setLoading(false);
               refetch();
               navigate(`/blogs/${item?._id}`);
             }
           });
       } else if (result.isDenied) {
-        setIsSubmitting(false);
+        setLoading(false);
         Swal.fire("Changes are not saved", "", "info");
       }
     });
@@ -68,7 +72,10 @@ export default function useUpdateBlog() {
     item,
     updatedContent,
     setUpdatedContent,
-    isSubmitting,
-    handleUpdate,
+    loading,
+    onSubmit,
+    handleSubmit,
+    register,
+    errors,
   };
 }
