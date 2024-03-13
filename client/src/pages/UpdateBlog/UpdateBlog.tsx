@@ -2,7 +2,6 @@ import { Helmet } from "react-helmet";
 
 import { FC } from "react";
 
-
 import useUpdateBlog from "../../hooks/useUpdateBlog";
 import BlogFrom from "../../components/BlogForm/BlogForm";
 
@@ -11,10 +10,12 @@ const UpdateBlog: FC = (): JSX.Element => {
     item,
     updatedContent,
     setUpdatedContent,
-    isSubmitting,
-    handleUpdate,
+    errors,
+    handleSubmit,
+    loading,
+    onSubmit,
+    register,
   } = useUpdateBlog();
-
 
   return (
     <div className="card w-full shadow-md min-h-screen my-10">
@@ -31,9 +32,12 @@ const UpdateBlog: FC = (): JSX.Element => {
             item={item}
             buttonText="Update"
             content={updatedContent}
-            handleSubmit={handleUpdate}
+            handleSubmit={handleSubmit}
             setContent={setUpdatedContent}
-            isSubmitting={isSubmitting}
+            loading={loading}
+            Submit={onSubmit}
+            register={register}
+            errors={errors}
           />
         </div>
       </div>
