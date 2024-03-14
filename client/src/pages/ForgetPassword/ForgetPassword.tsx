@@ -9,7 +9,11 @@ type ResetFormData = {
 const ForgetPassword = () => {
   const { sendResetPasswordEmail } = useAuth();
 
-  const { register, handleSubmit } = useForm<ResetFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetFormData>();
 
   const onSubmit = async (data: ResetFormData) => {
     const email = data?.email;
@@ -37,9 +41,11 @@ const ForgetPassword = () => {
                   className="appearance-none focus:outline-none p-2 mt-8 border rounded-xl text-black font-medium dark:text-blue-900"
                   type="email"
                   placeholder="Email"
-                  {...register("email", { required: true })}
+                  {...register("email", { required: "Email is required" })}
                 />
-
+                {errors.email && (
+                  <p className="text-red-500 my-1">{errors.email.message}</p>
+                )}
                 <button className="rounded-xl text-[#F0E3CA]  bg-blue-600 transition-all hover:bg-blue-500 py-2 hover:scale-105 duration-300">
                   Send
                 </button>

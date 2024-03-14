@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { Helmet } from "react-helmet";
-
 import NotVerified from "../../components/NotVerified/NotVerified";
-
 import useAddBlog from "../../hooks/useAddBlog";
 import BlogFrom from "../../components/BlogForm/BlogForm";
 

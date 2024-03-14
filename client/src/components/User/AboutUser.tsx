@@ -14,8 +14,8 @@ const AboutUser = () => {
           <img
             className="max-w-[64px] max-h-[64px] object-contain rounded-full"
             src={
-              user?.photoURL ||
               data.photo ||
+              user?.photoURL ||
               "https://i.ibb.co/Ydc2Yyb/download.png"
             }
             alt="user-image"
@@ -61,13 +61,14 @@ const AboutUser = () => {
                   <Box
                     padding="2"
                     boxShadow="lg"
-                    className="bg-white dark:bg-[#242535] w-72 md:w-[500px]"
+                    className="bg-[#F6F6F7] dark:bg-[#242535] w-72 md:w-[500px]"
                   >
                     <SkeletonText
                       mt="0"
                       noOfLines={5}
                       spacing="3"
                       skeletonHeight="2"
+                      className="bg-[#F6F6F7] dark:bg-[#242535] w-72 md:w-[500px]"
                     />
                   </Box>
                 </ChakraProvider>

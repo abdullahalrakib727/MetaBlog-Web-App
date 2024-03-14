@@ -11,7 +11,6 @@ import BannerSkeleton from "../../components/Skeletons/BannerSkeleton/BannerSkel
 const Home: FC = (): JSX.Element => {
   const { isLoading } = useBlogData();
 
-
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -24,13 +23,13 @@ const Home: FC = (): JSX.Element => {
         <title>MetaBlog</title>
       </Helmet>
       <section className="mb-10 mt-14 md:mb-[144px]">
-        {isLoading ? <BannerSkeleton /> : <Banner/>}
+        {isLoading ? <BannerSkeleton /> : <Banner />}
       </section>
       <section className="flex mb-10 lg:mb-20  justify-center">
         <Adds />
       </section>
       <section>
-        <RecentBlog/>
+        <RecentBlog />
         <div className="mt-8 mb-10 lg:mb-20 text-center">
           <button
             onClick={handleClick}
