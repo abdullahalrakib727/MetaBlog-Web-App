@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import RecentBlog from "../RecentBlog/RecentBlog";
+
 
 import { useNavigate } from "react-router-dom";
 import Adds from "../../components/Adds/Adds";
@@ -7,6 +7,7 @@ import Banner from "../../components/Banner/Banner";
 import { FC } from "react";
 import useBlogData from "../../api/useBlogData";
 import BannerSkeleton from "../../components/Skeletons/BannerSkeleton/BannerSkeleton";
+import RecentBlog from "../../components/RecentBlog/RecentBlog";
 
 const Home: FC = (): JSX.Element => {
   const { isLoading } = useBlogData();
