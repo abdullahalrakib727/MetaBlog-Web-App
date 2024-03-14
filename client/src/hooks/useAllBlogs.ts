@@ -23,7 +23,7 @@ const useAllBlogs = () => {
    const {
      data: allBlogs = [],
      refetch,
-     isLoading: isLoaded,
+     isLoading: loading,
    } = useQuery<BlogsProps[], unknown>({
      queryKey: ["all-blogs", selectedCategory],
      queryFn: async () => {
@@ -57,10 +57,7 @@ const useAllBlogs = () => {
      }
    };
  
-return { allBlogs, isLoading, isLoaded, handleChange, selectedCategory, data, category };
-
-
-   // ? can show featured blogs instead of recent blogs here on slider later
+return { allBlogs, isLoading, loading, handleChange, selectedCategory, data, category };
 };
 
 export default useAllBlogs;

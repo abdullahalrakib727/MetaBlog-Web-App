@@ -11,6 +11,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+
 import { FC, createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import toast from "react-hot-toast";

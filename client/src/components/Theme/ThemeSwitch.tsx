@@ -1,6 +1,7 @@
 
 import { FC } from "react";
-import { useTheme } from "../../Providers/ThemeProvider";
+import { useTheme } from "../../hooks/useTheme";
+
 
 const ThemeSwitch: FC = (): JSX.Element => {
   const { theme, setTheme } = useTheme();

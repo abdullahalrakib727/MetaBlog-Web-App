@@ -8,7 +8,7 @@ import Blogs from "../../components/Blogs/Blogs";
 
 const AllBlog: FC = (): JSX.Element => {
   
-  const { allBlogs, isLoading, isLoaded, handleChange, category, data } =
+  const { allBlogs, isLoading, loading, handleChange, category, data } =
     useAllBlogs();
 
   return (
@@ -17,12 +17,10 @@ const AllBlog: FC = (): JSX.Element => {
         <Helmet>
           <title>All Blogs | MetaBlog</title>
         </Helmet>
-        {/* slider section of recent blogs //! will add featured blogs here */}
+        {/* //*slider section of recent blogs //! will add featured blogs here which will be selected  by admin */}
         <BlogSlider data={data} isLoading={isLoading} />
-
         <CategorySelect category={category} handleChange={handleChange} />
-
-        <Blogs allBlogs={allBlogs} isLoaded={isLoaded} />
+        <Blogs allBlogs={allBlogs} loading={loading} />
       </div>
     </Container>
   );
