@@ -155,10 +155,10 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
       if (currentUser) {
         setUser(currentUser);
         await axiosPublic.post("/users", {
-          uid: currentUser.uid,
-          email: currentUser.email,
-          photo: currentUser.photoURL,
-          name: currentUser.displayName,
+          uid: currentUser?.uid,
+          email: currentUser?.email,
+          photo: currentUser?.photoURL,
+          name: currentUser?.displayName,
           role: "user",
         });
 

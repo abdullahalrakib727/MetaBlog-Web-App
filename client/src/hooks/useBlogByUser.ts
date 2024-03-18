@@ -12,7 +12,7 @@ const useBlogByUser = () => {
   const { data = [] as BlogsProps[], isLoading } = useQuery({
     queryKey: ["blogByUser", user?.uid],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/blogs?authorId=${user?.uid}`);
+      const res = await axiosSecure.get(`/blogs/author/${user?.uid}`);
       return res.data.data;
     },
   });

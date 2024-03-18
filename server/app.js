@@ -5,10 +5,9 @@ const cookieParser = require("cookie-parser");
 const connectDb = require("./db/db");
 
 const authRouter = require("./routes/authRouter");
-
-const userRouter = require("./routes/userRouter");
 const blogRouter = require("./routes/blogRouter");
 const reactionRouter = require("./routes/reactionRouter");
+const userRouter = require("./routes/userRouter");
 
 const app = express();
 
@@ -31,6 +30,6 @@ app.use(cookieParser());
 app.use("/blogs", blogRouter);
 app.use("/users", userRouter);
 app.use("/jwt", authRouter);
-app.use('/reactions',reactionRouter);
+app.use("/reactions", reactionRouter);
 
 module.exports = app;

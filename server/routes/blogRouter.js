@@ -16,6 +16,7 @@ const blogRouter = express.Router();
 
 blogRouter.route("/search").get(getSearchedBlog);
 blogRouter.route("/recent").get(getRecentBlogs);
+blogRouter.route("/author/:authorId").get(getBlogsByAuthorId);
 
 blogRouter.route("/").get(getAllBlogs).post(createBlog);
 
@@ -25,6 +26,5 @@ blogRouter
   .put(verifyToken, updateBlog)
   .delete(verifyToken, deleteBlog);
 
-blogRouter.route("/author/:authorId").get(getBlogsByAuthorId);
 
 module.exports = blogRouter;

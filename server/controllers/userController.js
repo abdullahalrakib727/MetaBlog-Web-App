@@ -1,10 +1,10 @@
-const allUsers = require("../models/User");
+const User = require("../models/User");
 
 // ! get all users
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await allUsers.find();
+    const users = await User.find();
     return res.status(200).send({ success: true, data: users });
   } catch (error) {
     return res.status(500).send({ message: error.message });
@@ -15,27 +15,31 @@ const getAllUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const user = req.body;
+    console.log(req.body);
 
-    const userExists = await allUsers.findOne({ email: user.email });
-    if (userExists) {
-      return res.send({ message: "User already exists" });
+    const existingUser = await User.findOne({ uid: req.body.uid });
+
+    if (existingUser) {
+      return res.status(204).send({ message: "User already exists" });
     }
 
-    const result = await allUsers.insertOne(user);
+    const user = new User(req.body);
+    const result = await user.save();
     return res.status(201).send(result);
   } catch (error) {
+    if (error.name === "ValidationError") {
+      return res.status(400).send({ message: error.message });
+    }
     return res.status(500).send({ message: error.message });
   }
 };
-
 //  ! get current logged user
 
 const getUser = async (req, res) => {
   try {
     const id = req.params.id;
     const query = { uid: id };
-    const user = await allUsers.findOne(query).select("-email -role -_id");
+    const user = await User.findOne(query).select("-email -role -_id");
 
     return res.status(200).send({ success: true, data: user });
   } catch (error) {
@@ -49,20 +53,13 @@ const updateUser = async (req, res) => {
   try {
     const id = req.params.id;
     const query = { uid: id };
-    const user = req.body;
+    const updates = req.body.bio ? { bio: req.body.bio } : req.body;
 
     if (req.user.userId !== id) {
       return res.status(403).send({ message: "Unauthorized access" });
     }
 
-    if (req.body.bio) {
-      const result = await allUsers.updateOne(query, {
-        $set: { bio: user.bio },
-      });
-      return res.status(200).send({ success: true, data: result });
-    }
-
-    const result = await allUsers.updateOne(query, { $set: user });
+    const result = await User.updateOne(query, { $set: updates });
     return res.status(200).send({ success: true, data: result });
   } catch (error) {
     return res.status(500).send({ message: error.message });
@@ -80,7 +77,7 @@ const deleteUser = async (req, res) => {
       return res.status(403).send({ message: "Unauthorized access" });
     }
 
-    const result = await allUsers.deleteOne(query);
+    const result = await User.deleteOne(query);
     return res.status(200).send({ success: true, data: result });
   } catch (error) {
     return res.status(500).send({ message: error.message });

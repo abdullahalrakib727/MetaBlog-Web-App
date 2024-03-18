@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const reactionSchema = new mongoose.Schema({
-  uid: {
-    type: String,
-    required: true,
-  },
   postId: {
     type: String,
     required: true,
