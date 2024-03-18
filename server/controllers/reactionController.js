@@ -40,7 +40,7 @@ const addReact = async (req, res) => {
         like,
         dislike,
       };
-      await reactions.insertOne(reaction);
+      await reactions.create(reaction);
     }
     return res.status(201).send({ success: true, message: "Reaction added" });
   } catch (error) {
