@@ -18,7 +18,7 @@ export default function useUpdateBlog() {
     queryKey: ["item", params.id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/blogs/${params.id}`);
-      return res.data.data;
+      return res.data;
     },
   });
 
@@ -50,16 +50,22 @@ export default function useUpdateBlog() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axiosSecure
-          .patch(`/blogs/${item?._id}`, updatedBlog, {
+          .put(`/blogs/${item?._id}`, updatedBlog, {
             withCredentials: true,
           })
           .then((res) => {
-            if (res.data.data.modifiedCount > 0) {
+            console.log(res);
+            if (res.data.success) {
               toast.success("Blog has been updated!");
               setLoading(false);
               refetch();
               navigate(`/blogs/${item?._id}`);
             }
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("Something went wrong!");
+            setLoading(false);
           });
       } else if (result.isDenied) {
         setLoading(false);

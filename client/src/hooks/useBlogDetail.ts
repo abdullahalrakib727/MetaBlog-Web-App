@@ -5,8 +5,6 @@ import useAxiosSecure from "../api/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 
-
-
 interface BlogData {
   _id: string;
   title: string;
@@ -18,83 +16,95 @@ interface BlogData {
   content: string;
 }
 
-
 const useBlogDetail = () => {
-    const { user } = useAuth();
-    const axiosSecure = useAxiosSecure();
-  
-  
-    const params = useParams();
-    const navigate = useNavigate();
-  
-    const { data = {} as BlogData, isLoading } = useQuery<BlogData>({
-      queryKey: ["blog", params.id],
-      queryFn: async () => {
-        const res = await axiosSecure.get(`/blogs/${params.id}`);
-        return res.data.data;
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const { data = {} as BlogData, isLoading } = useQuery<BlogData>({
+    queryKey: ["blog", params.id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/blogs/${params.id}`);
+      return res.data;
+    },
+  });
+
+  const {
+    _id,
+    title,
+    photoUrl,
+    authorImg,
+    authorName,
+    published,
+    authorId,
+    content,
+  } = data || {};
+
+  const isValidDate = published && !isNaN(Date.parse(published));
+
+  const publishDate = isValidDate
+    ? format(parseISO(published), "MMMM dd, yyyy")
+    : null;
+
+  // !delete blog
+
+  const handleDelete = (id: string) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+        popup: "dark:bg-[#242535] dark:text-white",
       },
+      buttonsStyling: true,
     });
-  
-    const {
-      _id,
-      title,
-      photoUrl,
-      authorImg,
-      authorName,
-      published,
-      authorId,
-      content,
-    } = data || {};
-  
-    const isValidDate = published && !isNaN(Date.parse(published));
-  
-    const publishDate = isValidDate
-      ? format(parseISO(published), "MMMM dd, yyyy")
-      : null;
-  
-    const handleDelete = (id: string) => {
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger",
-          popup: "dark:bg-[#242535] dark:text-white",
-        },
-        buttonsStyling: true,
-      });
-      swalWithBootstrapButtons
-        .fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel!",
-          reverseButtons: true,
-        })
-        .then(async (result) => {
-          if (result.isConfirmed) {
-            const res = await axiosSecure.delete(`/blogs/${id}`);
-  
-            if (res.data.deletedCount > 0) {
-              swalWithBootstrapButtons.fire({
-                title: "Deleted!",
-                text: "Your Blog has been deleted.",
-                icon: "success",
-              });
-              navigate("/");
-            }
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axiosSecure.delete(`/blogs/${id}`);
+
+          if (res.data.success) {
             swalWithBootstrapButtons.fire({
-              title: "Cancelled",
-              text: "Your Blog is safe :)",
-              icon: "error",
+              title: "Deleted!",
+              text: "Your Blog has been deleted.",
+              icon: "success",
             });
+            navigate("/");
           }
-        });
-    };
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your Blog is safe :)",
+            icon: "error",
+          });
+        }
+      });
+  };
 
-    return {isLoading,handleDelete,publishDate,authorName,authorImg,title,photoUrl,content,authorId,_id,user,data};
-
-}
+  return {
+    isLoading,
+    handleDelete,
+    publishDate,
+    authorName,
+    authorImg,
+    title,
+    photoUrl,
+    content,
+    authorId,
+    _id,
+    user,
+    data,
+  };
+};
 
 export default useBlogDetail;

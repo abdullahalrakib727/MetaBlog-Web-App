@@ -1,4 +1,4 @@
-// import { AiTwotoneDislike, AiTwotoneLike } from "react-icons/ai";
+
 import { BiSolidDislike, BiSolidLike } from "react-icons/bi";
 
 interface LikeDisLikeProps {
