@@ -5,9 +5,7 @@ import useAuth from "./useAuth";
 import { useParams } from "react-router-dom";
 
 const useReaction = () => {
-
-
-const {id} = useParams();
+  const { id } = useParams();
 
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -16,12 +14,12 @@ const {id} = useParams();
     queryKey: ["reactions", id],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/reactions/${id}`);
-      return data.data;
+      return data?.reactionsResult || {};
     },
   });
 
-  const like = reactionData?.reactions?.likes || 0;
-  const disLike = reactionData?.reactions?.dislikes || 0;
+  const like = reactionData?.likes || 0;
+  const disLike = reactionData?.dislikes || 0;
 
   const handleLike = async () => {
     await axiosSecure.post("/reactions", {

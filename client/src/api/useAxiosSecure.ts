@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const axiosSecure: AxiosInstance = axios.create({
-  baseURL: "https://blog-website-server-theta.vercel.app",
+  baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 

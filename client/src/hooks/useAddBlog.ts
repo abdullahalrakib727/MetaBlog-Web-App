@@ -43,8 +43,7 @@ export default function useAddBlog() {
 
     try {
       const res = await axiosPublic.post("/blogs", BlogData);
-
-      if (res.data.insertedId) {
+      if (res.data) {
         toast.success("Blog has been added!");
         setLoading(false);
         navigate("/blogs");

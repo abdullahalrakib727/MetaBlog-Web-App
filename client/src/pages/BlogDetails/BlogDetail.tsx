@@ -11,7 +11,6 @@ import useBlogDetail from "../../hooks/useBlogDetail";
 import useReaction from "../../hooks/useReaction";
 import Reactions from "../../components/Reactions/Reactions";
 
-
 const BlogDetail: FC = (): JSX.Element => {
   const {
     isLoading,

@@ -1,16 +1,13 @@
 {
     "version": 2,
+    "name": "my-app",
     "builds": [
-        {
-            "src": "./index.js",
-            "use": "@vercel/node"
-        }
+      { "src": "server.js", "use": "@vercel/node" }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/",
-            "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-        }
-    ]
-}
+      { "src": "/(.*)", "dest": "server.js" }
+    ],
+    "env": {
+      "CUSTOM_ENV_VARIABLE": "my-value"
+    }
+  }
