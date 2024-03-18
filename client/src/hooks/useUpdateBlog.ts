@@ -54,7 +54,6 @@ export default function useUpdateBlog() {
             withCredentials: true,
           })
           .then((res) => {
-            console.log(res);
             if (res.data.success) {
               toast.success("Blog has been updated!");
               setLoading(false);
