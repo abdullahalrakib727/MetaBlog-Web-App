@@ -26,7 +26,6 @@ const getBlogById = async (req, res) => {
 
 const getBlogsByAuthorId = async (req, res) => {
   try {
-    console.log(req.params.authorId);
     const blogs = await AllBlogs.find({ authorId: req.params.authorId });
     return res
       .status(200)
