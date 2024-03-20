@@ -4,6 +4,7 @@ import useAuth from "./useAuth";
 import useAxiosSecure from "../api/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useAllBlogs from "./useAllBlogs";
 
 interface BlogData {
   _id: string;
@@ -31,6 +32,9 @@ const useBlogDetail = () => {
     },
   });
 
+
+
+
   const {
     _id,
     title,
@@ -49,6 +53,8 @@ const useBlogDetail = () => {
     : null;
 
   // !delete blog
+
+  const { refetch } = useAllBlogs();
 
   const handleDelete = (id: string) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -79,6 +85,7 @@ const useBlogDetail = () => {
               text: "Your Blog has been deleted.",
               icon: "success",
             });
+            refetch();
             navigate("/");
           }
         } else if (result.dismiss === Swal.DismissReason.cancel) {

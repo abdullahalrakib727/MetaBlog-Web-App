@@ -9,12 +9,13 @@ export interface BlogsProps {
   _id?: string;
   title: string;
   photoUrl: string;
-  category: string;
+  category?: string;
   authorName: string;
   authorImg: string;
   published: string;
   content?: string;
 }
+
 
 export interface BlogData {
   data: BlogsProps[];

@@ -17,7 +17,7 @@ const getAllBlogs = async (req, res) => {
 
 const getBlogById = async (req, res) => {
   try {
-    const blog = await AllBlogs.findById(req.params.id);
+    const blog = await AllBlogs.findOne({ slug: req.params.id });
     return res.status(200).json(blog);
   } catch (error) {
     return res.status(500).json({ error: "Server Error" });
@@ -26,7 +26,9 @@ const getBlogById = async (req, res) => {
 
 const getBlogsByAuthorId = async (req, res) => {
   try {
-    const blogs = await AllBlogs.find({ authorId: req.params.authorId });
+    const blogs = await AllBlogs.find({ authorId: req.params.authorId }).sort({
+      published: -1,
+    });
     return res
       .status(200)
       .json({ success: true, total: blogs.length, data: blogs });

@@ -57,7 +57,7 @@ const useAllBlogs = () => {
      }
    };
  
-return { allBlogs, isLoading, loading, handleChange, selectedCategory, data, category };
+return { allBlogs, isLoading, loading, handleChange, selectedCategory, data, category, refetch };
 };
 
 export default useAllBlogs;

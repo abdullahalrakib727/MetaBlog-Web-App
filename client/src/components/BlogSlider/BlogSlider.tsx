@@ -30,11 +30,12 @@ const BlogSlider = ({ isLoading, data }: BlogSliderProps) => {
         >
           {data.map((blog: BlogsProps) => (
             <SwiperSlide key={blog._id} style={{ borderRadius: "12px" }}>
-              <Link to={`/blogs/${blog._id}`}>
+              <Link to={`/blogs/${blog.title.split(" ").join("-").replace(/[*+~.,;()'"!:@]/g, '').toLowerCase()}`}>
                 <div className="max-w-[1216px] overflow-hidden rounded-xl">
                   <div
                     style={{
                       backgroundImage: `url(${blog.photoUrl})`,
+                      backgroundPosition: "center",
                     }}
                     className=" h-[450px] my-12 rounded-xl flex bg-cover bg-no-repeat max-w-[1216px]"
                   >
