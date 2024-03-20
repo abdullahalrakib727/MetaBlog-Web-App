@@ -7,6 +7,7 @@ const Banner: FC = (): JSX.Element => {
   const { data } = useBlogData();
 
   return (
+
     <Link
       to={`/blogs/${data[1]?.title
         .split(" ")
