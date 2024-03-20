@@ -44,7 +44,7 @@ export default function useUpdateBlog() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axiosSecure
-          .put(`/blogs/${title.split(' ').join('-').replace(/[*+~.,;()'"!:@]/g, '').toLowerCase()}`, updatedBlog, {
+          .patch(`/blogs/${title.split(' ').join('-').replace(/[*+~.,;()'"!:@]/g, '').toLowerCase()}`, updatedBlog, {
             withCredentials: true,
           })
           .then((res) => {

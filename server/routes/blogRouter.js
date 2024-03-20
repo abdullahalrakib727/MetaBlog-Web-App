@@ -23,7 +23,7 @@ blogRouter.route("/").get(getAllBlogs).post(createBlog);
 blogRouter
   .route("/:id")
   .get(verifyToken, getBlogById)
-  .put(verifyToken, updateBlog)
+  .patch(verifyToken, updateBlog)
   .delete(verifyToken, deleteBlog);
 
 
