@@ -1,30 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
+
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../api/useAxiosSecure";
 import toast from "react-hot-toast";
-import { BlogsProps } from "../api/useBlogData";
+
 import { FieldValues, useForm } from "react-hook-form";
+import useBlogDetail from "./useBlogDetail";
 
 export default function useUpdateBlog() {
-  const params = useParams();
+
   const axiosSecure = useAxiosSecure();
   const [updatedContent, setUpdatedContent] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-
- 
-
-  const { data: item = {} as BlogsProps, refetch } = useQuery<BlogsProps>({
-    queryKey: ["item", params.id],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/blogs/${params.id}`);
-      return res.data;
-    },
-  });
-
+  const { data: item, fecthing } = useBlogDetail();
   const {
     register,
     handleSubmit,
@@ -53,15 +44,21 @@ export default function useUpdateBlog() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axiosSecure
-          .put(`/blogs/${item?._id}`, updatedBlog, {
+          .put(`/blogs/${title.split(' ').join('-').replace(/[*+~.,;()'"!:@]/g, '').toLowerCase()}`, updatedBlog, {
             withCredentials: true,
           })
           .then((res) => {
             if (res.data.success) {
               toast.success("Blog has been updated!");
               setLoading(false);
-              refetch();
-              navigate(`/blogs/${item?._id}`);
+              fecthing();
+              navigate(
+                `/blogs/${title
+                  .split(" ")
+                  .join("-")
+                  .replace(/[*+~.,;()'"!:@]/g, "")
+                  .toLowerCase()}`
+              );
             }
           })
           .catch((error) => {

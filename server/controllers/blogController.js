@@ -49,7 +49,7 @@ const createBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     const id = req.params.id;
-    const blog = await AllBlogs.findByIdAndUpdate(id, req.body, {
+    const blog = await AllBlogs.findOneAndUpdate({ slug: id }, req.body, {
       new: true,
       upsert: true,
     });

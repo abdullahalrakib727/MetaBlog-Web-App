@@ -24,16 +24,18 @@ const useBlogDetail = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { data = {} as BlogData, isLoading } = useQuery<BlogData>({
+  const {
+    data = {} as BlogData,
+    isLoading,
+    refetch: fecthing,
+  } = useQuery<BlogData>({
     queryKey: ["blog", params.id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/blogs/${params.id}`);
+
       return res.data;
     },
   });
-
-
-
 
   const {
     _id,
@@ -111,6 +113,7 @@ const useBlogDetail = () => {
     _id,
     user,
     data,
+    fecthing,
   };
 };
 
