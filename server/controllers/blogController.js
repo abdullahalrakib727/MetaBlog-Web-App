@@ -51,7 +51,6 @@ const updateBlog = async (req, res) => {
     const id = req.params.id;
     const blog = await AllBlogs.findOneAndUpdate({ slug: id }, req.body, {
       new: true,
-      upsert: true,
     });
 
     if (!blog) {
