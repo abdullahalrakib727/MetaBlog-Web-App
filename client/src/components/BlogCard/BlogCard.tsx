@@ -14,7 +14,7 @@ interface BlogCardProps {
 
 const BlogCard: FC<BlogCardProps> = ({ blog }): JSX.Element => {
   
-  const { _id, title, photoUrl, category, authorName, authorImg, published } =
+  const { title, photoUrl, category, authorName, authorImg, published } =
     blog;
 
   const isValidDate = published && !isNaN(Date.parse(published));
@@ -25,7 +25,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }): JSX.Element => {
 
   return (
     <Link
-      to={`/blogs/${_id}`}
+    to={`/blogs/${title.split(" ").join("-").replace(/[*+~.,;()'"!:@]/g, '').toLowerCase()}`}
       className="bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] p-4 rounded-xl max-w-[392px] flex flex-col"
     >
       <PhotoProvider>

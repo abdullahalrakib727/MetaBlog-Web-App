@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
+const { default: slugify } = require("slugify");
+require("slugify");
 
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    unique: true,
+  },
+  slug: {
+    type: String,
     unique: true,
   },
   photoUrl: {
@@ -47,6 +53,15 @@ const blogSchema = new mongoose.Schema({
     enum: ["draft", "published"],
     default: "draft",
   },
+});
+
+blogSchema.pre("save", function (next) {
+  this.slug = slugify(this.title, {
+    lower: true,
+    replacement: "-",
+    remove: /[*+~.;()'"!:@]/g,
+  });
+  next();
 });
 
 module.exports = mongoose.model("allBlogs", blogSchema, "allBlogs");
