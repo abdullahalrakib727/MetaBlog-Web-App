@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const axiosSecure: AxiosInstance = axios.create({
-<<<<<<< HEAD
-  baseURL: "http;//localhost:5000",
-=======
   baseURL: "http://localhost:5000",
->>>>>>> main
   withCredentials: true,
 });
 
