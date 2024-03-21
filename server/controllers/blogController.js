@@ -53,6 +53,8 @@ const updateBlog = async (req, res) => {
       new: true,
     });
 
+
+
     if (!blog) {
       return res
         .status(404)

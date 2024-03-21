@@ -64,4 +64,15 @@ blogSchema.pre("save", function (next) {
   next();
 });
 
+blogSchema.pre("findOneAndUpdate", function (next) {
+  if (this._update.title) {
+    this._update.slug = slugify(this._update.title, {
+      lower: true,
+      replacement: "-",
+      remove: /[*+~.;()'"!:@]/g,
+    });
+  }
+  next();
+});
+
 module.exports = mongoose.model("allBlogs", blogSchema, "allBlogs");
