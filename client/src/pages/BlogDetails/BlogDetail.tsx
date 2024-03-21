@@ -97,7 +97,8 @@ const BlogDetail: FC = (): JSX.Element => {
                       .split(" ")
                       .join("-")
                       .replace(/[*+~.,;()'"!:@]/g, "")
-                      .toLowerCase()}`}
+                      .toLowerCase()
+                      .replace(/^-|-$/g, "")}`}
                   >
                     <button className=" py-2 px-4 text-center rounded-md bg-black text-white  normal-case hover:bg-white hover:text-black transition-all duration-300 shadow-md">
                       Update

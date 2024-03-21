@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,20 +6,29 @@ import toast from "react-hot-toast";
 
 import { FieldValues, useForm } from "react-hook-form";
 import useBlogDetail from "./useBlogDetail";
+import useAllBlogs from "./useAllBlogs";
 
 export default function useUpdateBlog() {
+  // ! hooks
 
   const axiosSecure = useAxiosSecure();
   const [updatedContent, setUpdatedContent] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // ! fetch all blogs
+  const { refetch: reload } = useAllBlogs();
+
+  // ! details of the current blog
   const { data: item, fecthing } = useBlogDetail();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  // ! submit the updated blog
 
   const onSubmit = async (data: FieldValues) => {
     setLoading(true);
@@ -42,23 +50,28 @@ export default function useUpdateBlog() {
       confirmButtonText: "Save",
       denyButtonText: `Don't save`,
     }).then(async (result) => {
+      // ! if user wants to save the changes
       if (result.isConfirmed) {
         await axiosSecure
-          .patch(`/blogs/${title.split(' ').join('-').replace(/[*+~.,;()'"!:@]/g, '').toLowerCase()}`, updatedBlog, {
-            withCredentials: true,
-          })
+          .patch(
+            `/blogs/${item.title
+              .split(" ")
+              .join("-")
+              .replace(/[*+~.,;()'"!:@]/g, "")
+              .toLowerCase()
+              .replace(/^-|-$/g, "")}`,
+            updatedBlog,
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
+            reload();
             if (res.data.success) {
               toast.success("Blog has been updated!");
               setLoading(false);
               fecthing();
-              navigate(
-                `/blogs/${title
-                  .split(" ")
-                  .join("-")
-                  .replace(/[*+~.,;()'"!:@]/g, "")
-                  .toLowerCase()}`
-              );
+              navigate("/blogs");
             }
           })
           .catch((error) => {

@@ -4,6 +4,7 @@ import useAuth from "./useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FieldValues, useForm } from "react-hook-form";
+import useAllBlogs from "./useAllBlogs";
 
 export default function useAddBlog() {
   const {
@@ -19,6 +20,8 @@ export default function useAddBlog() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const { refetch } = useAllBlogs();
 
   const onSubmit = async (data: FieldValues) => {
     setLoading(true);
@@ -44,8 +47,9 @@ export default function useAddBlog() {
     try {
       const res = await axiosPublic.post("/blogs", BlogData);
       if (res.data) {
-        toast.success("Blog has been added!");
+        await refetch();
         setLoading(false);
+        toast.success("Blog has been added!");
         navigate("/blogs");
       }
     } catch (error) {

@@ -22,7 +22,7 @@ const Banner: FC = (): JSX.Element => {
           src={data[1]?.photoUrl}
           alt={data[1]?.title}
         />
-        <div className="lg:min-w-[518px] lg:min-h-[304px] rounded-xl  md:-bottom-20 lg:-bottom-20 border left-16 md:left-32 lg:left-24 bg-[#FFF] lg:p-10 p-3 md:absolute border-[#E8E8EA] shadow-md shadow-[#181A2A1F] dark:bg-[#181A2A] dark:border-[#242535]">
+        <div className="lg:min-w-[518px] lg:min-h-[304px] rounded-xl  md:-bottom-20 lg:-bottom-24 border left-16 md:left-32 lg:left-24 bg-[#FFF] lg:p-10 p-3 md:absolute border-[#E8E8EA] shadow-md shadow-[#181A2A1F] dark:bg-[#181A2A] dark:border-[#242535]">
           <div className="max-w-[518px]">
             <span className="bg-[#4B6BFB] rounded-md text-white px-2 py-1 text-sm text-center mt-2 lg:mt-0">
               {data[1]?.category}

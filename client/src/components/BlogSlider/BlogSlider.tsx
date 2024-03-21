@@ -44,10 +44,10 @@ const BlogSlider = ({ isLoading, data }: BlogSliderProps) => {
                       <p className="text-white bg-[#4B6BFB] inline-block py-1 px-[10px] rounded-md text-sm font-medium mb-4">
                         {blog.category}
                       </p>
-                      <h2 className="text-white text-3xl font-semibold max-w-[720px]">
+                      <h2 className="text-yellow-500 text-3xl font-semibold max-w-[720px]">
                         {blog.title}
                       </h2>
-                      <div className="text-white flex items-center gap-5 mt-6">
+                      <div className="text-yellow-500 flex items-center gap-5 mt-6">
                         <img
                           src={blog.authorImg}
                           alt="author-image"
