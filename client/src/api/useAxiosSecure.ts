@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const axiosSecure: AxiosInstance = axios.create({
   baseURL: "https://blog-website-server-theta.vercel.app",
@@ -17,7 +18,7 @@ const useAxiosSecure = () => {
         return res;
       },
       (error) => {
-        console.log("error tracked in interceptor", error.response);
+        toast.error(error.response.data.message);
         if (error.response.status === 401 || error.response.status === 403) {
           logOutUser();
           navigate("/login");

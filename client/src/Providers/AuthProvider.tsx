@@ -180,7 +180,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }): JSX.Element => {
 
       await axiosPublic.post("/jwt/logout");
       setUser(null);
-
+      toast.success("Logged out successfully");
       return setLoading(true);
     } catch (error) {
       console.error(error);

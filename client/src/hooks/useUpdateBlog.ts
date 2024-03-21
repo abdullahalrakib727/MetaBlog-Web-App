@@ -74,8 +74,7 @@ export default function useUpdateBlog() {
               navigate("/blogs");
             }
           })
-          .catch((error) => {
-            console.log(error);
+          .catch(() => {
             toast.error("Something went wrong!");
             setLoading(false);
           });
