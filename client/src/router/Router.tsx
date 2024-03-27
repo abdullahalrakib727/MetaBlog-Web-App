@@ -16,6 +16,7 @@ import Contact from "../pages/Contact/Contact";
 import Dashboard from "../layout/Dashboard";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 import DashBoardHome from "../pages/DashBoardHome/DashBoardHome";
+import AdRequest from "../pages/AdRequest/AdRequest";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,22 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddBlog />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add",
+        element: (
+          <PrivateRoute>
+            <AddBlog />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/request/ad",
+        element: (
+          <PrivateRoute>
+            <AdRequest/>
           </PrivateRoute>
         ),
       },

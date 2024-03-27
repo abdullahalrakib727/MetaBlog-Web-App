@@ -13,7 +13,7 @@ const Contact: FC = (): JSX.Element => {
   return (
     <Container>
       <div className="min-h-[calc(100vh-100px)] my-5 flex justify-center items-center">
-        <div className="w-11/12 mx-auto bg-slate-100 dark:bg-[#242535] py-5 rounded-md">
+        <div className="w-11/12 mx-auto bg-[#F6F6F7] dark:bg-[#242535] py-5 rounded-md">
           <div className="flex flex-col items-center mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-4 text-blue-600 dark:text-white text-center">
               Contact Us

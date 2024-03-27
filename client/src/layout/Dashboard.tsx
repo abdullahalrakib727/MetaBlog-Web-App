@@ -7,8 +7,8 @@ import SideNav from "../components/SideNav/SideNav";
 const Dashboard = () => {
   return (
     <>
-      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-        <div className="w-full flex-none md:w-64">
+      <div className="flex min-h-screen flex-col md:flex-row md:overflow-hidden">
+        <div className="w-full flex-none md:w-64 bg-[#F6F6F7] dark:bg-[#141624]">
           <SideNav />
         </div>
 
