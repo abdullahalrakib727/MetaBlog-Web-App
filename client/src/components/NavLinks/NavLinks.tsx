@@ -7,6 +7,7 @@ import {
 import { NavLink, useLocation } from "react-router-dom";
 
 import styles from "./navlink.module.css";
+import { RiAdvertisementLine } from "react-icons/ri";
 
 const links = [
   { name: "Dashboard Home", href: "/dashboard", icon: HomeIcon },
@@ -19,6 +20,12 @@ const links = [
     name: "Add Blog",
     href: "/dashboard/add",
     icon: PlusIcon,
+  },
+  {
+    name: "Advertisement",
+    href: "/dashboard/request/ad",
+    icon: RiAdvertisementLine,
+    iconType: "RiAdvertisementLine",
   },
 ];
 
@@ -39,7 +46,13 @@ export default function NavLinks() {
                 : "flex items-center py-2 rounded-sm"
             }
           >
-            <LinkIcon className="w-6  ml-1" />
+            <LinkIcon
+              className={
+                link.iconType == "RiAdvertisementLine"
+                  ? "text-xl w-6 ml-1"
+                  : "w-6 ml-1"
+              }
+            />
             <p className="hidden md:block  pl-1">{link.name}</p>
           </NavLink>
         );
