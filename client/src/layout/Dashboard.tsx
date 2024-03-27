@@ -1,25 +1,26 @@
 import { Toaster } from "react-hot-toast";
-import NavBar from "../components/shared/Navbar/NavBar";
 
 import { Outlet } from "react-router-dom";
-import Footer from "../components/shared/Footer/Footer";
 import Container from "../components/Container/Container";
-
-
+import SideNav from "../components/SideNav/SideNav";
 
 const Dashboard = () => {
-    return (
-        <>
-        <NavBar></NavBar>
-        <div>
-          <Toaster position="top-center" reverseOrder={false} />
+  return (
+    <>
+      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+        <div className="w-full flex-none md:w-64">
+          <SideNav />
+        </div>
+
+        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
           <Container>
+            <Toaster position="top-center" reverseOrder={false} />
             <Outlet></Outlet>
           </Container>
         </div>
-        <Footer></Footer>
-      </>
-    );
+      </div>
+    </>
+  );
 };
 
 export default Dashboard;

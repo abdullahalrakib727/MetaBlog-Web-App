@@ -8,7 +8,7 @@ const AboutUser = () => {
     useAboutUser();
 
   return (
-    <section className="max-w-[1216px] lg:max-h-[344px] bg-[#F6F6F7] dark:bg-[#242535] dark:text-white p-12 rounded-xl my-12">
+    <section className="max-w-[1216px] lg:max-h-[344px] bg-[#F6F6F7] dark:bg-[#242535] dark:text-white p-12 rounded-xl mb-12">
       <div className="flex flex-col justify-center items-center max-w-[648px] lg:max-h-[284px] mx-auto">
         <div className="flex items-center gap-4 mb-6">
           <img
