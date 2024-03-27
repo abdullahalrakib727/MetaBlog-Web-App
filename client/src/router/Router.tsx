@@ -15,6 +15,7 @@ import UpdateBlog from "../pages/UpdateBlog/UpdateBlog";
 import Contact from "../pages/Contact/Contact";
 import Dashboard from "../layout/Dashboard";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
+import DashBoardHome from "../pages/DashBoardHome/DashBoardHome";
 
 const router = createBrowserRouter([
   {
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <Profile />
+          <DashBoardHome />
           </PrivateRoute>
         ),
       },

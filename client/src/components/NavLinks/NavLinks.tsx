@@ -25,7 +25,7 @@ export default function NavLinks() {
             to={link.href}
           
           >
-            <LinkIcon className="w-6" />
+            <LinkIcon className="w-6 mt-2" />
             <p className="hidden md:block">{link.name}</p>
           </Link>
         );
