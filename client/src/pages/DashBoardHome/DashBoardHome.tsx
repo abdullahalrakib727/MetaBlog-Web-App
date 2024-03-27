@@ -1,15 +1,12 @@
 import useAuth from "../../hooks/useAuth";
 
 const DashBoardHome = () => {
-
-
-const {user} = useAuth();
-
+  const { user } = useAuth();
 
   return (
-    <section>
+    <section className="dark:text-white">
       <h1 className="text-xl font-semibold">Welcome {user?.displayName}</h1>
-      <p>Toaday is {'Monday'}</p>
+      <p>Toaday is {"Monday"}</p>
     </section>
   );
 };

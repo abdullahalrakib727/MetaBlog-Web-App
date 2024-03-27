@@ -12,7 +12,7 @@ const Dashboard = () => {
           <SideNav />
         </div>
 
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-12 dark:text-white">
+        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
           <Container>
             <Toaster position="top-center" reverseOrder={false} />
             <Outlet></Outlet>

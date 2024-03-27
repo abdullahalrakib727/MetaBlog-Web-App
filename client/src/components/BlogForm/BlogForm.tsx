@@ -1,6 +1,6 @@
 import JoditEditor from "jodit-react";
 import { FaSpinner } from "react-icons/fa";
-import {BlogsProps } from "../../api/useBlogData";
+import { BlogsProps } from "../../api/useBlogData";
 import {
   FieldErrors,
   FieldValues,
@@ -41,13 +41,13 @@ const BlogFrom = ({
         <input
           type="text"
           placeholder="Blog's title"
-          className="appearance-none focus:outline-none input bg-gray-200 dark:bg-white dark:border-white focus:bg-gray-100 dark:focus:bg-gray-100"
+          className="appearance-none focus:outline-none p-2 rounded-sm bg-gray-200 dark:bg-white dark:border-white focus:bg-gray-100 dark:focus:bg-gray-100"
           defaultValue={item?.title || ""}
           {...register("title", {
             required: "Title is required !!",
           })}
         />
-         {errors.title && (
+        {errors.title && (
           <p className="text-red-600 font-semibold mt-2">
             {errors.title && typeof errors.title.message === "string"
               ? errors.title.message
@@ -58,20 +58,20 @@ const BlogFrom = ({
       <div className="form-control">
         <label className="label">
           <span className="label-text text-black dark:text-white">
-            Image URL
+            Blog Thumbnail
           </span>
         </label>
         <input
           type="text"
           placeholder="Thumbnail link"
-          className="appearance-none focus:outline-none input bg-gray-200 dark:bg-white dark:border-white focus:bg-gray-100 dark:focus:bg-gray-100"
+          className="appearance-none focus:outline-none p-2 rounded-sm bg-gray-200 dark:bg-white dark:border-white focus:bg-gray-100 dark:focus:bg-gray-100"
           defaultValue={item?.photoUrl || ""}
           {...register("photoUrl", {
             required: "Thumbnail is required !!",
           })}
         />
         {errors.photoUrl && (
-         <p className="text-red-600 font-semibold mt-2">
+          <p className="text-red-600 font-semibold mt-2">
             {errors.photoUrl && typeof errors.photoUrl.message === "string"
               ? errors.photoUrl.message
               : ""}
@@ -85,7 +85,7 @@ const BlogFrom = ({
           </span>
         </label>
         <select
-          className="appearance-none focus:outline-none select bg-gray-200 dark:bg-white dark:border-white w-full focus:bg-gray-100 dark:focus:bg-gray-100"
+          className="appearance-none focus:outline-none p-2 rounded-sm bg-gray-200 dark:bg-white dark:border-white w-full focus:bg-gray-100 dark:focus:bg-gray-100"
           defaultValue={item?.category || ""}
           {...register("category", {
             required: "Category is required !!",
@@ -99,7 +99,7 @@ const BlogFrom = ({
           <option value="Sports">Sports</option>
         </select>
         {errors.category && (
-       <p className="text-red-600 font-semibold mt-2">
+          <p className="text-red-600 font-semibold mt-2">
             {errors.category && typeof errors.category.message === "string"
               ? errors.category.message
               : ""}
@@ -118,7 +118,7 @@ const BlogFrom = ({
       <div className="form-control mt-6">
         <button
           disabled={loading}
-          className=" py-2 rounded-md text-white bg-[#4B6BFB] hover:bg-blue-400 transition-colors duration-300  dark:bg-[#4B6BFB] uppercase w-32 mx-auto flex justify-center items-center gap-2"
+          className=" py-2 rounded-md text-white bg-[#394eac] hover:bg-blue-400 transition-colors duration-300  dark:bg-[#24378e] dark:hover:bg-blue-400  uppercase w-32 mx-auto flex justify-center items-center gap-2"
         >
           {loading ? (
             <span>

@@ -34,7 +34,7 @@ const AddBlog: FC = (): JSX.Element => {
         <title>Add Blog | MetaBlog</title>
       </Helmet>
       <div className="min-h-screen flex justify-center items-center">
-        <div className="card w-full shadow-xl">
+        <div className="card w-full shadow-xl shadow-[#242535]">
           <h1 className="dark:text-white text-center text-2xl font-semibold">
             Write a blog from here
           </h1>
