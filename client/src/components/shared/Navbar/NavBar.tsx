@@ -8,9 +8,11 @@ import LightLogoSvg from "../../Svgs/LightLogoSvg";
 import useSearchBar from "../../../hooks/useSearchBar";
 import useAuth from "../../../hooks/useAuth";
 import SearchBar from "../../SearchBar/SearchBar";
+import { useState } from "react";
 
 const NavBar = () => {
   const { user, logOutUser } = useAuth();
+  const [visible, setvisible] = useState(true);
 
   const { handleInputChange, handleReset, blogs, navigate, handleSearch } =
     useSearchBar();
@@ -20,34 +22,38 @@ const NavBar = () => {
     navigate("/");
   };
 
+  const handleDropdown = () => {
+    setvisible(!visible);
+  };
+
   const navLinks = (
     <>
-      <li>
+      <li onClick={handleDropdown}>
         <NavLink to="/">Home</NavLink>
       </li>
-      {user && (
-        <li>
-          <NavLink to="/add">Add Blog</NavLink>
-        </li>
-      )}
-      <li>
+      <li onClick={handleDropdown}>
         <NavLink to="/blogs">All Blogs</NavLink>
       </li>
-      <li>
+      <li onClick={handleDropdown}>
         <NavLink to="/contact">Contact</NavLink>
       </li>
       {user ? (
         <>
-          <li>
+          <li onClick={handleDropdown}>
             <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
-          <li onClick={handleLogOut}>
+          <li
+            onClick={() => {
+              handleLogOut();
+              handleDropdown();
+            }}
+          >
             <p>Logout</p>
           </li>
         </>
       ) : (
         <>
-          <li>
+          <li onClick={handleDropdown}>
             <NavLink to="/login">Login</NavLink>
           </li>
         </>
@@ -59,7 +65,11 @@ const NavBar = () => {
     <nav className="navbar bg-white dark:bg-[#181A2A] dark:text-white  max-w-[1216px] mx-auto">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          <label
+            tabIndex={0}
+            className="btn btn-ghost lg:hidden"
+            onClick={handleDropdown}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -75,12 +85,15 @@ const NavBar = () => {
               />
             </svg>
           </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 dark:bg-[#141624] dark:text-white rounded-box w-52 z-20"
-          >
-            {navLinks}
-          </ul>
+          {/* this ul */}
+          {visible && (
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 dark:bg-[#141624] dark:text-white rounded-box w-52 z-20"
+            >
+              {navLinks}
+            </ul>
+          )}
         </div>
         <div>
           <Link to="/" className="md:hidden relative">

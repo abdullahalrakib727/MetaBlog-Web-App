@@ -28,14 +28,6 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/forget", element: <ForgetPassword /> },
       {
-        path: "/add",
-        element: (
-          <PrivateRoute>
-            <AddBlog />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: "/blogs",
         element: <AllBlog />,
       },
@@ -71,7 +63,7 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-          <DashBoardHome />
+            <DashBoardHome />
           </PrivateRoute>
         ),
       },
@@ -82,7 +74,15 @@ const router = createBrowserRouter([
             <Profile />
           </PrivateRoute>
         ),
-      }
+      },
+      {
+        path: "/dashboard/add",
+        element: (
+          <PrivateRoute>
+            <AddBlog />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);
