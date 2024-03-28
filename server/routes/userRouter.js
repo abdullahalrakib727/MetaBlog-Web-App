@@ -1,7 +1,6 @@
 const express = require("express");
 const verifyToken = require("../middlewares/tokenVerification");
 const {
-  getAllUsers,
   createUser,
   getUser,
   updateUser,
@@ -10,7 +9,7 @@ const {
 
 const userRouter = express.Router();
 
-userRouter.route("/").get(getAllUsers).post(createUser);
+userRouter.route("/").post(createUser);
 
 userRouter
   .route("/:id")

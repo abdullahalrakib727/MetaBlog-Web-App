@@ -88,7 +88,7 @@ const useBlogDetail = () => {
               icon: "success",
             });
             refetch();
-            navigate("/");
+            navigate("/dashboard/profile");
           }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire({

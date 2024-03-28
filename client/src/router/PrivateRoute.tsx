@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
-// import { Navigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 interface PrivateRouteProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
 
   if (loading) {
     return (
-      <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg dark:text-white"></span>
+    <LoadingSpinner/>
     );
   }
   if (!user) {

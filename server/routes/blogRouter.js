@@ -10,21 +10,22 @@ const {
   getBlogsByAuthorId,
   getRecentBlogs,
   getSearchedBlog,
+  getStats,
 } = require("../controllers/blogController");
 
 const blogRouter = express.Router();
 
 blogRouter.route("/search").get(getSearchedBlog);
 blogRouter.route("/recent").get(getRecentBlogs);
-blogRouter.route("/author/:authorId").get(getBlogsByAuthorId);
+blogRouter.route("/stats").get(verifyToken, getStats);
+blogRouter.route("/author/:authorId").get(verifyToken, getBlogsByAuthorId);
 
-blogRouter.route("/").get(getAllBlogs).post(createBlog);
+blogRouter.route("/").get(getAllBlogs).post(verifyToken, createBlog);
 
 blogRouter
   .route("/:id")
   .get(verifyToken, getBlogById)
   .patch(verifyToken, updateBlog)
   .delete(verifyToken, deleteBlog);
-
 
 module.exports = blogRouter;

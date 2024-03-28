@@ -71,7 +71,7 @@ export default function useUpdateBlog() {
               toast.success("Blog has been updated!");
               setLoading(false);
               fecthing();
-              navigate("/blogs");
+              navigate("/dashboard/profile");
             }
           })
           .catch(() => {

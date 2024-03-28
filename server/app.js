@@ -8,6 +8,7 @@ const authRouter = require("./routes/authRouter");
 const blogRouter = require("./routes/blogRouter");
 const reactionRouter = require("./routes/reactionRouter");
 const userRouter = require("./routes/userRouter");
+const adminRouter = require("./routes/adminRouter");
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.use("/blogs", blogRouter);
 app.use("/users", userRouter);
 app.use("/jwt", authRouter);
 app.use("/reactions", reactionRouter);
+app.use("/admin", adminRouter);
 
 module.exports = app;
