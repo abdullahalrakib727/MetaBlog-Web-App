@@ -1,7 +1,6 @@
 const express = require("express");
 
 const verifyToken = require("../middlewares/tokenVerification");
-const verifyAdmin = require("../middlewares/verifyAdmin");
 const {
   createBlog,
   getAllBlogs,

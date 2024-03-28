@@ -1,16 +1,10 @@
-const verifyAdmin = require("../middlewares/verifyAdmin");
+
 const User = require("../models/User");
 
 // ! get all users
 
 const getAllUsers = async (req, res) => {
   try {
-    const role = await verifyAdmin(req.user.userId);
-
-    if (role !== "admin") {
-      return res.status(403).send({ message: "Unauthorized access" });
-    }
-
     const users = await User.find();
     return res.status(200).send({ success: true, data: users });
   } catch (error) {
