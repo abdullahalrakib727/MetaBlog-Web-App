@@ -1,4 +1,6 @@
 const AllBlogs = require("../models/AllBlogs");
+const isAdmin = require("../utils/checkAdmin");
+const isAuthor = require("../utils/checkAuthor");
 
 const getAllBlogs = async (req, res) => {
   try {
@@ -33,9 +35,11 @@ const getBlogById = async (req, res) => {
 
 const getBlogsByAuthorId = async (req, res) => {
   try {
-    const blogs = await AllBlogs.find({ authorId: req.params.authorId }).sort({
-      published: -1,
-    }).select("-content -authorId -_id -__v -authorId");
+    const blogs = await AllBlogs.find({ authorId: req.params.authorId })
+      .sort({
+        published: -1,
+      })
+      .select("-content -authorId -_id -__v -authorId");
     return res
       .status(200)
       .json({ success: true, total: blogs.length, data: blogs });
@@ -75,8 +79,17 @@ const updateBlog = async (req, res) => {
 
 const deleteBlog = async (req, res) => {
   try {
-    const blog = await AllBlogs.findByIdAndDelete(req.params.id);
-    return res.status(200).json({ success: true, data: blog });
+    const Author = await isAuthor(req.user.userId);
+    const Admin = await isAdmin(req.user.userId);
+
+    if (Author || Admin) {
+      const blog = await AllBlogs.findByIdAndDelete(req.params.id);
+      return res.status(200).json({ success: true, data: blog });
+    }
+
+    return res
+      .status(403)
+      .json({ error: "You are not authorized to delete this blog" });
   } catch (error) {
     return res.status(500).json({ error: "Server Error" });
   }
