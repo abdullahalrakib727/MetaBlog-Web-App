@@ -72,7 +72,6 @@ const deleteUser = async (req, res) => {
     const id = req.params.id;
     const query = { uid: id };
 
-    const role = await verifyAdmin(req.user.userId);
 
     if (role === "admin" || req.user.userId === id) {
       const result = await User.deleteOne(query);

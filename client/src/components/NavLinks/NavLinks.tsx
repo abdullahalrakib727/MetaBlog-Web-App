@@ -23,7 +23,7 @@ const links = [
   },
   {
     name: "Services",
-    href: "/dashboard/request/ad",
+    href: "/dashboard/services",
     icon: MdOutlineMiscellaneousServices,
     iconType: "MdOutlineMiscellaneousServices",
   },
