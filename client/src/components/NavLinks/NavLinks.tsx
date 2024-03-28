@@ -7,7 +7,7 @@ import {
 import { NavLink, useLocation } from "react-router-dom";
 
 import styles from "./navlink.module.css";
-import { RiAdvertisementLine } from "react-icons/ri";
+import { MdOutlineMiscellaneousServices } from "react-icons/md";
 
 const links = [
   { name: "Dashboard Home", href: "/dashboard", icon: HomeIcon },
@@ -22,10 +22,10 @@ const links = [
     icon: PlusIcon,
   },
   {
-    name: "Advertisement",
+    name: "Services",
     href: "/dashboard/request/ad",
-    icon: RiAdvertisementLine,
-    iconType: "RiAdvertisementLine",
+    icon: MdOutlineMiscellaneousServices,
+    iconType: "MdOutlineMiscellaneousServices",
   },
 ];
 
@@ -48,7 +48,7 @@ export default function NavLinks() {
           >
             <LinkIcon
               className={
-                link.iconType == "RiAdvertisementLine"
+                link.iconType == "MdOutlineMiscellaneousServices"
                   ? "text-xl w-6 ml-1"
                   : "w-6 ml-1"
               }
