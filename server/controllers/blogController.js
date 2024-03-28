@@ -138,14 +138,21 @@ const getStats = async (req, res) => {
       },
       {
         $group: {
-          _id: null,
+          _id: "$authorId",
           totalBlogs: { $sum: 1 },
-          published: {$sum: "$status" === "published" ? 1 : 0},
-          draft: {$sum: "$status" === "draft" ? 1 : 0},
+          published: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "published"] }, 1, 0],
+            },
+          },
+          draft: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "draft"] }, 1, 0],
+            },
+          },
         },
       },
     ]);
-    console.log(stats);
     return res.status(200).json({ success: true, data: stats });
   } catch (error) {
     return res.status(500).send({ message: error.message });
