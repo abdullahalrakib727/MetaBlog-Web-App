@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../api/useAxiosSecure";
 import PrivateRoute from "./PrivateRoute";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 type AdminRouteProps = {
   children: React.ReactNode;
@@ -22,10 +23,7 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
     enabled: !!userId,
   });
 
-  if (isLoading)
-    return (
-      <span className="loading loading-spinner min-h-screen flex justify-center items-center mx-auto loading-lg dark:text-white"></span>
-    );
+  if (isLoading) return <LoadingSpinner />;
 
   if (data.isAdmin === false) return <p>Access Denied</p>;
 

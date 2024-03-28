@@ -129,6 +129,29 @@ const getSearchedBlog = async (req, res) => {
   }
 };
 
+const getStats = async (req, res) => {
+  try {
+    const id = req.user.userId;
+    const stats = await AllBlogs.aggregate([
+      {
+        $match: { authorId: id },
+      },
+      {
+        $group: {
+          _id: null,
+          totalBlogs: { $sum: 1 },
+          published: {$sum: "$status" === "published" ? 1 : 0},
+          draft: {$sum: "$status" === "draft" ? 1 : 0},
+        },
+      },
+    ]);
+    console.log(stats);
+    return res.status(200).json({ success: true, data: stats });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllBlogs,
   getBlogById,
@@ -138,4 +161,5 @@ module.exports = {
   deleteBlog,
   getRecentBlogs,
   getSearchedBlog,
+  getStats,
 };
