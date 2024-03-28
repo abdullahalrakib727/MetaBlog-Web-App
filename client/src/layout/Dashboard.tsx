@@ -1,4 +1,4 @@
-import { Toaster } from "react-hot-toast";
+
 
 import { Outlet } from "react-router-dom";
 import Container from "../components/Container/Container";
@@ -14,7 +14,6 @@ const Dashboard = () => {
 
         <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
           <Container>
-            <Toaster position="top-center" reverseOrder={false} />
             <Outlet></Outlet>
           </Container>
         </div>

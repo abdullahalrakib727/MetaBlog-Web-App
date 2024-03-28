@@ -59,6 +59,14 @@ const createBlog = async (req, res) => {
 
 const updateBlog = async (req, res) => {
   try {
+    const Author = await isAuthor(req.user.userId);
+
+    if (!Author) {
+      return res
+        .status(403)
+        .json({ error: "You are not authorized to update this blog" });
+    }
+
     const id = req.params.id;
     const blog = await AllBlogs.findOneAndUpdate({ slug: id }, req.body, {
       new: true,

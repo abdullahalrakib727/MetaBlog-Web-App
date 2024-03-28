@@ -12,6 +12,7 @@ import {
   ColorModeProvider,
   ColorModeScript,
 } from "@chakra-ui/react";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
+            <Toaster position="top-center" reverseOrder={false} />
               <RouterProvider router={router} />
             </AuthProvider>
           </QueryClientProvider>
