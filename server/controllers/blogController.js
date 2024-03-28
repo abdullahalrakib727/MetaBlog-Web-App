@@ -132,14 +132,14 @@ const getSearchedBlog = async (req, res) => {
 const getStats = async (req, res) => {
   try {
     const id = req.user.userId;
-    const stats = await AllBlogs.aggregate([
+    const statsArray = await AllBlogs.aggregate([
       {
         $match: { authorId: id },
       },
       {
         $group: {
-          _id: "$authorId",
-          totalBlogs: { $sum: 1 },
+          _id: null,
+          total: { $sum: 1 },
           published: {
             $sum: {
               $cond: [{ $eq: ["$status", "published"] }, 1, 0],
@@ -153,6 +153,9 @@ const getStats = async (req, res) => {
         },
       },
     ]);
+
+    const stats = await statsArray[0];
+
     return res.status(200).json({ success: true, data: stats });
   } catch (error) {
     return res.status(500).send({ message: error.message });

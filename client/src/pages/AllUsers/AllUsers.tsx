@@ -2,7 +2,7 @@
 const AllUsers = () => {
     return (
         <div>
-            <h1>All Users page</h1>
+            <h1 className="dark:text-white">All Users page</h1>
         </div>
     );
 };

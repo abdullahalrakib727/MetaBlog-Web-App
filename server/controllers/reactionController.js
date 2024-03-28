@@ -61,7 +61,7 @@ const getReact = async (req, res) => {
       },
       {
         $group: {
-          _id: null,
+          _id: "$postId",
           likes: { $sum: "$like" },
           dislikes: { $sum: "$dislike" },
         },
