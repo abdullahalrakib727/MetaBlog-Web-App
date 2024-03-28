@@ -1,9 +1,16 @@
+const verifyAdmin = require("../middlewares/verifyAdmin");
 const User = require("../models/User");
 
 // ! get all users
 
 const getAllUsers = async (req, res) => {
   try {
+    const role = await verifyAdmin(req.user.userId);
+
+    if (role !== "admin") {
+      return res.status(403).send({ message: "Unauthorized access" });
+    }
+
     const users = await User.find();
     return res.status(200).send({ success: true, data: users });
   } catch (error) {
@@ -15,7 +22,6 @@ const getAllUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-
     const existingUser = await User.findOne({ uid: req.body.uid });
 
     if (existingUser) {
@@ -72,12 +78,13 @@ const deleteUser = async (req, res) => {
     const id = req.params.id;
     const query = { uid: id };
 
-    if (req.user.userId !== id) {
-      return res.status(403).send({ message: "Unauthorized access" });
-    }
+    const role = await verifyAdmin(req.user.userId);
 
-    const result = await User.deleteOne(query);
-    return res.status(200).send({ success: true, data: result });
+    if (role === "admin" || req.user.userId === id) {
+      const result = await User.deleteOne(query);
+      return res.status(200).send({ success: true, data: result });
+    }
+    return res.status(403).send({ message: "Unauthorized access" });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }

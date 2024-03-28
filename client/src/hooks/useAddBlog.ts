@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import useAxiosPublic from "../api/useAxiosPublic";
 import useAuth from "./useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FieldValues, useForm } from "react-hook-form";
 import useAllBlogs from "./useAllBlogs";
+import useAxiosSecure from "../api/useAxiosSecure";
 
 export default function useAddBlog() {
   const {
@@ -14,7 +14,7 @@ export default function useAddBlog() {
   } = useForm();
 
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+const axiosSecure = useAxiosSecure();
 
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,12 +45,12 @@ export default function useAddBlog() {
     };
 
     try {
-      const res = await axiosPublic.post("/blogs", BlogData);
+      const res = await axiosSecure.post("/blogs", BlogData);
       if (res.data) {
-        await refetch();
+        refetch();
         setLoading(false);
         toast.success("Blog has been added!");
-        navigate("/blogs");
+        navigate("/dashboard/profile");
       }
     } catch (error) {
       toast.error("Something went wrong!");

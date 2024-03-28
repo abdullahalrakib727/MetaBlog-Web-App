@@ -6,10 +6,17 @@ const getAllBlogs = async (req, res) => {
     if (req.query.category) {
       query.category = req.query.category;
     }
-    const blogs = await AllBlogs.find(query).sort({ published: -1 });
-    return res
-      .status(200)
-      .json({ success: true, total: blogs.length, data: blogs });
+    const blogs = await AllBlogs.find(query)
+      .sort({ published: -1 })
+      .select("-content -_id -__v -authorId");
+    const filteredBlogs = await blogs.filter(
+      (blog) => blog.status === "published"
+    );
+    return res.status(200).json({
+      success: true,
+      total: filteredBlogs.length,
+      data: filteredBlogs,
+    });
   } catch (error) {
     return res.status(500).json({ error: "Server Error" });
   }
@@ -28,7 +35,7 @@ const getBlogsByAuthorId = async (req, res) => {
   try {
     const blogs = await AllBlogs.find({ authorId: req.params.authorId }).sort({
       published: -1,
-    });
+    }).select("-content -authorId -_id -__v -authorId");
     return res
       .status(200)
       .json({ success: true, total: blogs.length, data: blogs });
@@ -52,8 +59,6 @@ const updateBlog = async (req, res) => {
     const blog = await AllBlogs.findOneAndUpdate({ slug: id }, req.body, {
       new: true,
     });
-
-
 
     if (!blog) {
       return res
@@ -79,7 +84,9 @@ const deleteBlog = async (req, res) => {
 
 const getRecentBlogs = async (req, res) => {
   try {
-    const blogs = await AllBlogs.find().sort({ published: -1 }).limit(6);
+    const blogs = await AllBlogs.find({ status: "published" })
+      .sort({ published: -1 })
+      .limit(6);
     return res
       .status(200)
       .json({ success: true, total: blogs.length, data: blogs });
