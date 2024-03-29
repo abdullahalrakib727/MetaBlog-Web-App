@@ -18,7 +18,8 @@ const useAxiosSecure = () => {
         return res;
       },
       (error) => {
-        toast.error(error.response.data.message);
+        console.error(error);
+        toast.error("Session expired, please login again");
         if (error.response.status === 401 || error.response.status === 403) {
           logOutUser();
           navigate("/login");
