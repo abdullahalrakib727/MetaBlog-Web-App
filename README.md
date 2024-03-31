@@ -6,11 +6,11 @@ MetaBlog is where you will be able to write your heart's content. Our commitment
 
 This project is created using MERN stack technology. Previously, I had used Javascript on the frontend/client. But after learning how to use Typescript with react, I have switched to Typescript. I intend to add more new features to this webapp.
 
-I have discontinued working on Javascript version as I will be working with Typescript version from now on. If you want to check out the Javascript version then go to this link : <a href="https://github.com/alrakib1/MetaBlog-Js" target="_blank">MetaBlog Javascript version</a>
+I have discontinued working on Javascript version as I will be working with Typescript version from now on. If you want to check out the Javascript version then go to this link : [MetaBlog Js](https://github.com/alrakib1/MetaBlog-Js)
 
 ## Installation
 
-I have used pnpm on this project. If you already have pnpm on your device just use this command after cloning this repo on both client and server folder respectively :
+ I have used pnpm on this project. If you already have pnpm on your device just use this command after cloning this repo on both client and server folder respectively :
 
 ### For Pnpm :
 
