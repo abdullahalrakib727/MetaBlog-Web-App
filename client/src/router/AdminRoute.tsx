@@ -3,6 +3,7 @@ import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../api/useAxiosSecure";
 import PrivateRoute from "./PrivateRoute";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 type AdminRouteProps = {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ type AdminRouteProps = {
 
 const AdminRoute = ({ children }: AdminRouteProps) => {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { user } = useAuth();
   const userId = user?.uid;
@@ -20,12 +22,12 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
       const response = await axiosSecure(`/admin/${userId}`);
       return response.data;
     },
-    enabled: !!userId,
   });
 
-  if (isLoading) return <LoadingSpinner />;
+  console.log(data);
 
-  if (data.isAdmin === false) return <p>Access Denied</p>;
+
+  if (!data.isAdmin) return navigate("/dashboard");
 
   return <PrivateRoute>{children}</PrivateRoute>;
 };
