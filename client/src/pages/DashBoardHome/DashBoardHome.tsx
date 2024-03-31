@@ -16,7 +16,7 @@ const DashBoardHome = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data = {} as DashboardData } = useQuery<DashboardData>({
-    queryKey: ["dashboard"],
+    queryKey: ["dashboard", user?.uid],
     queryFn: async () => {
       const response = await axiosSecure.get("/blogs/stats");
       return response.data.data;
