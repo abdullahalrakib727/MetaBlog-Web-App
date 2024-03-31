@@ -42,7 +42,10 @@ const AllUsers = () => {
           <tbody>
             {data?.map((user, index) => {
               return (
-                <tr key={user.uid}>
+                <tr
+                  className="hover:bg-[#E8E8EA] dark:hover:bg-[#242535]"
+                  key={user.uid}
+                >
                   <th>{index + 1}</th>
                   <td>
                     <img
@@ -55,12 +58,12 @@ const AllUsers = () => {
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 rounded-md">
+                    <button className="py-1 px-2 bg-blue-600 text-white rounded-md">
                       {user.role === "admin" ? "Make User" : "Make Admin"}
                     </button>
                   </td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 rounded-md">
+                    <button className="py-1 px-2 bg-blue-600 text-white rounded-md">
                       Delete
                     </button>
                   </td>
