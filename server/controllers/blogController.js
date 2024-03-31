@@ -156,6 +156,11 @@ const getStats = async (req, res) => {
 
     const stats = await statsArray[0];
 
+    if (!stats)
+      return res
+        .status(200)
+        .json({ success: true, data: { total: 0, published: 0, draft: 0 } });
+
     return res.status(200).json({ success: true, data: stats });
   } catch (error) {
     return res.status(500).send({ message: error.message });

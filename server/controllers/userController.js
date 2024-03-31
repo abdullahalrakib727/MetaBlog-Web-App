@@ -1,11 +1,10 @@
-
 const User = require("../models/User");
 
 // ! get all users
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().select("-_id uid name email photo role");
     return res.status(200).send({ success: true, data: users });
   } catch (error) {
     return res.status(500).send({ message: error.message });
@@ -71,7 +70,6 @@ const deleteUser = async (req, res) => {
   try {
     const id = req.params.id;
     const query = { uid: id };
-
 
     if (role === "admin" || req.user.userId === id) {
       const result = await User.deleteOne(query);

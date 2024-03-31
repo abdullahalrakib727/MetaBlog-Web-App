@@ -6,11 +6,11 @@ MetaBlog is where you will be able to write your heart's content. Our commitment
 
 This project is created using MERN stack technology. Previously, I had used Javascript on the frontend/client. But after learning how to use Typescript with react, I have switched to Typescript. I intend to add more new features to this webapp.
 
-I have discontinued working on Javascript version as I will be working with Typescript version from now on. If you want to check out the Javascript version then go to this link : <a href="https://github.com/alrakib1/MetaBlog-Js" target="_blank">MetaBlog Javascript version</a>
+I have discontinued working on Javascript version as I will be working with Typescript version from now on. If you want to check out the Javascript version then go to this link : [MetaBlog Js](https://github.com/alrakib1/MetaBlog-Js)
 
 ## Installation
 
-I have used pnpm on this project. If you already have pnpm on your device just use this command after cloning this repo on both client and server folder respectively :
+ I have used pnpm on this project. If you already have pnpm on your device just use this command after cloning this repo on both client and server folder respectively :
 
 ### For Pnpm :
 
@@ -35,10 +35,11 @@ I have used pnpm on this project. If you already have pnpm on your device just u
 - Live Searchbar : We also have a searchbar at the navbar. You can type any words and it will show you blogs related to your typed words if it exits on our web app database.
 - Beautiful Slider : We also have a slider on all blogs page. It will automatically change new blog thumbnail, image, author details and publish date after 4 second. Recently added 6 blogs will be shown here.
 - Filter by category : After the slider you have filter option to filter blogs on these category: All blogs, Lifestyle, Technology, Travel, Business, Economy and Sports.
-- Loading skeleton : We also have loading skeleton. When data is being loaded from the server you will be able to see loading skeleton.
+- Loading skeleton : We also have loading skeleton. When data is being loaded from the server you will be able to see loading skeleton and you will be able to get the idea of what kind of data will be serverd.
 - Update blog : Author will be able to update their blog as well. If you are the author of that blog then you will see an update button at the end of your blog's detail page. By clicking on that button you will be redirect to the update blog page.
 - Delete Blog: Author will be able to delete the blogs that they have created.
 - Reactions : You will be able to like or dislike a blog from it's details page.
+
 
 ## Authors
 

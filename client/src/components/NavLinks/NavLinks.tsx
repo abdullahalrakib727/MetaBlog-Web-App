@@ -8,6 +8,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import styles from "./navlink.module.css";
 import { MdOutlineMiscellaneousServices } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
 
 const links = [
   { name: "Dashboard Home", href: "/dashboard", icon: HomeIcon },
@@ -26,6 +27,12 @@ const links = [
     href: "/dashboard/services",
     icon: MdOutlineMiscellaneousServices,
     iconType: "MdOutlineMiscellaneousServices",
+  },
+  {
+    name: "All Users",
+    href: "/dashboard/all-users",
+    icon: FaUsers,
+    iconType: "FaUsers",
   },
 ];
 
