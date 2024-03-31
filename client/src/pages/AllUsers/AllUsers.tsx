@@ -42,7 +42,7 @@ const AllUsers = () => {
           <tbody>
             {data?.map((user, index) => {
               return (
-                <tr>
+                <tr key={user.uid}>
                   <th>{index + 1}</th>
                   <td>
                     <img
