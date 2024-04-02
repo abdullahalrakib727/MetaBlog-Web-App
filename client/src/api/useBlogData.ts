@@ -14,6 +14,7 @@ export interface BlogsProps {
   authorImg: string;
   published: string;
   content?: string;
+  slug?: string;
 }
 
 
