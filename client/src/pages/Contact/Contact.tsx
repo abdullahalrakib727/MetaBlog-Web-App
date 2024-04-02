@@ -1,6 +1,7 @@
 import { FC } from "react";
 import toast from "react-hot-toast";
 import Container from "../../components/Container/Container";
+import { Helmet } from "react-helmet";
 
 const Contact: FC = (): JSX.Element => {
   // todo: will add email js later
@@ -12,6 +13,11 @@ const Contact: FC = (): JSX.Element => {
 
   return (
     <Container>
+      <>
+        <Helmet>
+          <title>Contact | MetaBlog</title>
+        </Helmet>
+      </>
       <div className="min-h-[calc(100vh-100px)] my-5 flex justify-center items-center">
         <div className="w-11/12 mx-auto bg-[#F6F6F7] dark:bg-[#242535] py-5 rounded-md">
           <div className="flex flex-col items-center mx-auto px-4 py-8">

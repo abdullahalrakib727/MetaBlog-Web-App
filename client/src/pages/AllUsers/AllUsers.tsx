@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../api/useAxiosSecure";
+import useAdmin from "../../hooks/useAdmin";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { Helmet } from "react-helmet";
 
 type AllUsersData = {
   uid: string;
@@ -11,18 +14,29 @@ type AllUsersData = {
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const { result, loading } = useAdmin();
 
-  const { data = [] } = useQuery<AllUsersData>({
+  const { data = [], isLoading } = useQuery<AllUsersData>({
     queryKey: ["all-users"],
     queryFn: async () => {
       const response = await axiosSecure("/admin/users");
 
       return response.data.data;
     },
+    enabled: result.isAdmin,
   });
+
+  if (loading || isLoading) return <LoadingSpinner />;
+
+  if(result.isAdmin === false) return <h1>Not Authorized</h1>;
 
   return (
     <section className="dark:text-white">
+      <>
+        <Helmet>
+          <title>All Users | MetaBlog</title>
+        </Helmet>
+      </>
       <h1 className="text-2xl">All Users page</h1>
       {/* user's table */}
       <div className="overflow-x-auto">
