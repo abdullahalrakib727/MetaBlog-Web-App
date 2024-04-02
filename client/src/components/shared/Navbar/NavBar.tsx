@@ -12,7 +12,7 @@ import { useState } from "react";
 
 const NavBar = () => {
   const { user, logOutUser } = useAuth();
-  const [visible, setvisible] = useState(true);
+  const [visible, setvisible] = useState(false);
 
   const { handleInputChange, handleReset, blogs, navigate, handleSearch } =
     useSearchBar();
