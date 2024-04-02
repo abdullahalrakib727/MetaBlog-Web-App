@@ -1,9 +1,15 @@
+import { Helmet } from "react-helmet";
 import { TiTick } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
 const Services = () => {
   return (
     <section className="dark:text-white">
+      <>
+        <Helmet>
+          <title>Services | MetaBlog</title>
+        </Helmet>
+      </>
       <h3 className="text-3xl">Services Page</h3>
       <div className="flex flex-col gap-5 mt-10">
         {/* card-1 */}

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import moment from "moment";
 import useAxiosSecure from "../../api/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 type DashboardData = {
   total: number;
@@ -25,6 +26,11 @@ const DashBoardHome = () => {
 
   return (
     <section className="dark:text-white">
+      <>
+        <Helmet>
+          <title>Dashboard | Home</title>
+        </Helmet>
+      </>
       <h1 className="text-xl font-semibold mb-2">
         Welcome {user?.displayName}
       </h1>
