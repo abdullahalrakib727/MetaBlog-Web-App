@@ -8,7 +8,7 @@ type AboutUserProps = {
   edit?: boolean;
   handleEdit?: () => void;
   handleSave?: (event: React.FormEvent) => Promise<void>;
-  about: RefObject<HTMLTextAreaElement>;
+  about?: RefObject<HTMLTextAreaElement>;
 };
 
 const AboutUser = ({

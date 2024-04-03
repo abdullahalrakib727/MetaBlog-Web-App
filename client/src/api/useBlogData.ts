@@ -15,8 +15,8 @@ export interface BlogsProps {
   published: string;
   content?: string;
   slug?: string;
+  authorId?: string;
 }
-
 
 export interface BlogData {
   data: BlogsProps[];

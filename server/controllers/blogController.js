@@ -10,7 +10,7 @@ const getAllBlogs = async (req, res) => {
     }
     const blogs = await AllBlogs.find(query)
       .sort({ published: -1 })
-      .select("-content -_id -__v -authorId");
+      .select("-content -_id -__v");
     const filteredBlogs = await blogs.filter(
       (blog) => blog.status === "published"
     );
@@ -39,7 +39,7 @@ const getBlogsByAuthorId = async (req, res) => {
       .sort({
         published: -1,
       })
-      .select("-content -authorId -_id -__v -authorId");
+      .select("-content -_id -__v -authorId");
     return res
       .status(200)
       .json({ success: true, total: blogs.length, data: blogs });
