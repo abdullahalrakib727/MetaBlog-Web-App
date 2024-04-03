@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../api/useAxiosSecure";
 import useAxiosPublic from "../api/useAxiosPublic";
 
-type UserData = {
+export type UserData = {
   bio: string;
   name: string;
   photo: string;
