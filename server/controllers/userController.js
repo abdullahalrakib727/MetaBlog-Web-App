@@ -37,7 +37,7 @@ const getUser = async (req, res) => {
   try {
     const id = req.params.id;
     const query = { uid: id };
-    const user = await User.findOne(query).select("-email -role -_id");
+    const user = await User.findOne(query).select("-email -_id -__v");
 
     return res.status(200).send({ success: true, data: user });
   } catch (error) {
