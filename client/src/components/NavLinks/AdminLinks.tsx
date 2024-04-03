@@ -14,7 +14,6 @@ const AdminLinks = () => {
     },
   ];
 
-  console.log(location.pathname);
 
   return (
     <>

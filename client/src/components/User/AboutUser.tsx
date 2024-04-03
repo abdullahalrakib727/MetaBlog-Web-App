@@ -25,7 +25,7 @@ const AboutUser = () => {
               {user?.displayName}
             </h4>
             <p className="text-[#696A75] font-normal text-sm dark:text-[#BABABF]">
-              {data.role}
+              {/* {data.role} */}
             </p>
           </div>
         </div>
