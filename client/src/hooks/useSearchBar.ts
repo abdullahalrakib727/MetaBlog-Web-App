@@ -20,7 +20,7 @@ export default function useSearchBar (){
       setBlogs(res.data.data);
     }, [value, axiosPublic]);
   
-    const debouncedHandleSearch = debounce(handleSearch, 300);
+    const debouncedHandleSearch = debounce(handleSearch, 3000);
   
     const clearSearchResults = () => {
       setBlogs([]);
