@@ -10,9 +10,18 @@ import BlogByUser from "../../components/BlogByUser/BlogByUser";
 import { Helmet } from "react-helmet";
 import useBlogByUser from "../../hooks/useBlogByUser";
 import AboutUser from "../../components/User/AboutUser";
+import useAboutUser from "../../hooks/useAboutUser";
 
 const Profile: FC = (): JSX.Element => {
   const { data, isLoading } = useBlogByUser();
+
+  const {
+    data: userData,
+    edit,
+    handleEdit,
+    handleSave,
+    about,
+  } = useAboutUser();
 
   return (
     <div>
@@ -28,7 +37,13 @@ const Profile: FC = (): JSX.Element => {
                 <PdSkeleton />
               </ChakraProvider>
             ) : (
-              <AboutUser />
+              <AboutUser
+                userData={userData}
+                about={about}
+                edit={edit}
+                handleEdit={handleEdit}
+                handleSave={handleSave}
+              />
             )}
             {/* Blog by user Section here */}
             <BlogByUser isLoading={isLoading} data={data} />

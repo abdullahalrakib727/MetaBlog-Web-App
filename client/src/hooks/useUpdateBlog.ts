@@ -20,7 +20,7 @@ export default function useUpdateBlog() {
   const { refetch: reload } = useAllBlogs();
 
   // ! details of the current blog
-  const { data: item, fecthing } = useBlogDetail();
+  const { data: item, fecthing,slug } = useBlogDetail();
 
   const {
     register,
@@ -54,12 +54,7 @@ export default function useUpdateBlog() {
       if (result.isConfirmed) {
         await axiosSecure
           .patch(
-            `/blogs/${item.title
-              .split(" ")
-              .join("-")
-              .replace(/[*+~.,;()'"!:@]/g, "")
-              .toLowerCase()
-              .replace(/^-|-$/g, "")}`,
+            `/blogs/${slug}`,
             updatedBlog,
             {
               withCredentials: true,

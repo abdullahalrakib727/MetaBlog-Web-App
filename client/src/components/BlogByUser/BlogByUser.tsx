@@ -24,7 +24,7 @@ const BlogByUser = ({ isLoading, data }: BlogByUserProps) => {
                 <div className="flex justify-center px-4 xl:px-0 w-full">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
                     {data.map((blog) => (
-                      <BlogCard key={blog._id} blog={blog}></BlogCard>
+                      <BlogCard key={blog.slug} blog={blog}></BlogCard>
                     ))}
                   </div>
                 </div>

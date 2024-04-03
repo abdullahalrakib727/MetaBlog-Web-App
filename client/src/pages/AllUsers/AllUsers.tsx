@@ -3,6 +3,7 @@ import useAxiosSecure from "../../api/useAxiosSecure";
 import useAdmin from "../../hooks/useAdmin";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { Helmet } from "react-helmet";
+import { MdOutlineDelete } from "react-icons/md";
 
 type AllUsersData = {
   uid: string;
@@ -28,7 +29,7 @@ const AllUsers = () => {
 
   if (loading || isLoading) return <LoadingSpinner />;
 
-  if(result.isAdmin === false) return <h1>Not Authorized</h1>;
+  if (result.isAdmin === false) return <h1>Not Authorized</h1>;
 
   return (
     <section className="dark:text-white">
@@ -72,13 +73,13 @@ const AllUsers = () => {
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 text-white rounded-md">
+                    <button className="py-1 px-2 bg-blue-600 hover:bg-green-400 transition-colors duration-300 text-white rounded-md">
                       {user.role === "admin" ? "Make User" : "Make Admin"}
                     </button>
                   </td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 text-white rounded-md">
-                      Delete
+                    <button className="py-1 px-2 bg-blue-600 text-white text-xl hover:bg-red-500 transition-colors duration-300 rounded-md">
+                      <MdOutlineDelete />
                     </button>
                   </td>
                 </tr>

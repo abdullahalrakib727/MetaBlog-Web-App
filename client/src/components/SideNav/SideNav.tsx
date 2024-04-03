@@ -3,9 +3,12 @@ import NavLinks from "../NavLinks/NavLinks";
 import useAuth from "../../hooks/useAuth";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import ThemeSwitch from "../Theme/ThemeSwitch";
+import useAdmin from "../../hooks/useAdmin";
+import AdminLinks from "../NavLinks/AdminLinks";
 
 const SideNav = () => {
   const { logOutUser } = useAuth();
+  const { result } = useAdmin();
 
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
@@ -40,6 +43,7 @@ const SideNav = () => {
       </button>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2 dark:text-white">
         <NavLinks />
+        <>{result.isAdmin && <AdminLinks />}</>
         <div className="hidden h-auto w-full grow rounded-md md:block"></div>
         <button
           onClick={logOutUser}

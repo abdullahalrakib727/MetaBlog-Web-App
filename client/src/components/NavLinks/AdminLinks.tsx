@@ -1,37 +1,19 @@
-import {
-  HomeIcon,
-  UserCircleIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
-
 import { NavLink, useLocation } from "react-router-dom";
-
 import styles from "./navlink.module.css";
-import { MdOutlineMiscellaneousServices } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
 
-
-const links = [
-  { name: "Dashboard Home", href: "/dashboard", icon: HomeIcon },
-  {
-    name: "Profile",
-    href: "/dashboard/profile",
-    icon: UserCircleIcon,
-  },
-  {
-    name: "Add Blog",
-    href: "/dashboard/add",
-    icon: PlusIcon,
-  },
-  {
-    name: "Services",
-    href: "/dashboard/services",
-    icon: MdOutlineMiscellaneousServices,
-    iconType: "MdOutlineMiscellaneousServices",
-  },
-];
-
-export default function NavLinks() {
+const AdminLinks = () => {
   const location = useLocation();
+
+  const links = [
+    {
+      name: "All Users",
+      href: "/dashboard/all-users",
+      icon: FaUsers,
+      iconType: "FaUsers",
+    },
+  ];
+
 
   return (
     <>
@@ -60,4 +42,6 @@ export default function NavLinks() {
       })}
     </>
   );
-}
+};
+
+export default AdminLinks;

@@ -4,16 +4,23 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../api/useAxiosSecure";
 import useAxiosPublic from "../api/useAxiosPublic";
 
+export type UserData = {
+  bio: string;
+  name: string;
+  photo: string;
+  date: string;
+};
+
 const useAboutUser = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
 
   const {
-    data = {},
+    data = {} as UserData,
     isLoading,
     refetch,
-  } = useQuery({
+  } = useQuery<UserData>({
     queryKey: ["userDetails", user?.uid],
     queryFn: async () => {
       const res = await axiosPublic.get(`/users/${user?.uid}`);

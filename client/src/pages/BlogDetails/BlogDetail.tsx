@@ -25,6 +25,7 @@ const BlogDetail: FC = (): JSX.Element => {
     _id,
     user,
     data,
+    slug,
   } = useBlogDetail();
 
   const { like, disLike, handleLike, handleDisLike } = useReaction();
@@ -92,14 +93,7 @@ const BlogDetail: FC = (): JSX.Element => {
             <div className="mb-10 text-center">
               {authorId === user?.uid && (
                 <div className="flex gap-3 justify-center">
-                  <Link
-                    to={`/update/${title
-                      .split(" ")
-                      .join("-")
-                      .replace(/[*+~.,;()'"!:@]/g, "")
-                      .toLowerCase()
-                      .replace(/^-|-$/g, "")}`}
-                  >
+                  <Link to={`/update/${slug}`}>
                     <button className=" py-2 px-4 text-center rounded-md bg-black text-white  normal-case hover:bg-white hover:text-black transition-all duration-300 shadow-md">
                       Update
                     </button>

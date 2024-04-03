@@ -11,7 +11,6 @@ const Dashboard = () => {
         <div className="w-full flex-none md:w-64 bg-[#F6F6F7] dark:bg-[#141624]">
           <SideNav />
         </div>
-
         <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
           <Container>
             <Outlet></Outlet>

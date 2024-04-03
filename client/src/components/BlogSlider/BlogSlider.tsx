@@ -29,8 +29,8 @@ const BlogSlider = ({ isLoading, data }: BlogSliderProps) => {
           className="mySwiper"
         >
           {data.map((blog: BlogsProps) => (
-            <SwiperSlide key={blog._id} style={{ borderRadius: "12px" }}>
-              <Link to={`/blogs/${blog.title.split(" ").join("-").replace(/[*+~.,;()'"!:@]/g, '').toLowerCase()}`}>
+            <SwiperSlide key={blog.slug} style={{ borderRadius: "12px" }}>
+              <Link to={`/blogs/${blog.slug}`}>
                 <div className="max-w-[1216px] overflow-hidden rounded-xl">
                   <div
                     style={{
