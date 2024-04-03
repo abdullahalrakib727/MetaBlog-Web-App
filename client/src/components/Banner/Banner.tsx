@@ -6,14 +6,11 @@ import { FC } from "react";
 const Banner: FC = (): JSX.Element => {
   const { data } = useBlogData();
 
+
   return (
 
     <Link
-      to={`/blogs/${data[1]?.title
-        .split(" ")
-        .join("-")
-        .replace(/[*+~.,;()'"!:@]/g, "")
-        .toLowerCase()}`}
+      to={`/blogs/${data[1]?.slug}`}
     >
       {/* // TODO will add featured blog here later instead of blogs[1] */}
       <section className="relative">

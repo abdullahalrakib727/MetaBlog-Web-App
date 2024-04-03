@@ -15,6 +15,7 @@ interface BlogData {
   published: string;
   authorId: string;
   content: string;
+  slug: string;
 }
 
 const useBlogDetail = () => {
@@ -46,7 +47,9 @@ const useBlogDetail = () => {
     published,
     authorId,
     content,
+    slug,
   } = data || {};
+
 
   const isValidDate = published && !isNaN(Date.parse(published));
 
@@ -114,7 +117,9 @@ const useBlogDetail = () => {
     user,
     data,
     fecthing,
+    slug
   };
+
 };
 
 export default useBlogDetail;
