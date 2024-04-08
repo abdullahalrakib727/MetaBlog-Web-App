@@ -5,12 +5,16 @@ const verifyAdmin = require("../middlewares/verifyAdmin");
 const {
   checkAdmin,
   changeUserRole,
+  deleteUser,
 } = require("../controllers/adminController");
 
 const adminRouter = express.Router();
 
 adminRouter.route("/users").get(verifyToken, verifyAdmin, getAllUsers);
 adminRouter.route("/:id").get(verifyToken, checkAdmin);
-adminRouter.route("/users/:id").patch(verifyToken, verifyAdmin, changeUserRole);
+adminRouter
+  .route("/users/:id")
+  .patch(verifyToken, verifyAdmin, changeUserRole)
+  .delete(verifyToken, verifyAdmin, deleteUser);
 
 module.exports = adminRouter;

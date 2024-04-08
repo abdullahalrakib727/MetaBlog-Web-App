@@ -37,6 +37,10 @@ const AllUsers = () => {
     });
   };
 
+  const handleDeleteUser = async (id: string) => {
+    console.log(id);
+  };
+
   return (
     <section className="dark:text-white">
       <Helmet>
@@ -95,7 +99,10 @@ const AllUsers = () => {
                     )}
                   </td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 text-white text-xl hover:bg-red-500 transition-colors duration-300 rounded-md">
+                    <button
+                      onClick={() => handleDeleteUser(user.uid)}
+                      className="py-1 px-2 bg-blue-600 text-white text-xl hover:bg-red-500 transition-colors duration-300 rounded-md"
+                    >
                       <MdOutlineDelete />
                     </button>
                   </td>

@@ -26,4 +26,18 @@ const changeUserRole = async (req, res) => {
   }
 };
 
-module.exports = { checkAdmin, changeUserRole };
+const deleteUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await User.findOneAndDelete({ uid: id });
+    return res.status(200).send({
+      success: true,
+      message: "User deleted successfully",
+      result: result,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+module.exports = { checkAdmin, changeUserRole, deleteUser};
