@@ -6,6 +6,7 @@ const {
   checkAdmin,
   changeUserRole,
   deleteUser,
+  getAllBlogs,
 } = require("../controllers/adminController");
 
 const adminRouter = express.Router();
@@ -16,5 +17,7 @@ adminRouter
   .route("/users/:id")
   .patch(verifyToken, verifyAdmin, changeUserRole)
   .delete(verifyToken, verifyAdmin, deleteUser);
+
+adminRouter.route("/blogs").get(verifyToken, verifyAdmin, getAllBlogs);
 
 module.exports = adminRouter;

@@ -1,3 +1,4 @@
+const AllBlogs = require("../models/AllBlogs");
 const User = require("../models/User");
 const isAdmin = require("../utils/checkAdmin");
 
@@ -40,4 +41,13 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { checkAdmin, changeUserRole, deleteUser};
+const getAllBlogs = async (req, res) => {
+  try {
+    const blogs = await AllBlogs.find();
+    return res.status(200).json({ success: true, data: blogs });
+  } catch (error) {
+    return res.status(500).json({ error: "Server Error" });
+  }
+};
+
+module.exports = { checkAdmin, changeUserRole, deleteUser, getAllBlogs};
