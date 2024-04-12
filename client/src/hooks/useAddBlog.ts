@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { FieldValues, useForm } from "react-hook-form";
 import useAllBlogs from "./useAllBlogs";
 import useAxiosSecure from "../api/useAxiosSecure";
+import useAdmin from "./useAdmin";
 
 export default function useAddBlog() {
   const {
@@ -14,7 +15,7 @@ export default function useAddBlog() {
   } = useForm();
 
   const { user } = useAuth();
-const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,8 @@ const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const { refetch } = useAllBlogs();
+
+  const { result } = useAdmin();
 
   const onSubmit = async (data: FieldValues) => {
     setLoading(true);
@@ -33,6 +36,14 @@ const axiosSecure = useAxiosSecure();
     const authorName = user?.displayName;
     const authorImg = user?.photoURL;
 
+    let status;
+
+    if (result.isAdmin) {
+      status = "published";
+    } else {
+      status = "draft";
+    }
+
     const BlogData = {
       title,
       photoUrl,
@@ -42,6 +53,7 @@ const axiosSecure = useAxiosSecure();
       published,
       authorName,
       authorImg,
+      status,
     };
 
     try {
