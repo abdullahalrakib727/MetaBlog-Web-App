@@ -16,6 +16,7 @@ interface BlogData {
   authorId: string;
   content: string;
   slug: string;
+  status: string;
 }
 
 const useBlogDetail = () => {
