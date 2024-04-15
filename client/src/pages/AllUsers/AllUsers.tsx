@@ -1,43 +1,91 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../api/useAxiosSecure";
-import useAdmin from "../../hooks/useAdmin";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { Helmet } from "react-helmet";
 import { MdOutlineDelete } from "react-icons/md";
-
-type AllUsersData = {
-  uid: string;
-  email: string;
-  photo: string;
-  name: string;
-  role: string;
-}[];
+import useGetAllUsersData from "../../hooks/useGetAllUsersData";
+import useAxiosSecure from "../../api/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
+  const { data, isLoading, loading, result, refetch } = useGetAllUsersData();
   const axiosSecure = useAxiosSecure();
-  const { result, loading } = useAdmin();
-
-  const { data = [], isLoading } = useQuery<AllUsersData>({
-    queryKey: ["all-users"],
-    queryFn: async () => {
-      const response = await axiosSecure("/admin/users");
-
-      return response.data.data;
-    },
-    enabled: result.isAdmin,
-  });
 
   if (loading || isLoading) return <LoadingSpinner />;
 
   if (result.isAdmin === false) return <h1>Not Authorized</h1>;
 
+  const handleChangeRole = async (role: string, id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want change this person role to : ${role}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Update the role!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosSecure.patch(`/admin/users/${id}`, { role });
+        if (res.data.success) {
+          Swal.fire({
+            title: "Updated!",
+            text: "User role has been updated !!.",
+            icon: "success",
+          });
+          refetch();
+        }
+      }
+    });
+  };
+
+  const handleDeleteUser = async (id: string) => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Do you want to delete this user?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axiosSecure.delete(`/admin/users/${id}`);
+
+          if (res.data.success) {
+            swalWithBootstrapButtons.fire({
+              title: "Deleted!",
+              text: "User has been deleted!!.",
+              icon: "success",
+            });
+            refetch();
+          }
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "user hasn't been deleted !! :)",
+            icon: "error",
+          });
+        }
+      });
+  };
+
   return (
     <section className="dark:text-white">
-      <>
-        <Helmet>
-          <title>All Users | MetaBlog</title>
-        </Helmet>
-      </>
+      <Helmet>
+        <title>All Users | MetaBlog</title>
+      </Helmet>
+
       <h1 className="text-2xl">All Users page</h1>
       {/* user's table */}
       <div className="overflow-x-auto">
@@ -73,12 +121,27 @@ const AllUsers = () => {
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 hover:bg-green-400 transition-colors duration-300 text-white rounded-md">
-                      {user.role === "admin" ? "Make User" : "Make Admin"}
-                    </button>
+                    {user.role === "admin" ? (
+                      <button
+                        onClick={() => handleChangeRole("user", user.uid)}
+                        className="py-1 px-2 bg-blue-600 hover:bg-green-400 transition-colors duration-300 text-white rounded-md"
+                      >
+                        Make User
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleChangeRole("admin", user.uid)}
+                        className="py-1 px-2 bg-blue-600 hover:bg-green-400 transition-colors duration-300 text-white rounded-md"
+                      >
+                        Make Admin
+                      </button>
+                    )}
                   </td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 text-white text-xl hover:bg-red-500 transition-colors duration-300 rounded-md">
+                    <button
+                      onClick={() => handleDeleteUser(user.uid)}
+                      className="py-1 px-2 bg-blue-600 text-white text-xl hover:bg-red-500 transition-colors duration-300 rounded-md"
+                    >
                       <MdOutlineDelete />
                     </button>
                   </td>
