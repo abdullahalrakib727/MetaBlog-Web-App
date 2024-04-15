@@ -14,7 +14,7 @@ const useGetAllUsersData = () => {
   const axiosSecure = useAxiosSecure();
   const { result, loading } = useAdmin();
 
-  const { data = [] as AllUsersData, isLoading } = useQuery<AllUsersData>({
+  const { data = [] as AllUsersData, isLoading,refetch } = useQuery<AllUsersData>({
     queryKey: ["all-users"],
     queryFn: async () => {
       const response = await axiosSecure("/admin/users");
@@ -24,7 +24,7 @@ const useGetAllUsersData = () => {
     enabled: result.isAdmin,
   });
 
-  return { data, isLoading, loading, result };
+  return { data, isLoading, loading, result,refetch };
 };
 
 export default useGetAllUsersData;
