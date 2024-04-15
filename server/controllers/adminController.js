@@ -43,11 +43,38 @@ const deleteUser = async (req, res) => {
 
 const getAllBlogs = async (req, res) => {
   try {
-    const blogs = await AllBlogs.find();
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const skip = (page - 1) * limit;
+
+    const blogs = await AllBlogs.find()
+      .limit(limit)
+      .skip(skip)
+      .sort({ published: -1 });
+
+    if (blogs.length === 0)
+      return res.status(404).json({ error: "No blogs found" });
+
     return res.status(200).json({ success: true, data: blogs });
+  } catch (error) {
+    return res.status(500).json({ data: "Server Error" });
+  }
+};
+
+const totalBlogsCount = async (req, res) => {
+  try {
+    const count = await AllBlogs.countDocuments();
+    const totalPage = await Math.ceil(count / 5);
+    return res.status(200).json({ success: true, data: totalPage });
   } catch (error) {
     return res.status(500).json({ error: "Server Error" });
   }
 };
 
-module.exports = { checkAdmin, changeUserRole, deleteUser, getAllBlogs};
+module.exports = {
+  checkAdmin,
+  changeUserRole,
+  deleteUser,
+  getAllBlogs,
+  totalBlogsCount,
+};

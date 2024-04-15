@@ -7,11 +7,13 @@ const {
   changeUserRole,
   deleteUser,
   getAllBlogs,
+  totalBlogsCount,
 } = require("../controllers/adminController");
 
 const adminRouter = express.Router();
 
 adminRouter.route("/users").get(verifyToken, verifyAdmin, getAllUsers);
+adminRouter.route("/page-count").get(verifyToken, verifyAdmin, totalBlogsCount);
 adminRouter.route("/blogs").get(verifyToken, verifyAdmin, getAllBlogs);
 adminRouter.route("/:id").get(verifyToken, checkAdmin);
 adminRouter
