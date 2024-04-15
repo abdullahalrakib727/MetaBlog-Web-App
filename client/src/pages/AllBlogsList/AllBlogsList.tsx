@@ -5,6 +5,7 @@ import { format, parseISO } from "date-fns";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import useTotalPageCount from "../../hooks/useTotalPageCount";
 
 const AllBlogsList = () => {
   const axiosSecure = useAxiosSecure();
@@ -12,10 +13,17 @@ const AllBlogsList = () => {
   const { data = [] as BlogsProps[], isLoading } = useQuery<BlogsProps[]>({
     queryKey: ["blogs-list"],
     queryFn: async () => {
-      const response = await axiosSecure.get("/admin/blogs");
+      const response = await axiosSecure.get("/admin/blogs?page=1&limit=6");
       return response.data.data;
     },
   });
+
+  const { pages } = useTotalPageCount();
+
+  const Totalpages = [...Array(pages).keys()];
+  console.log(Totalpages);
+
+  Totalpages.map((i) => console.log(i + 1));
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -69,6 +77,13 @@ const AllBlogsList = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="join flex justify-center mt-10">
+        {Totalpages.map((i) => (
+          <button className="join-item btn" key={i}>
+            {i + 1}
+          </button>
+        ))}
       </div>
     </section>
   );
