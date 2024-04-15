@@ -12,12 +12,11 @@ const {
 const adminRouter = express.Router();
 
 adminRouter.route("/users").get(verifyToken, verifyAdmin, getAllUsers);
+adminRouter.route("/blogs").get(verifyToken, verifyAdmin, getAllBlogs);
 adminRouter.route("/:id").get(verifyToken, checkAdmin);
 adminRouter
   .route("/users/:id")
   .patch(verifyToken, verifyAdmin, changeUserRole)
   .delete(verifyToken, verifyAdmin, deleteUser);
-
-adminRouter.route("/blogs").get(verifyToken, verifyAdmin, getAllBlogs);
 
 module.exports = adminRouter;

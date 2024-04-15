@@ -19,6 +19,7 @@ import DashBoardHome from "../pages/DashBoardHome/DashBoardHome";
 import Services from "../pages/Services/Services";
 import AdminRoute from "./AdminRoute";
 import AllUsers from "../pages/AllUsers/AllUsers";
+import AllBlogsList from "../pages/AllBlogsList/AllBlogsList";
 
 const router = createBrowserRouter([
   {
@@ -107,6 +108,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-blogs",
+        element: (
+          <AdminRoute>
+            <AllBlogsList />
           </AdminRoute>
         ),
       },
