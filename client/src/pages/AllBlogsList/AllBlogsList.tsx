@@ -1,45 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../api/useAxiosSecure";
-import { BlogsProps } from "../../api/useBlogData";
 import { format, parseISO } from "date-fns";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
-import useTotalPageCount from "../../hooks/useTotalPageCount";
+
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import { useState } from "react";
+
+import useAllBlogList from "../../hooks/useAllBlogList";
 
 const AllBlogsList = () => {
-  const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(searchParams.get("page") || 1);
-
   const {
-    data = [] as BlogsProps[],
-    isLoading,
-    refetch,
+    data,
+    Totalpages,
+    handleChangeStatus,
+    handleDeleteBlog,
+    handlePageChange,
     isError,
-  } = useQuery<BlogsProps[]>({
-    queryKey: ["blogs-list", currentPage],
-    queryFn: async () => {
-      const response = await axiosSecure.get(
-        `/admin/blogs?page=${currentPage}`
-      );
-
-      return response.data.data;
-    },
-  });
-
-  const { pages } = useTotalPageCount();
-
-  const Totalpages = [...Array(pages).keys()];
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    refetch();
-    navigate(`/dashboard/all-blogs?page=${page}`);
-  };
+    isLoading,
+  } = useAllBlogList();
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -55,9 +32,9 @@ const AllBlogsList = () => {
       <h1>All Blogs</h1>
 
       <div className="overflow-x-auto mt-20">
-        <table className="table">
+        <table className="table dark:text-white">
           {/* head */}
-          <thead>
+          <thead className="dark:text-white">
             <tr>
               <th></th>
               <th>Blog Title</th>
@@ -87,12 +64,18 @@ const AllBlogsList = () => {
                   </button>
                 </td>
                 <td>
-                  <button className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-blue-700 transition-colors duration-300 hover:text-white">
+                  <button
+                    onClick={() => handleChangeStatus(blog._id, blog.status)}
+                    className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-blue-700 transition-colors duration-300 hover:text-white"
+                  >
                     <CiEdit />
                   </button>
                 </td>
                 <td>
-                  <button className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-red-600 transition-colors duration-300 hover:text-white">
+                  <button
+                    onClick={() => handleDeleteBlog(blog._id)}
+                    className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-red-600 transition-colors duration-300 hover:text-white"
+                  >
                     <MdDeleteOutline />
                   </button>
                 </td>
@@ -101,7 +84,7 @@ const AllBlogsList = () => {
           </tbody>
         </table>
       </div>
-      <div className="join flex justify-center items-center m-auto fixed bottom-10 left-0 w-full">
+      <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
         {Totalpages.map((i) => (
           <button
             onClick={() => handlePageChange(i + 1)}

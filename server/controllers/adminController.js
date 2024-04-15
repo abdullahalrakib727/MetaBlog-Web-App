@@ -71,10 +71,46 @@ const totalBlogsCount = async (req, res) => {
   }
 };
 
+const changeBlogStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const status = req.body.status;
+    const result = await AllBlogs.findOneAndUpdate(
+      { _id: id },
+      { status: status }
+    );
+    console.log(id, status);
+
+    return res.status(200).send({
+      success: true,
+      message: "Blog status updated successfully",
+      result: result,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+const deleteBlog = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await AllBlogs.findOneAndDelete({ _id: id });
+    return res.status(200).send({
+      success: true,
+      message: "Blog deleted successfully",
+      result: result,
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
 module.exports = {
   checkAdmin,
   changeUserRole,
   deleteUser,
   getAllBlogs,
   totalBlogsCount,
+  changeBlogStatus,
+  deleteBlog
 };

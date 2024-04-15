@@ -8,6 +8,8 @@ const {
   deleteUser,
   getAllBlogs,
   totalBlogsCount,
+  changeBlogStatus,
+  deleteBlog,
 } = require("../controllers/adminController");
 
 const adminRouter = express.Router();
@@ -20,5 +22,9 @@ adminRouter
   .route("/users/:id")
   .patch(verifyToken, verifyAdmin, changeUserRole)
   .delete(verifyToken, verifyAdmin, deleteUser);
+
+adminRouter
+  .route("/blogs/:id")
+  .patch(verifyToken, verifyAdmin, changeBlogStatus).delete(verifyToken, verifyAdmin, deleteBlog);
 
 module.exports = adminRouter;

@@ -6,7 +6,7 @@ import {
 import useAxiosPublic from "./useAxiosPublic";
 
 export interface BlogsProps {
-  _id?: string;
+  _id: string;
   title: string;
   photoUrl: string;
   category?: string;
@@ -16,7 +16,7 @@ export interface BlogsProps {
   content?: string;
   slug: string;
   authorId?: string;
-  status?: string;
+  status: string;
 }
 
 export interface BlogData {
