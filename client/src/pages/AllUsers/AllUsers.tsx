@@ -1,31 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../api/useAxiosSecure";
-import useAdmin from "../../hooks/useAdmin";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { Helmet } from "react-helmet";
 import { MdOutlineDelete } from "react-icons/md";
-
-type AllUsersData = {
-  uid: string;
-  email: string;
-  photo: string;
-  name: string;
-  role: string;
-}[];
+import useGetAllUsersData from "../../hooks/useGetAllUsersData";
 
 const AllUsers = () => {
-  const axiosSecure = useAxiosSecure();
-  const { result, loading } = useAdmin();
-
-  const { data = [], isLoading } = useQuery<AllUsersData>({
-    queryKey: ["all-users"],
-    queryFn: async () => {
-      const response = await axiosSecure("/admin/users");
-
-      return response.data.data;
-    },
-    enabled: result.isAdmin,
-  });
+  const { data, isLoading, loading, result } = useGetAllUsersData();
 
   if (loading || isLoading) return <LoadingSpinner />;
 
@@ -73,9 +52,15 @@ const AllUsers = () => {
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td>
-                    <button className="py-1 px-2 bg-blue-600 hover:bg-green-400 transition-colors duration-300 text-white rounded-md">
-                      {user.role === "admin" ? "Make User" : "Make Admin"}
-                    </button>
+                    {user.role === "admin" ? (
+                      <button className="py-1 px-2 bg-blue-600 hover:bg-green-400 transition-colors duration-300 text-white rounded-md">
+                        Make User
+                      </button>
+                    ) : (
+                      <button className="py-1 px-2 bg-blue-600 hover:bg-green-400 transition-colors duration-300 text-white rounded-md">
+                        Make Admin
+                      </button>
+                    )}
                   </td>
                   <td>
                     <button className="py-1 px-2 bg-blue-600 text-white text-xl hover:bg-red-500 transition-colors duration-300 rounded-md">
