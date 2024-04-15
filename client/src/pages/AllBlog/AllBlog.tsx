@@ -7,9 +7,18 @@ import CategorySelect from "../../components/CategorySelect/CategorySelect";
 import Blogs from "../../components/Blogs/Blogs";
 
 const AllBlog: FC = (): JSX.Element => {
-  
   const { allBlogs, isLoading, loading, handleChange, category, data } =
     useAllBlogs();
+
+  const categoryList = [
+    { value: "", label: "All Categories" },
+    { value: "Lifestyle", label: "Life Style" },
+    { value: "Technology", label: "Technology" },
+    { value: "Travel", label: "Travel" },
+    { value: "Business", label: "Business" },
+    { value: "Economy", label: "Economy" },
+    { value: "Sports", label: "Sports" },
+  ];
 
   return (
     <Container>
@@ -19,7 +28,11 @@ const AllBlog: FC = (): JSX.Element => {
         </Helmet>
         {/* //*slider section of recent blogs //! will add featured blogs here which will be selected  by admin */}
         <BlogSlider data={data} isLoading={isLoading} />
-        <CategorySelect category={category} handleChange={handleChange} />
+        <CategorySelect
+          categoryList={categoryList}
+          category={category}
+          handleChange={handleChange}
+        />
         <Blogs allBlogs={allBlogs} loading={loading} />
       </div>
     </Container>

@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import styles from "./navlink.module.css";
 import { FaUsers,FaBloggerB } from "react-icons/fa";
+import { FaSlidersH } from "react-icons/fa";
 
 const AdminLinks = () => {
   const location = useLocation();
@@ -17,6 +18,12 @@ const AdminLinks = () => {
       href: "/dashboard/all-blogs",
       icon: FaBloggerB,
       iconType: "FaBloggerB",
+    },
+    {
+      name: "Other Services",
+      href: "/dashboard/others-services",
+      icon: FaSlidersH,
+      iconType: "FaSlidersH",
     },
   ];
 
