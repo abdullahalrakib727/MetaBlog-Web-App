@@ -2,18 +2,31 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../api/useAxiosSecure";
 import { BlogsProps } from "../../api/useBlogData";
 import { format, parseISO } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import useTotalPageCount from "../../hooks/useTotalPageCount";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { useState } from "react";
 
 const AllBlogsList = () => {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(searchParams.get("page") || 1);
 
-  const { data = [] as BlogsProps[], isLoading } = useQuery<BlogsProps[]>({
-    queryKey: ["blogs-list"],
+  const {
+    data = [] as BlogsProps[],
+    isLoading,
+    refetch,
+    isError,
+  } = useQuery<BlogsProps[]>({
+    queryKey: ["blogs-list", currentPage],
     queryFn: async () => {
-      const response = await axiosSecure.get("/admin/blogs?page=1&limit=6");
+      const response = await axiosSecure.get(
+        `/admin/blogs?page=${currentPage}`
+      );
+
       return response.data.data;
     },
   });
@@ -21,11 +34,21 @@ const AllBlogsList = () => {
   const { pages } = useTotalPageCount();
 
   const Totalpages = [...Array(pages).keys()];
-  console.log(Totalpages);
 
-  Totalpages.map((i) => console.log(i + 1));
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    refetch();
+    navigate(`/dashboard/all-blogs?page=${page}`);
+  };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
+
+  if (isError)
+    return (
+      <h1 className="text-2xl flex font-bold text-red-600 h-screen justify-center items-center">
+        No Data Found with this query !!
+      </h1>
+    );
 
   return (
     <section className="dark:text-white">
@@ -78,9 +101,13 @@ const AllBlogsList = () => {
           </tbody>
         </table>
       </div>
-      <div className="join flex justify-center mt-10">
+      <div className="join flex justify-center items-center m-auto fixed bottom-10 left-0 w-full">
         {Totalpages.map((i) => (
-          <button className="join-item btn" key={i}>
+          <button
+            onClick={() => handlePageChange(i + 1)}
+            className="join-item btn"
+            key={i}
+          >
             {i + 1}
           </button>
         ))}

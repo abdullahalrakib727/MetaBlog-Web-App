@@ -52,9 +52,12 @@ const getAllBlogs = async (req, res) => {
       .skip(skip)
       .sort({ published: -1 });
 
+    if (blogs.length === 0)
+      return res.status(404).json({ error: "No blogs found" });
+
     return res.status(200).json({ success: true, data: blogs });
   } catch (error) {
-    return res.status(500).json({ error: "Server Error" });
+    return res.status(500).json({ data: "Server Error" });
   }
 };
 
