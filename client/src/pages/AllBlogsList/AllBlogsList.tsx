@@ -6,6 +6,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import useAllBlogList from "../../hooks/useAllBlogList";
+import { Helmet } from "react-helmet";
 
 const AllBlogsList = () => {
   const {
@@ -30,7 +31,11 @@ const AllBlogsList = () => {
   return (
     <section className="dark:text-white">
       <h1>All Blogs</h1>
-
+      <>
+        <Helmet>
+          <title>All Blogs List | MetaBlog</title>
+        </Helmet>
+      </>
       <div className="overflow-x-auto mt-20">
         <table className="table dark:text-white">
           {/* head */}

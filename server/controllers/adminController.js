@@ -43,14 +43,23 @@ const deleteUser = async (req, res) => {
 
 const getAllBlogs = async (req, res) => {
   try {
+    const query = req.query.status;
+
+    let filter = {};
+
+    if (query === "published" || query === "draft") {
+      filter.status = query;
+    }
+
     const page = parseInt(req.query.page) || 1;
     const limit = 5;
     const skip = (page - 1) * limit;
 
-    const blogs = await AllBlogs.find()
+    const blogs = await AllBlogs.find(filter)
       .limit(limit)
       .skip(skip)
-      .sort({ published: -1 });
+      .sort({ published: -1 })
+      .select("-content -__v");
 
     if (blogs.length === 0)
       return res.status(404).json({ error: "No blogs found" });
@@ -79,7 +88,6 @@ const changeBlogStatus = async (req, res) => {
       { _id: id },
       { status: status }
     );
-    console.log(id, status);
 
     return res.status(200).send({
       success: true,
@@ -112,5 +120,5 @@ module.exports = {
   getAllBlogs,
   totalBlogsCount,
   changeBlogStatus,
-  deleteBlog
+  deleteBlog,
 };
