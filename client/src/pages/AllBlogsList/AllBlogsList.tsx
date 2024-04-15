@@ -8,6 +8,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import useTotalPageCount from "../../hooks/useTotalPageCount";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const AllBlogsList = () => {
   const axiosSecure = useAxiosSecure();
@@ -40,6 +41,40 @@ const AllBlogsList = () => {
     refetch();
     navigate(`/dashboard/all-blogs?page=${page}`);
   };
+
+  const handleChangeStatus = async (id: string, cstatus: string) => {
+    const status = cstatus === "published" ? "draft" : "published";
+
+    Swal.fire({
+      title: "Do you want to change the staus of the blog?",
+      text: `Blog status will be changed from ${cstatus} to ${status}!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Change it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axiosSecure.patch(`/admin/blogs/${id}`, {
+            status,
+          });
+          if (response.data.success) {
+            Swal.fire({
+              title: "Success!",
+              text: "Blog status has been changed !!.",
+              icon: "success",
+            });
+            refetch();
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+  };
+
+ 
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -87,12 +122,18 @@ const AllBlogsList = () => {
                   </button>
                 </td>
                 <td>
-                  <button className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-blue-700 transition-colors duration-300 hover:text-white">
+                  <button
+                    onClick={() => handleChangeStatus(blog._id, blog.status)}
+                    className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-blue-700 transition-colors duration-300 hover:text-white"
+                  >
                     <CiEdit />
                   </button>
                 </td>
                 <td>
-                  <button className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-red-600 transition-colors duration-300 hover:text-white">
+                  <button
+                    onClick={() => handleDeleteBlog(blog._id)}
+                    className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-red-600 transition-colors duration-300 hover:text-white"
+                  >
                     <MdDeleteOutline />
                   </button>
                 </td>
@@ -101,7 +142,7 @@ const AllBlogsList = () => {
           </tbody>
         </table>
       </div>
-      <div className="join flex justify-center items-center m-auto fixed bottom-10 left-0 w-full">
+      <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
         {Totalpages.map((i) => (
           <button
             onClick={() => handlePageChange(i + 1)}
