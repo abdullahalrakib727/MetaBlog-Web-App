@@ -72,7 +72,15 @@ const getAllBlogs = async (req, res) => {
 
 const totalBlogsCount = async (req, res) => {
   try {
-    const count = await AllBlogs.countDocuments();
+    const query = req.query.status;
+
+    let filter = {};
+
+    if (query === "published" || query === "draft") {
+      filter.status = query;
+    }
+
+    const count = await AllBlogs.countDocuments(filter);
     const totalPage = await Math.ceil(count / 5);
     return res.status(200).json({ success: true, data: totalPage });
   } catch (error) {

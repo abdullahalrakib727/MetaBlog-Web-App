@@ -7,6 +7,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import useAllBlogList from "../../hooks/useAllBlogList";
 import { Helmet } from "react-helmet";
+import CategorySelect from "../../components/CategorySelect/CategorySelect";
 
 const AllBlogsList = () => {
   const {
@@ -17,6 +18,8 @@ const AllBlogsList = () => {
     handlePageChange,
     isError,
     isLoading,
+    handleFilter,
+    status
   } = useAllBlogList();
 
   if (isLoading) return <LoadingSpinner />;
@@ -28,6 +31,12 @@ const AllBlogsList = () => {
       </h1>
     );
 
+  const categoryList = [
+    { value: "all", label: "All" },
+    { value: "published", label: "Published" },
+    { value: "draft", label: "Draft" },
+  ];
+
   return (
     <section className="dark:text-white">
       <h1>All Blogs</h1>
@@ -36,7 +45,14 @@ const AllBlogsList = () => {
           <title>All Blogs List | MetaBlog</title>
         </Helmet>
       </>
-      <div className="overflow-x-auto mt-20">
+      <>
+        <CategorySelect
+          category={status}
+          handleChange={handleFilter}
+          categoryList={categoryList}
+        />
+      </>
+      <div className="overflow-x-auto">
         <table className="table dark:text-white">
           {/* head */}
           <thead className="dark:text-white">

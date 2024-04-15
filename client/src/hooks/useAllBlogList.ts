@@ -1,42 +1,51 @@
-import  { useState } from 'react';
-import useTotalPageCount from './useTotalPageCount';
-import { BlogsProps } from '../api/useBlogData';
-import useAxiosSecure from '../api/useAxiosSecure';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import Swal from 'sweetalert2';
+import { useEffect, useState } from "react";
+import useTotalPageCount from "./useTotalPageCount";
+import { BlogsProps } from "../api/useBlogData";
+import useAxiosSecure from "../api/useAxiosSecure";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const useAllBlogList = () => {
-    const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(searchParams.get("page") || 1);
 
+  const [status, setStatus] = useState("");
+
+  // ! Fetch all blogs
   const {
     data = [] as BlogsProps[],
     isLoading,
     refetch,
     isError,
   } = useQuery<BlogsProps[]>({
-    queryKey: ["blogs-list", currentPage],
+    queryKey: ["blogs-list", currentPage, status],
     queryFn: async () => {
       const response = await axiosSecure.get(
-        `/admin/blogs?page=${currentPage}`
+        `/admin/blogs?page=${currentPage}&status=${status}`
       );
 
       return response.data.data;
     },
   });
 
-  const { pages } = useTotalPageCount();
+  // ! pagination
+
+  const { pages, reload } = useTotalPageCount(status);
 
   const Totalpages = [...Array(pages).keys()];
+
+  // ! Handle the page change
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     refetch();
-    navigate(`/dashboard/all-blogs?page=${page}`);
+    navigate(`/dashboard/all-blogs?page=${page}&status=${status}`);
   };
+
+  // ! Change the status of the blog
 
   const handleChangeStatus = async (id: string, cstatus: string) => {
     const status = cstatus === "published" ? "draft" : "published";
@@ -70,6 +79,8 @@ const useAllBlogList = () => {
     });
   };
 
+  // ! Delete the blog
+
   const handleDeleteBlog = async (id: string) => {
     console.log(id);
     Swal.fire({
@@ -99,9 +110,35 @@ const useAllBlogList = () => {
     });
   };
 
+  // ! handle sorting blogs based on status
 
-return {data, isLoading, isError, Totalpages, handlePageChange, handleChangeStatus, handleDeleteBlog}
+  useEffect(() => {
+    refetch();
+  }, [status]);
 
+  const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    reload();
+    const newStatus = e.target.value;
+    setStatus(newStatus);
+
+    if (newStatus === "all") {
+      navigate(`/dashboard/all-blogs?status=all`);
+    } else {
+      navigate(`/dashboard/all-blogs?page=${currentPage}&status=${newStatus}`);
+    }
+  };
+
+  return {
+    data,
+    isLoading,
+    isError,
+    Totalpages,
+    handlePageChange,
+    handleChangeStatus,
+    handleDeleteBlog,
+    handleFilter,
+    status,
+  };
 };
 
 export default useAllBlogList;

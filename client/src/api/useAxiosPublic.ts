@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 const axiosPublic: AxiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://blog-website-server-theta.vercel.app",
 });
 
 const useAxiosPublic = () => {
@@ -11,3 +11,5 @@ const useAxiosPublic = () => {
 export default useAxiosPublic;
 
 // https://blog-website-server-theta.vercel.app
+
+// http://localhost:5000
