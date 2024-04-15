@@ -60,12 +60,12 @@ const AllBlogsList = () => {
             status,
           });
           if (response.data.success) {
+            refetch();
             Swal.fire({
               title: "Success!",
               text: "Blog status has been changed !!.",
               icon: "success",
             });
-            refetch();
           }
         } catch (error) {
           console.log(error);
@@ -83,18 +83,18 @@ const AllBlogsList = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Change it!",
+      confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           const response = await axiosSecure.delete(`/admin/blogs/${id}`);
           if (response.data.success) {
+            refetch();
             Swal.fire({
               title: "Success!",
               text: "Blog has been deleted !!.",
               icon: "success",
             });
-            refetch();
           }
         } catch (error) {
           console.log(error);
@@ -117,9 +117,9 @@ const AllBlogsList = () => {
       <h1>All Blogs</h1>
 
       <div className="overflow-x-auto mt-20">
-        <table className="table">
+        <table className="table dark:text-white">
           {/* head */}
-          <thead>
+          <thead className="dark:text-white">
             <tr>
               <th></th>
               <th>Blog Title</th>
