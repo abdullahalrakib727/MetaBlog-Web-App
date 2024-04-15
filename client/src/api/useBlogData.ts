@@ -16,6 +16,7 @@ export interface BlogsProps {
   content?: string;
   slug?: string;
   authorId?: string;
+  status?: string;
 }
 
 export interface BlogData {
