@@ -10,10 +10,10 @@ const useAllBlogs = () => {
    //* hooks
 
    const navigate = useNavigate();
-   const [selectedCategory, setSelectedCategory] = useState<string>("");
    const location = useLocation();
    const params = new URLSearchParams(location.search);
    const category = params.get("category");
+   const [selectedCategory, setSelectedCategory] = useState(category || "");
  
    //* data fetching
  
@@ -25,34 +25,33 @@ const useAllBlogs = () => {
      refetch,
      isLoading: loading,
    } = useQuery<BlogsProps[], unknown>({
-     queryKey: ["all-blogs", selectedCategory],
+     queryKey: ["all-blogs",category, selectedCategory],
      queryFn: async () => {
-       const res = await axiosPublic.get(`/blogs${selectedCategory}`);
+       const res = await axiosPublic.get(`/blogs?category=${selectedCategory}`);
        return res.data.data;
      },
    });
  
    //* hooks
- 
    useEffect(() => {
-     if (category) {
-       setSelectedCategory(`?category=${category}`);
-     }
-   }, [category]);
- 
-   useEffect(() => {
-     refetch();
-   }, [selectedCategory, refetch]);
+    if (category) {
+      setSelectedCategory(category);
+    }
+  }, [category]);
+
+  useEffect(() => {
+    refetch();
+  }, [selectedCategory, refetch]);
  
    //* functions
  
    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
      if (e.target.value === "") {
        setSelectedCategory("");
-       navigate("/blogs");
+       navigate("/blogs?category=all");
        return;
      } else {
-       setSelectedCategory("?category=" + e.target.value);
+       setSelectedCategory(e.target.value);
        navigate(`/blogs?category=${e.target.value}`);
      }
    };
