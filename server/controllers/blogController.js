@@ -10,10 +10,10 @@ const getAllBlogs = async (req, res) => {
     const skip = (page - 1) * limit;
 
     let query = { status: "published" };
-    if (req.query.category === "all") {
+    if (req.query.category === "All") {
       query = { status: "published" };
     }
-    if (req.query.category !== "all") {
+    if (req.query.categroy && req.query.category !== "All") {
       query.category = req.query.category;
     }
     const blogs = await AllBlogs.find(query)
@@ -194,7 +194,16 @@ const getStats = async (req, res) => {
 //  ! to get total number of pages of published blogs
 const getTotalBlogsCount = async (req, res) => {
   try {
-    const result = await AllBlogs.countDocuments({ status: "published" });
+    let query = { status: "published" };
+
+    if (req.query.category === "all") {
+      query = { status: "published" };
+    }
+    if (req.query.category && req.query.category !== "all") {
+      query.category = req.query.category;
+    }
+
+    const result = await AllBlogs.countDocuments(query);
     const totalPage = await Math.ceil(result / 9);
     return res.status(200).json({ success: true, data: totalPage });
   } catch (error) {

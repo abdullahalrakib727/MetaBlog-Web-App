@@ -11,7 +11,7 @@ const AllBlog: FC = (): JSX.Element => {
     useAllBlogs();
 
   const categoryList = [
-    { value: "all", label: "All Categories" },
+    { value: "All", label: "All Categories" },
     { value: "Lifestyle", label: "Life Style" },
     { value: "Technology", label: "Technology" },
     { value: "Travel", label: "Travel" },

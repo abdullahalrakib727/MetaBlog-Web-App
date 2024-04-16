@@ -12,7 +12,7 @@ const useAllBlogs = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get("category");
-  const [selectedCategory, setSelectedCategory] = useState(category || "all");
+  const [selectedCategory, setSelectedCategory] = useState(category || "All");
 
   //* data fetching
 
