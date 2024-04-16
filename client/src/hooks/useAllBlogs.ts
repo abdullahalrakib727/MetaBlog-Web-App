@@ -11,7 +11,7 @@ const useAllBlogs = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const category = params.get("category");
+  const category = params.get("category") || "all";
   const [selectedCategory, setSelectedCategory] = useState(category || "all");
 
   //* data fetching
