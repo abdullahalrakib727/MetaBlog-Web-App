@@ -12,7 +12,7 @@ const useAllBlogList = () => {
   const [searchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(searchParams.get("page") || 1);
 
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("all");
 
   // ! Fetch all blogs
   const {
@@ -119,12 +119,13 @@ const useAllBlogList = () => {
   const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     reload();
     const newStatus = e.target.value;
-    setStatus(newStatus);
-
+    await setStatus(newStatus);
+    await setCurrentPage(1);
+    
     if (newStatus === "all") {
-      navigate(`/dashboard/all-blogs?status=all`);
+    await  navigate(`/dashboard/all-blogs?page=1&status=all`);
     } else {
-      navigate(`/dashboard/all-blogs?page=${currentPage}&status=${newStatus}`);
+    await  navigate(`/dashboard/all-blogs?page=1&status=${newStatus}`);
     }
   };
 

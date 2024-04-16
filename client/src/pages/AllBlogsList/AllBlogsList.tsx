@@ -109,7 +109,7 @@ const AllBlogsList = () => {
         {Totalpages.map((i) => (
           <button
             onClick={() => handlePageChange(i + 1)}
-            className="join-item btn"
+            className={`join-item btn dark:bg-[#242535] dark:text-white `}
             key={i}
           >
             {i + 1}
