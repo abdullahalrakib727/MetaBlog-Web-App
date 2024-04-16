@@ -10,6 +10,8 @@ import styles from "./BlogDetail.module.css";
 import useBlogDetail from "../../hooks/useBlogDetail";
 import useReaction from "../../hooks/useReaction";
 import Reactions from "../../components/Reactions/Reactions";
+import { MdDeleteOutline } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
 
 const BlogDetail: FC = (): JSX.Element => {
   const {
@@ -95,14 +97,14 @@ const BlogDetail: FC = (): JSX.Element => {
                 <div className="flex gap-3 justify-center">
                   <Link to={`/update/${slug}`}>
                     <button className=" py-2 px-4 text-center rounded-md bg-black text-white  normal-case hover:bg-white hover:text-black transition-all duration-300 shadow-md">
-                      Update
+                    <CiEdit />
                     </button>
                   </Link>
                   <button
                     className=" py-2 px-4 text-center rounded-md bg-green-700 text-white  normal-case hover:bg-red-600 transition-all duration-300 shadow-md"
                     onClick={() => handleDelete(_id)}
                   >
-                    Delete
+                     <MdDeleteOutline />
                   </button>
                 </div>
               )}

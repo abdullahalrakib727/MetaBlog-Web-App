@@ -17,8 +17,6 @@ const getAllBlogs = async (req, res) => {
       query.category = req.query.category;
     }
 
-
-    console.log(query);
     const blogs = await AllBlogs.find(query)
       .sort({ published: -1 })
       .select("-content -_id -__v")
