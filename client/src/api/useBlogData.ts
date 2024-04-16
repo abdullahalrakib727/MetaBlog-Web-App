@@ -37,10 +37,11 @@ const useBlogData = (): BlogData => {
   } = useQuery<BlogsProps[], unknown>({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/blogs");
+      const res = await axiosPublic.get("/blogs?category=all");
       return res.data.data;
     },
   });
+
 
   return { data, isLoading, refetch };
 };
