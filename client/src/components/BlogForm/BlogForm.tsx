@@ -91,12 +91,12 @@ const BlogFrom = ({
             required: "Category is required !!",
           })}
         >
-          <option value="Lifestyle">Life Style</option>
-          <option value="Technology">Technology</option>
-          <option value="Travel">Travel</option>
-          <option value="Business">Business</option>
-          <option value="Economy">Economy</option>
-          <option value="Sports">Sports</option>
+          <option value="lifestyle">Life Style</option>
+          <option value="technology">Technology</option>
+          <option value="travel">Travel</option>
+          <option value="business">Business</option>
+          <option value="economy">Economy</option>
+          <option value="sports">Sports</option>
         </select>
         {errors.category && (
           <p className="text-red-600 font-semibold mt-2">

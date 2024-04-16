@@ -10,12 +10,15 @@ const getAllBlogs = async (req, res) => {
     const skip = (page - 1) * limit;
 
     let query = { status: "published" };
-    if (req.query.category === "All") {
+    if (req.query.category === "all") {
       query = { status: "published" };
     }
-    if (req.query.categroy && req.query.category !== "All") {
+    if (req.query.category && req.query.category !== "all") {
       query.category = req.query.category;
     }
+
+
+    console.log(query);
     const blogs = await AllBlogs.find(query)
       .sort({ published: -1 })
       .select("-content -_id -__v")

@@ -12,7 +12,7 @@ const useAllBlogs = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get("category");
-  const [selectedCategory, setSelectedCategory] = useState(category || "All");
+  const [selectedCategory, setSelectedCategory] = useState(category || "all");
 
   //* data fetching
 
@@ -20,10 +20,10 @@ const useAllBlogs = () => {
   const { data, isLoading } = useRecentBlogs();
 
   const {
-    data: allBlogs = [],
+    data: allBlogs = [] as BlogsProps[],
     refetch,
     isLoading: loading,
-  } = useQuery<BlogsProps[], unknown>({
+  } = useQuery<BlogsProps[]>({
     queryKey: ["all-blogs", category, selectedCategory],
     queryFn: async () => {
       const res = await axiosPublic.get(`/blogs?category=${selectedCategory}`);
@@ -45,6 +45,7 @@ const useAllBlogs = () => {
   //* functions
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    refetch();
     if (e.target.value === "") {
       setSelectedCategory("");
       navigate("/blogs?category=all");

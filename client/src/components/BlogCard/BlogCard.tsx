@@ -13,7 +13,8 @@ interface BlogCardProps {
 }
 
 const BlogCard: FC<BlogCardProps> = ({ blog }): JSX.Element => {
-  const { title, photoUrl, category, authorName, authorImg, published,slug } = blog;
+  const { title, photoUrl, category, authorName, authorImg, published, slug } =
+    blog;
 
   const isValidDate = published && !isNaN(Date.parse(published));
 
@@ -42,7 +43,7 @@ const BlogCard: FC<BlogCardProps> = ({ blog }): JSX.Element => {
           style={{ backgroundColor: "rgba(75, 107, 251, 0.05)" }}
           className="px-[10px] py-1 text-[#4B6BFB] text-sm font-medium"
         >
-          {category}
+          {category[0].toUpperCase() + category.slice(1)}
         </span>
       </div>
       <h2 className="mt-4 dark:text-white text-2xl font-semibold mb-5">

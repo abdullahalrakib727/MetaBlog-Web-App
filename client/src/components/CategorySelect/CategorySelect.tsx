@@ -4,7 +4,7 @@ export type OptionProps = {
 };
 
 interface CategorySelectProps {
-  category: string | null;
+  category: string ;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   categoryList: OptionProps[];
 }

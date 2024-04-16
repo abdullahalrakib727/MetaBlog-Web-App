@@ -9,7 +9,7 @@ export interface BlogsProps {
   _id: string;
   title: string;
   photoUrl: string;
-  category?: string;
+  category: string;
   authorName: string;
   authorImg: string;
   published: string;
@@ -31,7 +31,7 @@ const useBlogData = (): BlogData => {
   const axiosPublic = useAxiosPublic();
 
   const {
-    data = [],
+    data = [] as BlogsProps[],
     isLoading,
     refetch,
   } = useQuery<BlogsProps[], unknown>({
