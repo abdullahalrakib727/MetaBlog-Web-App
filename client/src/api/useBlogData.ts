@@ -9,7 +9,7 @@ export interface BlogsProps {
   _id: string;
   title: string;
   photoUrl: string;
-  category?: string;
+  category: string;
   authorName: string;
   authorImg: string;
   published: string;
@@ -31,16 +31,17 @@ const useBlogData = (): BlogData => {
   const axiosPublic = useAxiosPublic();
 
   const {
-    data = [],
+    data = [] as BlogsProps[],
     isLoading,
     refetch,
   } = useQuery<BlogsProps[], unknown>({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/blogs");
+      const res = await axiosPublic.get("/blogs?category=all");
       return res.data.data;
     },
   });
+
 
   return { data, isLoading, refetch };
 };

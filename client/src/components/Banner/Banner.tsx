@@ -22,7 +22,7 @@ const Banner: FC = (): JSX.Element => {
         <div className="lg:min-w-[518px] lg:min-h-[304px] rounded-xl  md:-bottom-20 lg:-bottom-24 border left-16 md:left-32 lg:left-24 bg-[#FFF] lg:p-10 p-3 md:absolute border-[#E8E8EA] shadow-md shadow-[#181A2A1F] dark:bg-[#181A2A] dark:border-[#242535]">
           <div className="max-w-[518px]">
             <span className="bg-[#4B6BFB] rounded-md text-white px-2 py-1 text-sm text-center mt-2 lg:mt-0">
-              {data[1]?.category}
+              {data[1]?.category[0].toUpperCase() + data[1]?.category.slice(1)}
             </span>
             <h1 className="text-[#181A2A] dark:text-white text-xl mt-4 mb-6 lg:text-4xl font-semibold max-w-[400px] lg:max-w-[518px] ">
               {data[1]?.title}

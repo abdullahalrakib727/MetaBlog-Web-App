@@ -2,27 +2,40 @@ const AllBlogs = require("../models/AllBlogs");
 const isAdmin = require("../utils/checkAdmin");
 const isAuthor = require("../utils/checkAuthor");
 
+// ! to get all blogs
 const getAllBlogs = async (req, res) => {
   try {
-    let query = {};
-    if (req.query.category) {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 9;
+    const skip = (page - 1) * limit;
+
+    let query = { status: "published" };
+    if (req.query.category === "all") {
+      query = { status: "published" };
+    }
+    if (req.query.category && req.query.category !== "all") {
       query.category = req.query.category;
     }
+
+
+    console.log(query);
     const blogs = await AllBlogs.find(query)
       .sort({ published: -1 })
-      .select("-content -_id -__v");
-    const filteredBlogs = await blogs.filter(
-      (blog) => blog.status === "published"
-    );
+      .select("-content -_id -__v")
+      .skip(skip)
+      .limit(limit);
+
     return res.status(200).json({
       success: true,
-      total: filteredBlogs.length,
-      data: filteredBlogs,
+      total: blogs.length,
+      data: blogs,
     });
   } catch (error) {
     return res.status(500).json({ error: "Server Error" });
   }
 };
+
+// ! to get blog by id
 
 const getBlogById = async (req, res) => {
   try {
@@ -32,6 +45,8 @@ const getBlogById = async (req, res) => {
     return res.status(500).json({ error: "Server Error" });
   }
 };
+
+// ! to get blogs by author id
 
 const getBlogsByAuthorId = async (req, res) => {
   try {
@@ -48,6 +63,8 @@ const getBlogsByAuthorId = async (req, res) => {
   }
 };
 
+// ! to create a blog
+
 const createBlog = async (req, res) => {
   try {
     const blog = await AllBlogs.create(req.body);
@@ -56,6 +73,8 @@ const createBlog = async (req, res) => {
     return res.status(500).json({ error: "Server Error" });
   }
 };
+
+// ! to update a blog
 
 const updateBlog = async (req, res) => {
   try {
@@ -85,6 +104,8 @@ const updateBlog = async (req, res) => {
   }
 };
 
+// ! to delete a blog
+
 const deleteBlog = async (req, res) => {
   try {
     const Author = await isAuthor(req.user.userId);
@@ -103,6 +124,8 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+// ! to get recent blogs
+
 const getRecentBlogs = async (req, res) => {
   try {
     const blogs = await AllBlogs.find({ status: "published" })
@@ -117,6 +140,8 @@ const getRecentBlogs = async (req, res) => {
   }
 };
 
+// ! to get searched blog by title
+
 const getSearchedBlog = async (req, res) => {
   const regexPattern = await new RegExp(req.query.include, "i");
   try {
@@ -128,6 +153,8 @@ const getSearchedBlog = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+// ! to get stats of the current user
 
 const getStats = async (req, res) => {
   try {
@@ -167,6 +194,26 @@ const getStats = async (req, res) => {
   }
 };
 
+//  ! to get total number of pages of published blogs
+const getTotalBlogsCount = async (req, res) => {
+  try {
+    let query = { status: "published" };
+
+    if (req.query.category === "all") {
+      query = { status: "published" };
+    }
+    if (req.query.category && req.query.category !== "all") {
+      query.category = req.query.category;
+    }
+
+    const result = await AllBlogs.countDocuments(query);
+    const totalPage = await Math.ceil(result / 9);
+    return res.status(200).json({ success: true, data: totalPage });
+  } catch (error) {
+    return res.status(500).json({ error: "Server Error" });
+  }
+};
+
 module.exports = {
   getAllBlogs,
   getBlogById,
@@ -177,4 +224,5 @@ module.exports = {
   getRecentBlogs,
   getSearchedBlog,
   getStats,
+  getTotalBlogsCount,
 };

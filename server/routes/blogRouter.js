@@ -11,10 +11,12 @@ const {
   getRecentBlogs,
   getSearchedBlog,
   getStats,
+  getTotalBlogsCount,
 } = require("../controllers/blogController");
 
 const blogRouter = express.Router();
 
+blogRouter.route('/count').get(getTotalBlogsCount);
 blogRouter.route("/search").get(getSearchedBlog);
 blogRouter.route("/recent").get(getRecentBlogs);
 blogRouter.route("/stats").get(verifyToken, getStats);

@@ -11,13 +11,13 @@ const AllBlog: FC = (): JSX.Element => {
     useAllBlogs();
 
   const categoryList = [
-    { value: "", label: "All Categories" },
-    { value: "Lifestyle", label: "Life Style" },
-    { value: "Technology", label: "Technology" },
-    { value: "Travel", label: "Travel" },
-    { value: "Business", label: "Business" },
-    { value: "Economy", label: "Economy" },
-    { value: "Sports", label: "Sports" },
+    { value: "all", label: "All Categories" },
+    { value: "lifestyle", label: "Life Style" },
+    { value: "technology", label: "Technology" },
+    { value: "travel", label: "Travel" },
+    { value: "business", label: "Business" },
+    { value: "economy", label: "Economy" },
+    { value: "sports", label: "Sports" },
   ];
 
   return (

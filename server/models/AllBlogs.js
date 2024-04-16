@@ -11,6 +11,7 @@ const blogSchema = new mongoose.Schema({
   slug: {
     type: String,
     unique: true,
+    lowercase: true,
   },
   photoUrl: {
     type: String,
@@ -19,13 +20,14 @@ const blogSchema = new mongoose.Schema({
   category: {
     type: String,
     enum: [
-      "Lifestyle",
-      "Economy",
-      "Technology",
-      "Sports",
-      "Business",
-      "Travel",
+      "lifestyle",
+      "economy",
+      "technology",
+      "sports",
+      "business",
+      "travel",
     ],
+    lowercase: true,
     required: true,
   },
   authorId: {

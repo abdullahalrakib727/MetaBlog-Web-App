@@ -42,7 +42,8 @@ const BlogSlider = ({ isLoading, data }: BlogSliderProps) => {
                     {/* details */}
                     <div className="p-10 self-end">
                       <p className="text-white bg-[#4B6BFB] inline-block py-1 px-[10px] rounded-md text-sm font-medium mb-4">
-                        {blog.category}
+                        {blog.category[0].toUpperCase() +
+                          blog.category.slice(1)}
                       </p>
                       <h2 className="text-yellow-500 text-3xl font-semibold max-w-[720px]">
                         {blog.title}

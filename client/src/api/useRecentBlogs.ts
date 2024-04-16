@@ -5,7 +5,7 @@ import { BlogData, BlogsProps } from "./useBlogData";
 const useRecentBlogs = (): BlogData => {
   const axiosPublic = useAxiosPublic();
 
-  const { data = [], isLoading } = useQuery<BlogsProps[], unknown>({
+  const { data = [] as BlogsProps[], isLoading } = useQuery<BlogsProps[], unknown>({
     queryKey: ["recentBlogs"],
     queryFn: async () => {
       const res = await axiosPublic.get("/blogs/recent");

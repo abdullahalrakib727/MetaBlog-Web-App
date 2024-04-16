@@ -5,7 +5,7 @@ const useTotalPageCount = (staus:string) => {
   const axiosSecure = useAxiosSecure();
 
   const { data: pages = {},refetch:reload } = useQuery({
-    queryKey: ["total-page",staus],
+    queryKey: ["all-blog-list-page",staus],
     queryFn: async () => {
       const response = await axiosSecure.get("/admin/page-count?status="+staus);
       return response.data.data;
