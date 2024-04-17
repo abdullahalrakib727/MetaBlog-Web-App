@@ -7,8 +7,16 @@ import CategorySelect from "../../components/CategorySelect/CategorySelect";
 import Blogs from "../../components/Blogs/Blogs";
 
 const AllBlog: FC = (): JSX.Element => {
-  const { allBlogs, isLoading, loading, handleChange, category, data } =
-    useAllBlogs();
+  const {
+    allBlogs,
+    isLoading,
+    loading,
+    handleChange,
+    category,
+    data,
+    pages,
+    handlePageChange,
+  } = useAllBlogs();
 
   const categoryList = [
     { value: "all", label: "All Categories" },
@@ -19,6 +27,8 @@ const AllBlog: FC = (): JSX.Element => {
     { value: "economy", label: "Economy" },
     { value: "sports", label: "Sports" },
   ];
+
+  const totalPages = [...Array(pages).keys()];
 
   return (
     <Container>
@@ -34,6 +44,17 @@ const AllBlog: FC = (): JSX.Element => {
           handleChange={handleChange}
         />
         <Blogs allBlogs={allBlogs} loading={loading} />
+      </div>
+      <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
+        {totalPages.map((i) => (
+          <button
+            onClick={() => handlePageChange(i + 1)}
+            className={`join-item btn dark:bg-[#242535] dark:text-white `}
+            key={i}
+          >
+            {i + 1}
+          </button>
+        ))}
       </div>
     </Container>
   );

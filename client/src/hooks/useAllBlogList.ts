@@ -35,7 +35,7 @@ const useAllBlogList = () => {
 
   const { pages, reload } = useTotalPageCount(status);
 
-  const Totalpages = [...Array(pages).keys()];
+  const totalPages = [...Array(pages).keys()];
 
   // ! Handle the page change
 
@@ -133,7 +133,7 @@ const useAllBlogList = () => {
     data,
     isLoading,
     isError,
-    Totalpages,
+    totalPages,
     handlePageChange,
     handleChangeStatus,
     handleDeleteBlog,
