@@ -5,7 +5,7 @@ const useAlllBlogsPage = (category: string) => {
   const axiosSecure = useAxiosSecure();
 
   const { data: pages = {}, refetch: reload } = useQuery({
-    queryKey: ["all-blog-list-page", category],
+    queryKey: ["all-blogs-page", category],
     queryFn: async () => {
       const response = await axiosSecure.get(
         "/blogs/count?category=" + category

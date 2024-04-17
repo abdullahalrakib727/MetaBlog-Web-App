@@ -12,7 +12,7 @@ import CategorySelect from "../../components/CategorySelect/CategorySelect";
 const AllBlogsList = () => {
   const {
     data,
-    Totalpages,
+  totalPages,
     handleChangeStatus,
     handleDeleteBlog,
     handlePageChange,
@@ -106,7 +106,7 @@ const AllBlogsList = () => {
         </table>
       </div>
       <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
-        {Totalpages.map((i) => (
+        {totalPages.map((i) => (
           <button
             onClick={() => handlePageChange(i + 1)}
             className={`join-item btn dark:bg-[#242535] dark:text-white `}
