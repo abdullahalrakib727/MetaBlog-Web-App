@@ -64,11 +64,12 @@ const useAllBlogList = () => {
           const response = await axiosSecure.patch(`/admin/blogs/${id}`, {
             status,
           });
+
           if (response.data.success) {
             refetch();
             Swal.fire({
               title: "Success!",
-              text: "Blog status has been changed !!.",
+              text: `${response.data.message} !!`,
               icon: "success",
             });
           }
@@ -114,18 +115,18 @@ const useAllBlogList = () => {
 
   useEffect(() => {
     refetch();
-  }, [status]);
+  }, [status,refetch]);
 
   const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     reload();
     const newStatus = e.target.value;
     await setStatus(newStatus);
     await setCurrentPage(1);
-    
+
     if (newStatus === "all") {
-    await  navigate(`/dashboard/all-blogs?page=1&status=all`);
+      await navigate(`/dashboard/all-blogs?page=1&status=all`);
     } else {
-    await  navigate(`/dashboard/all-blogs?page=1&status=${newStatus}`);
+      await navigate(`/dashboard/all-blogs?page=1&status=${newStatus}`);
     }
   };
 
