@@ -28,7 +28,7 @@ const useAllBlogs = () => {
     refetch,
     isLoading: loading,
   } = useQuery<BlogsProps[]>({
-    queryKey: ["all-blogs", category, selectedCategory,currentPage],
+    queryKey: ["all-blogs", category, selectedCategory, currentPage],
     queryFn: async () => {
       const res = await axiosPublic.get(
         `/blogs?page=${currentPage}&category=${selectedCategory}`
@@ -58,7 +58,7 @@ const useAllBlogs = () => {
 
   //* functions
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(1);
     refetch();
     if (e.target.value === "all") {
