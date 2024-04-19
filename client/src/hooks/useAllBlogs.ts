@@ -54,13 +54,12 @@ const useAllBlogs = () => {
 
   useEffect(() => {
     refetch();
-  }, [selectedCategory, refetch]);
+  }, [selectedCategory, currentPage]);
 
   //* functions
 
-  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(1);
-    refetch();
     if (e.target.value === "all") {
       setSelectedCategory("all");
       navigate(`/blogs?page=${currentPage}&category=all`);

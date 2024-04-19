@@ -12,23 +12,31 @@ import CategorySelect from "../../components/CategorySelect/CategorySelect";
 const AllBlogsList = () => {
   const {
     data,
-  totalPages,
+    totalPages,
     handleChangeStatus,
     handleDeleteBlog,
     handlePageChange,
     isError,
     isLoading,
     handleFilter,
-    status
+    status,
   } = useAllBlogList();
 
   if (isLoading) return <LoadingSpinner />;
 
   if (isError)
     return (
-      <h1 className="text-2xl flex font-bold text-red-600 h-screen justify-center items-center">
-        No Data Found with this query !!
-      </h1>
+      <section className="flex flex-col gap-10 h-screen justify-center items-center">
+        <h1 className="text-2xl font-bold text-red-600">
+          No Data Found with this query !!
+        </h1>
+        <Helmet>
+          <title>No Data Found | MetaBlog</title>
+        </Helmet>
+        <Link to="/dashboard" className="btn">
+          Go Back to Dashboard
+        </Link>
+      </section>
     );
 
   const categoryList = [
