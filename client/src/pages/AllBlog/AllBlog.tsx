@@ -5,6 +5,7 @@ import useAllBlogs from "../../hooks/useAllBlogs";
 import BlogSlider from "../../components/BlogSlider/BlogSlider";
 import CategorySelect from "../../components/CategorySelect/CategorySelect";
 import Blogs from "../../components/Blogs/Blogs";
+import Pagintaion from "../../components/shared/Pagination/Pagintaion";
 
 const AllBlog: FC = (): JSX.Element => {
   const {
@@ -47,13 +48,7 @@ const AllBlog: FC = (): JSX.Element => {
       </div>
       <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
         {totalPages.map((i) => (
-          <button
-            onClick={() => handlePageChange(i + 1)}
-            className={`join-item btn dark:bg-[#242535] dark:text-white `}
-            key={i}
-          >
-            {i + 1}
-          </button>
+          <Pagintaion handlePageChange={handlePageChange} i={i} key={i} />
         ))}
       </div>
     </Container>

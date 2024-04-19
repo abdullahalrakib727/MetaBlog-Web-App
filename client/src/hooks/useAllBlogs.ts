@@ -37,7 +37,11 @@ const useAllBlogs = () => {
     },
   });
 
+  // * pagination
+
   const { pages, reload } = useAlllBlogsPage(selectedCategory);
+
+  // * handle page change
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -54,13 +58,12 @@ const useAllBlogs = () => {
 
   useEffect(() => {
     refetch();
-  }, [selectedCategory, refetch]);
+  }, [selectedCategory, currentPage]);
 
-  //* functions
+  //* functions to handle the category change
 
-  const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(1);
-    refetch();
     if (e.target.value === "all") {
       setSelectedCategory("all");
       navigate(`/blogs?page=${currentPage}&category=all`);
