@@ -46,11 +46,7 @@ const AllBlog: FC = (): JSX.Element => {
         />
         <Blogs allBlogs={allBlogs} loading={loading} />
       </div>
-      <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
-        {totalPages.map((i) => (
-          <Pagintaion handlePageChange={handlePageChange} i={i} key={i} />
-        ))}
-      </div>
+      <Pagintaion handlePageChange={handlePageChange} pages={totalPages} />
     </Container>
   );
 };

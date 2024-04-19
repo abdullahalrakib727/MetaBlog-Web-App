@@ -1,17 +1,20 @@
 type PageProps = {
   handlePageChange: (page: number) => void;
-  i: number;
+  pages: number[];
 };
 
-const Pagintaion = ({ handlePageChange, i }: PageProps) => {
+const Pagintaion = ({ handlePageChange, pages }: PageProps) => {
   return (
-    <button
-      onClick={() => handlePageChange(i + 1)}
-      className={`join-item btn dark:bg-[#242535] dark:text-white `}
-      key={i}
-    >
-      {i + 1}
-    </button>
+    <div className="join flex justify-center items-center mb-10 mt-auto  w-full">
+      {pages.map((i) => (
+        <button
+          onClick={() => handlePageChange(i + 1)}
+          className="join-item btn border-slate-400 dark:border-white bg-[#F6F6F7] transition-colors duration-300 text-center dark:bg-[#242535] dark:text-white dark:hover:bg-[#181A2A]"
+        >
+          {i + 1}
+        </button>
+      ))}
+    </div>
   );
 };
 
