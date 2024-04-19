@@ -2,6 +2,8 @@ const AllBlogs = require("../models/AllBlogs");
 const User = require("../models/User");
 const isAdmin = require("../utils/checkAdmin");
 
+// ! check if user is admin
+
 const checkAdmin = async (req, res) => {
   try {
     const id = req.params.id;
@@ -11,6 +13,8 @@ const checkAdmin = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+// ! change user role to admin or user
 
 const changeUserRole = async (req, res) => {
   try {
@@ -27,6 +31,8 @@ const changeUserRole = async (req, res) => {
   }
 };
 
+// ! delete user
+
 const deleteUser = async (req, res) => {
   try {
     const id = req.params.id;
@@ -40,6 +46,8 @@ const deleteUser = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+// ! get all blogs on the admin pannel
 
 const getAllBlogs = async (req, res) => {
   try {
@@ -59,7 +67,7 @@ const getAllBlogs = async (req, res) => {
       .limit(limit)
       .skip(skip)
       .sort({ published: -1 })
-      .select("-content -__v");
+      .select("-content -__v -authorId -authorImg");
 
     if (blogs.length === 0)
       return res.status(404).json({ error: "No blogs found" });
@@ -69,6 +77,8 @@ const getAllBlogs = async (req, res) => {
     return res.status(500).json({ data: "Server Error" });
   }
 };
+
+// ! get total number of blogs for pagination
 
 const totalBlogsCount = async (req, res) => {
   try {
@@ -88,6 +98,8 @@ const totalBlogsCount = async (req, res) => {
   }
 };
 
+// ! change blog status to published or draft
+
 const changeBlogStatus = async (req, res) => {
   try {
     const id = req.params.id;
@@ -106,6 +118,8 @@ const changeBlogStatus = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+// ! delete blog
 
 const deleteBlog = async (req, res) => {
   try {
