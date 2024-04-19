@@ -67,7 +67,7 @@ const getAllBlogs = async (req, res) => {
       .limit(limit)
       .skip(skip)
       .sort({ published: -1 })
-      .select("-content -__v");
+      .select("-content -__v -authorId -authorImg");
 
     if (blogs.length === 0)
       return res.status(404).json({ error: "No blogs found" });

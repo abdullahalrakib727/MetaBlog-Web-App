@@ -83,7 +83,6 @@ const useAllBlogList = () => {
   // ! Delete the blog
 
   const handleDeleteBlog = async (id: string) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "This blog will be deleted and you won't be able to revert this action!",
@@ -100,7 +99,7 @@ const useAllBlogList = () => {
             refetch();
             Swal.fire({
               title: "Success!",
-              text: "Blog has been deleted !!.",
+              text: `${response.data.message} !!`,
               icon: "success",
             });
           }
@@ -115,7 +114,7 @@ const useAllBlogList = () => {
 
   useEffect(() => {
     refetch();
-  }, [status,refetch]);
+  }, [status, refetch]);
 
   const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     reload();
