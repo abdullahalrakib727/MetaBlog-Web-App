@@ -85,7 +85,7 @@ const useAllBlogList = () => {
   const handleDeleteBlog = async (id: string) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "This blog will be deleted and you won't be able to revert this action!",
+      text: "This blog will be deleted from the site!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -115,6 +115,8 @@ const useAllBlogList = () => {
   useEffect(() => {
     refetch();
   }, [status, refetch]);
+
+  // ! handle filter
 
   const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     reload();

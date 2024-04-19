@@ -37,7 +37,11 @@ const useAllBlogs = () => {
     },
   });
 
+  // * pagination
+
   const { pages, reload } = useAlllBlogsPage(selectedCategory);
+
+  // * handle page change
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -56,7 +60,7 @@ const useAllBlogs = () => {
     refetch();
   }, [selectedCategory, currentPage]);
 
-  //* functions
+  //* functions to handle the category change
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(1);

@@ -1,13 +1,12 @@
-import { format, parseISO } from "date-fns";
 import { Link } from "react-router-dom";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteOutline } from "react-icons/md";
 
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import useAllBlogList from "../../hooks/useAllBlogList";
 import { Helmet } from "react-helmet";
 import CategorySelect from "../../components/CategorySelect/CategorySelect";
+import Pagintaion from "../../components/shared/Pagination/Pagintaion";
+import BlogTable from "../../components/BlogTable/BlogTable";
 
 const AllBlogsList = () => {
   const {
@@ -75,53 +74,19 @@ const AllBlogsList = () => {
           </thead>
           <tbody>
             {data.map((blog) => (
-              <tr key={blog._id}>
-                <td>
-                  <img
-                    src={blog.photoUrl}
-                    alt={blog.title}
-                    className="h-20 w-16 object-contain"
-                  />
-                </td>
-                <td>{blog.title}</td>
-                <td>{blog.authorName}</td>
-                <td>{format(parseISO(blog.published), "dd, M, yyyy")}</td>
-                <td>{blog.status}</td>
-                <td>
-                  <button className="hover:bg-blue-500 p-2 hover:text-white transition-all duration-300 rounded-md">
-                    <Link to={`/blogs/${blog.slug}`}>Details</Link>
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => handleChangeStatus(blog._id, blog.status)}
-                    className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-blue-700 transition-colors duration-300 hover:text-white"
-                  >
-                    <CiEdit />
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => handleDeleteBlog(blog._id)}
-                    className="text-2xl bg-blue-400 p-2 rounded-md hover:bg-red-600 transition-colors duration-300 hover:text-white"
-                  >
-                    <MdDeleteOutline />
-                  </button>
-                </td>
-              </tr>
+              <BlogTable
+                key={blog._id}
+                blog={blog}
+                handleChangeStatus={handleChangeStatus}
+                handleDeleteBlog={handleDeleteBlog}
+              />
             ))}
           </tbody>
         </table>
       </div>
       <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
         {totalPages.map((i) => (
-          <button
-            onClick={() => handlePageChange(i + 1)}
-            className={`join-item btn dark:bg-[#242535] dark:text-white `}
-            key={i}
-          >
-            {i + 1}
-          </button>
+          <Pagintaion key={i} i={i} handlePageChange={handlePageChange} />
         ))}
       </div>
     </section>
