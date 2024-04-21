@@ -4,7 +4,7 @@ import useAxiosSecure from "../api/useAxiosSecure";
 const useAlllBlogsPage = (category: string) => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: pages = {}, refetch: reload } = useQuery({
+  const { data: pages = {}, refetch: reload } = useQuery<number>({
     queryKey: ["all-blogs-page", category],
     queryFn: async () => {
       const response = await axiosSecure.get(

@@ -1,20 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../api/useAxiosSecure";
 import useAdmin from "./useAdmin";
-
-type AllUsersData = {
-  uid: string;
-  email: string;
-  photo: string;
-  name: string;
-  role: string;
-}[];
+import { AllUsersData } from "../TypeDefination/TypeDefination";
 
 const useGetAllUsersData = () => {
   const axiosSecure = useAxiosSecure();
   const { result, loading } = useAdmin();
 
-  const { data = [] as AllUsersData, isLoading,refetch } = useQuery<AllUsersData>({
+  const {
+    data = [] as AllUsersData,
+    isLoading,
+    refetch,
+  } = useQuery<AllUsersData>({
     queryKey: ["all-users"],
     queryFn: async () => {
       const response = await axiosSecure("/admin/users");
@@ -24,7 +21,7 @@ const useGetAllUsersData = () => {
     enabled: result.isAdmin,
   });
 
-  return { data, isLoading, loading, result,refetch };
+  return { data, isLoading, loading, result, refetch };
 };
 
 export default useGetAllUsersData;

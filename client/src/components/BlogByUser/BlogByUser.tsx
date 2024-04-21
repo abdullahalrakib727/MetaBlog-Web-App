@@ -1,11 +1,12 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import CardSkeleton from "../Skeletons/CardSkeleton/CardSkeleton";
-import { BlogsProps } from "../../api/useBlogData";
+
 import BlogCard from "../BlogCard/BlogCard";
+import { BlogData } from "../../TypeDefination/TypeDefination";
 
 interface BlogByUserProps {
   isLoading: boolean;
-  data: BlogsProps[];
+  data: BlogData[];
 }
 
 const BlogByUser = ({ isLoading, data }: BlogByUserProps) => {

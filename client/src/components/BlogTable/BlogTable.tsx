@@ -1,11 +1,11 @@
 import { format, parseISO } from "date-fns";
 import { MdDeleteOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { BlogsProps } from "../../api/useBlogData";
 import { CiEdit } from "react-icons/ci";
+import { BlogData } from "../../TypeDefination/TypeDefination";
 
 type BlogTableProps = {
-  blogs: BlogsProps[];
+  blogs: BlogData[];
   handleChangeStatus: (id: string, status: string) => void;
   handleDeleteBlog: (id: string) => void;
 };

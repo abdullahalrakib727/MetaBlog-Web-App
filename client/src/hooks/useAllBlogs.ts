@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import useAxiosPublic from "../api/useAxiosPublic";
 import useRecentBlogs from "../api/useRecentBlogs";
-import { BlogsProps } from "../api/useBlogData";
 import { useQuery } from "@tanstack/react-query";
 import useAlllBlogsPage from "./useAlllBlogsPage";
+import { BlogData } from "../TypeDefination/TypeDefination";
 
 const useAllBlogs = () => {
   //* hooks
@@ -24,10 +24,10 @@ const useAllBlogs = () => {
   const { data, isLoading } = useRecentBlogs();
 
   const {
-    data: allBlogs = [] as BlogsProps[],
+    data: allBlogs = [] as BlogData[],
     refetch,
     isLoading: loading,
-  } = useQuery<BlogsProps[]>({
+  } = useQuery<BlogData[]>({
     queryKey: ["all-blogs", category, selectedCategory, currentPage],
     queryFn: async () => {
       const res = await axiosPublic.get(

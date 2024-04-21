@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../api/useAxiosSecure";
-import { BlogsProps } from "../api/useBlogData";
 import useAuth from "./useAuth";
+import { BlogData } from "../TypeDefination/TypeDefination";
 
 
 const useBlogByUser = () => {
@@ -9,7 +9,7 @@ const useBlogByUser = () => {
 
   const axiosSecure = useAxiosSecure();
 
-  const { data = [] as BlogsProps[], isLoading } = useQuery({
+  const { data = [] as BlogData[], isLoading } = useQuery({
     queryKey: ["blogByUser", user?.uid],
     queryFn: async () => {
       const res = await axiosSecure.get(`/blogs/author/${user?.uid}`);

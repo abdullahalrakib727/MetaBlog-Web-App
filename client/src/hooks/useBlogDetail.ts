@@ -5,20 +5,9 @@ import useAxiosSecure from "../api/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAllBlogs from "./useAllBlogs";
+import { BlogData } from "../TypeDefination/TypeDefination";
 
-interface BlogData {
-  _id: string;
-  title: string;
-  photoUrl: string;
-  authorImg: string;
-  authorName: string;
-  published: string;
-  authorId: string;
-  content: string;
-  slug: string;
-  status: string;
-  category: string;
-}
+
 
 const useBlogDetail = () => {
   const { user } = useAuth();

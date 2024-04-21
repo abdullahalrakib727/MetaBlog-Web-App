@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import useTotalPageCount from "./useTotalPageCount";
-import { BlogsProps } from "../api/useBlogData";
 import useAxiosSecure from "../api/useAxiosSecure";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { BlogData } from "../TypeDefination/TypeDefination";
 
 const useAllBlogList = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,11 +16,11 @@ const useAllBlogList = () => {
 
   // ! Fetch all blogs
   const {
-    data = [] as BlogsProps[],
+    data = [] as BlogData[],
     isLoading,
     refetch,
     isError,
-  } = useQuery<BlogsProps[]>({
+  } = useQuery<BlogData[]>({
     queryKey: ["blogs-list", currentPage, status],
     queryFn: async () => {
       const response = await axiosSecure.get(

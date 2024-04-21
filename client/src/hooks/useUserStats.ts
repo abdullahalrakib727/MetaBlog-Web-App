@@ -1,18 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../api/useAxiosSecure";
 import useAuth from "./useAuth";
+import { UserStats } from "../TypeDefination/TypeDefination";
 
-type DashboardData = {
-  total: number;
-  draft: number;
-  published: number;
-};
+
 
 const useUserStats = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: stats = {} as DashboardData ,isLoading } = useQuery<DashboardData>({
+  const { data: stats = {} as UserStats ,isLoading } = useQuery<UserStats>({
     queryKey: ["dashboard", user?.uid],
     queryFn: async () => {
       const response = await axiosSecure.get("/blogs/stats");

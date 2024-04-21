@@ -1,6 +1,5 @@
 import JoditEditor from "jodit-react";
 import { FaSpinner } from "react-icons/fa";
-import { BlogsProps } from "../../api/useBlogData";
 import {
   FieldErrors,
   FieldValues,
@@ -8,18 +7,19 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
+import { BlogData } from "../../TypeDefination/TypeDefination";
 
-interface BlogFormProps {
-  item?: BlogsProps;
+type BlogFormProps = {
+  item: BlogData;
   buttonText: string;
   content: string;
   setContent: (content: string) => void;
   handleSubmit: UseFormHandleSubmit<FieldValues, FieldValues>;
   Submit: SubmitHandler<FieldValues>;
   register: UseFormRegister<FieldValues>;
-  errors: FieldErrors<BlogsProps>;
+  errors: FieldErrors<BlogData>;
   loading: boolean;
-}
+};
 
 const BlogFrom = ({
   item,

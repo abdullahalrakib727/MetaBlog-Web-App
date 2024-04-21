@@ -1,11 +1,9 @@
+import { AdminData } from "../TypeDefination/TypeDefination";
 import useAxiosSecure from "../api/useAxiosSecure";
 import useAuth from "./useAuth";
 import { useQuery } from "@tanstack/react-query";
 
-type AdminData = {
-  isAdmin: boolean;
-  success: boolean;
-};
+
 
 const useAdmin = () => {
   const axiosSecure = useAxiosSecure();

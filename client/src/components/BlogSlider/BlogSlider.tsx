@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { BlogsProps } from "../../api/useBlogData";
+
 import FsSkeleton from "../Skeletons/FeaturedSliderSkeleton/FsSkeleton";
 import { Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
@@ -8,11 +8,12 @@ import { format, parseISO } from "date-fns";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/autoplay";
+import { BlogData } from "../../TypeDefination/TypeDefination";
 
-interface BlogSliderProps {
+type BlogSliderProps = {
   isLoading: boolean;
-  data: BlogsProps[];
-}
+  data: BlogData[];
+};
 
 const BlogSlider = ({ isLoading, data }: BlogSliderProps) => {
   return (
@@ -28,7 +29,7 @@ const BlogSlider = ({ isLoading, data }: BlogSliderProps) => {
           modules={[Autoplay]}
           className="mySwiper"
         >
-          {data.map((blog: BlogsProps) => (
+          {data.map((blog: BlogData) => (
             <SwiperSlide key={blog.slug} style={{ borderRadius: "12px" }}>
               <Link to={`/blogs/${blog.slug}`}>
                 <div className="max-w-[1216px] overflow-hidden rounded-xl">
