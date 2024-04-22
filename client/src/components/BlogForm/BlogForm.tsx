@@ -10,7 +10,7 @@ import {
 import { BlogData } from "../../TypeDefination/TypeDefination";
 
 type BlogFormProps = {
-  item: BlogData;
+  item?: BlogData;
   buttonText: string;
   content: string;
   setContent: (content: string) => void;
