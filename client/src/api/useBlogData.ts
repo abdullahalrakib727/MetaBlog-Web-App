@@ -4,44 +4,30 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
+import { BlogData, BlogFetchResult } from "../TypeDefination/TypeDefination";
 
-export interface BlogsProps {
-  _id: string;
-  title: string;
-  photoUrl: string;
-  category: string;
-  authorName: string;
-  authorImg: string;
-  published: string;
-  content?: string;
-  slug: string;
-  authorId?: string;
-  status: string;
-}
-
-export interface BlogData {
-  data: BlogsProps[];
+export interface BlogArray {
+  data: BlogData[];
   isLoading: boolean;
   refetch?: (
     options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<BlogsProps[], unknown>>;
+  ) => Promise<QueryObserverResult<BlogData[], unknown>>;
 }
 
-const useBlogData = (): BlogData => {
+const useBlogData = (): BlogFetchResult => {
   const axiosPublic = useAxiosPublic();
 
   const {
-    data = [] as BlogsProps[],
+    data = [] as BlogData[],
     isLoading,
     refetch,
-  } = useQuery<BlogsProps[], unknown>({
+  } = useQuery<BlogData[], unknown>({
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await axiosPublic.get("/blogs?category=all");
       return res.data.data;
     },
   });
-
 
   return { data, isLoading, refetch };
 };

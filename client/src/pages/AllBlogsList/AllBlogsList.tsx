@@ -60,35 +60,13 @@ const AllBlogsList = () => {
         />
       </>
       <div className="overflow-x-auto">
-        <table className="table dark:text-white">
-          {/* head */}
-          <thead className="dark:text-white">
-            <tr>
-              <th></th>
-              <th>Blog Title</th>
-              <th>Author</th>
-              <th>Create Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((blog) => (
-              <BlogTable
-                key={blog._id}
-                blog={blog}
-                handleChangeStatus={handleChangeStatus}
-                handleDeleteBlog={handleDeleteBlog}
-              />
-            ))}
-          </tbody>
-        </table>
+        <BlogTable
+          blogs={data}
+          handleChangeStatus={handleChangeStatus}
+          handleDeleteBlog={handleDeleteBlog}
+        />
       </div>
-      <div className="join flex justify-center items-center m-auto fixed bottom-2 left-0 w-full">
-        {totalPages.map((i) => (
-          <Pagintaion key={i} i={i} handlePageChange={handlePageChange} />
-        ))}
-      </div>
+      <Pagintaion handlePageChange={handlePageChange} pages={totalPages} />
     </section>
   );
 };

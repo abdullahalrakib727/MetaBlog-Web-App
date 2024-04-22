@@ -1,10 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import CardSkeleton from "../Skeletons/CardSkeleton/CardSkeleton";
 import BlogCard from "../BlogCard/BlogCard";
-import { BlogsProps } from "../../api/useBlogData";
+import { BlogData } from "../../TypeDefination/TypeDefination";
 
-interface AllBlogProps {
-  allBlogs: BlogsProps[];
+
+type AllBlogProps = {
+  allBlogs: BlogData[];
   loading: boolean;
 }
 

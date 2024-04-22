@@ -1,11 +1,11 @@
 import { TfiSearch } from "react-icons/tfi";
-import { BlogsProps } from "../../api/useBlogData";
 import { Link } from "react-router-dom";
+import { BlogData } from "../../TypeDefination/TypeDefination";
 
 interface SearchBarProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onReset: () => void;
-  blogs: BlogsProps[];
+  blogs: BlogData[];
   onSearch: () => void;
 }
 
@@ -24,7 +24,7 @@ const SearchBar = ({ onChange, onReset, blogs, onSearch }: SearchBarProps) => {
       />
       {blogs.length > 0 && (
         <div className="absolute mt-2 bg-white border border-[#E8E8EA] dark:bg-[#181A2A] dark:border-[#242535] z-10 p-2 rounded-xl space-y-1 overflow-x-auto max-h-40">
-          {blogs.map((blog: BlogsProps) => (
+          {blogs.map((blog: BlogData) => (
             <Link
               to={`/blogs/${blog.slug}`}
               onClick={onReset}

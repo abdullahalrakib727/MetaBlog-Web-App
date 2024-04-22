@@ -2,15 +2,10 @@ import { useState } from "react";
 import useAuth from "./useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { FormData } from "../TypeDefination/TypeDefination";
 
 
-interface FormData {
-    name: string;
-    email: string;
-    photo: string;
-    password: string;
-  }
-  
+
 
 export const useRegister = () => {
     const [loading, setLoading] = useState(false);

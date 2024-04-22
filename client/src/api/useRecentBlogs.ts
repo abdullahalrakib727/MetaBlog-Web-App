@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
-import { BlogData, BlogsProps } from "./useBlogData";
+import { BlogData, BlogFetchResult } from "../TypeDefination/TypeDefination";
 
-const useRecentBlogs = (): BlogData => {
+const useRecentBlogs = (): BlogFetchResult => {
   const axiosPublic = useAxiosPublic();
 
-  const { data = [] as BlogsProps[], isLoading } = useQuery<BlogsProps[], unknown>({
+  const { data = [] as BlogData[], isLoading } = useQuery<BlogData[], unknown>({
     queryKey: ["recentBlogs"],
     queryFn: async () => {
       const res = await axiosPublic.get("/blogs/recent");
