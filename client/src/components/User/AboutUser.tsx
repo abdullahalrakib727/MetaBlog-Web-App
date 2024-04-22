@@ -1,7 +1,8 @@
 import { CiEdit } from "react-icons/ci";
 import { MdOutlineCancel, MdOutlineSave } from "react-icons/md";
 import { RefObject } from "react";
-import { UserData } from "../../hooks/useAboutUser";
+import { UserData } from "../../TypeDefination/TypeDefination";
+
 
 type AboutUserProps = {
   userData: UserData;
