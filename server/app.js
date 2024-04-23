@@ -16,11 +16,7 @@ connectDb();
 
 app.use(
   cors({
-    origin: [
-      "https://blog-zone-web.netlify.app",
-      "http://localhost:5173",
-      "https://meta-blog-app.vercel.app",
-    ],
+    origin: ["https://meta-blog-app.vercel.app"],
     credentials: true,
   })
 );
