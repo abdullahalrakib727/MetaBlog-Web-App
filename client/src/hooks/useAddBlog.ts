@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import { FieldValues, useForm } from "react-hook-form";
 import useAllBlogs from "./useAllBlogs";
 import useAxiosSecure from "../api/useAxiosSecure";
-import useAdmin from "./useAdmin";
 
 export default function useAddBlog() {
   const {
@@ -24,8 +23,6 @@ export default function useAddBlog() {
 
   const { refetch } = useAllBlogs();
 
-  const { result } = useAdmin();
-
   const onSubmit = async (data: FieldValues) => {
     setLoading(true);
     const title = data.title;
@@ -36,14 +33,6 @@ export default function useAddBlog() {
     const authorName = user?.displayName;
     const authorImg = user?.photoURL;
 
-    let status;
-
-    if (result.isAdmin) {
-      status = "published";
-    } else {
-      status = "draft";
-    }
-
     const BlogData = {
       title,
       photoUrl,
@@ -53,7 +42,6 @@ export default function useAddBlog() {
       published,
       authorName,
       authorImg,
-      status,
     };
 
     try {
