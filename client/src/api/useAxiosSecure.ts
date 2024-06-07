@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 
 const axiosSecure: AxiosInstance = axios.create({
-  baseURL: "https://blog-website-server-theta.vercel.app",
+  baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 

@@ -32,6 +32,8 @@ const BlogFrom = ({
   loading,
   errors,
 }: BlogFormProps) => {
+
+
   return (
     <form className="card-body" onSubmit={handleSubmit(Submit)}>
       <div className="form-control">
@@ -62,10 +64,10 @@ const BlogFrom = ({
           </span>
         </label>
         <input
-          type="text"
+          type="file"
+   
           placeholder="Thumbnail link"
           className="appearance-none focus:outline-none p-2 rounded-sm bg-gray-200 dark:bg-white dark:border-white focus:bg-gray-100 dark:focus:bg-gray-100"
-          defaultValue={item?.photoUrl || ""}
           {...register("photoUrl", {
             required: "Thumbnail is required !!",
           })}
