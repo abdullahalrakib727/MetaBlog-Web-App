@@ -23,7 +23,6 @@ export default function useUpdateBlog() {
   // ! fetch all blogs
   const { refetch: reload } = useAllBlogs();
 
-
   const {
     register,
     handleSubmit,
@@ -35,32 +34,12 @@ export default function useUpdateBlog() {
   const onSubmit = async (data: FieldValues) => {
     setLoading(true);
     const title = data?.title || item?.title;
-    const thubmnail = data?.photoUrl;
+    const thubmnail = data?.photoUrl[0];
     const category = data?.category || item?.category;
 
     const imgApiKey = import.meta.env.VITE_IMG_API_KEY;
 
     const image_hosting_api = `https://api.imgbb.com/1/upload?key=${imgApiKey}`;
-
-    const formData = new FormData();
-    if (thubmnail) {
-      formData.append("image", thubmnail);
-    }
-
-    const response = await axiosPublic.post(image_hosting_api, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    const photoUrl = await response.data.data.display_url || item?.photoUrl;
-
-    const updatedBlog = {
-      title,
-      photoUrl,
-      category,
-      content: updatedContent || item?.content,
-    };
 
     Swal.fire({
       title: "Do you want to save the changes?",
@@ -71,6 +50,27 @@ export default function useUpdateBlog() {
     }).then(async (result) => {
       // ! if user wants to save the changes
       if (result.isConfirmed) {
+        const formData = new FormData();
+        if (thubmnail) {
+          formData.append("image", thubmnail);
+        }
+
+        const response = await axiosPublic.post(image_hosting_api, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        const photoUrl =
+          (await response.data.data.display_url) || item?.photoUrl;
+
+        const updatedBlog = {
+          title,
+          photoUrl,
+          category,
+          content: updatedContent || item?.content,
+        };
+
         await axiosSecure
           .patch(`/blogs/${slug}`, updatedBlog, {
             withCredentials: true,
