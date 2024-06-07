@@ -30,7 +30,7 @@ const BlogTable = ({
       </thead>
       <tbody>
         {blogs.map((blog) => (
-          <tr key={blog._id}>
+          <tr key={blog?._id}>
             <td>
               <img
                 src={blog.photoUrl}
