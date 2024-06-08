@@ -47,7 +47,7 @@ const Register: FC = (): JSX.Element => {
                   {...register("name", { required: "Name is required" })}
                 />
                 {errors.name && (
-                  <p className="text-red-700 ">{errors.name.message}</p>
+                  <p className="text-red-600 ">{errors.name.message}</p>
                 )}
                 <input
                   className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium "
@@ -56,22 +56,23 @@ const Register: FC = (): JSX.Element => {
                   {...register("email", { required: "Email is required" })}
                 />
                 {errors.email && (
-                  <p className="text-red-700 ">{errors.email.message}</p>
+                  <p className="text-red-600 ">{errors.email.message}</p>
                 )}
-                <input
-                  className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium"
-                  type="text"
-                  placeholder="Photo URL"
-                  {...register("photo", { required: "Photo is required" })}
-                />
-                {errors.photo && (
-                  <p className="text-red-700 ">{errors.photo.message}</p>
-                )}
+                <span className="">
+                  <input
+                    className="appearance-none focus:outline-none p-2 border rounded-xl text-black font-medium bg-white w-full"
+                    type="file"
+                    accept="image/*"
+                    {...register("photo", { required: "Photo is required" })}
+                  />
+                  {errors.photo && (
+                    <p className="text-red-600 ">{errors.photo.message}</p>
+                  )}
+                </span>
                 <div className="relative">
                   <input
                     className="appearance-none focus:outline-none p-2 border rounded-xl w-full text-black font-medium"
                     type={showPass ? "text" : "password"}
-                    id=""
                     placeholder="Password"
                     {...register("password", {
                       required: "Password is required",
@@ -90,7 +91,7 @@ const Register: FC = (): JSX.Element => {
                   )}
                 </div>
                 {errors.password && (
-                  <p className="text-red-700 ">{errors.password.message}</p>
+                  <p className="text-red-600 ">{errors.password.message}</p>
                 )}
                 <button className="rounded-xl text-[#F0E3CA]  transition-all bg-blue-600 hover:bg-blue-500 py-2 hover:scale-105 duration-300">
                   {loading ? (

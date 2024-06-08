@@ -1,4 +1,5 @@
 const AllBlogs = require("../models/AllBlogs");
+const User = require("../models/User");
 const isAdmin = require("../utils/checkAdmin");
 const isAuthor = require("../utils/checkAuthor");
 
@@ -156,37 +157,50 @@ const getSearchedBlog = async (req, res) => {
 
 const getStats = async (req, res) => {
   try {
+    if (!req.user || !req.user.userId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID is required" });
+    }
+
     const id = req.user.userId;
-    const statsArray = await AllBlogs.aggregate([
-      {
-        $match: { authorId: id },
-      },
-      {
-        $group: {
-          _id: null,
-          total: { $sum: 1 },
-          published: {
-            $sum: {
-              $cond: [{ $eq: ["$status", "published"] }, 1, 0],
+
+    const user = await User.findOne({ uid: id });
+
+    let stats = [];
+
+    if (user) {
+      const statsArray = await AllBlogs.aggregate([
+        {
+          $match: { authorId: id },
+        },
+        {
+          $group: {
+            _id: "$authorId",
+            total: { $sum: 1 },
+            published: {
+              $sum: {
+                $cond: [{ $eq: ["$status", "published"] }, 1, 0],
+              },
             },
-          },
-          draft: {
-            $sum: {
-              $cond: [{ $eq: ["$status", "draft"] }, 1, 0],
+            draft: {
+              $sum: {
+                $cond: [{ $eq: ["$status", "draft"] }, 1, 0],
+              },
             },
           },
         },
-      },
-    ]);
+      ]);
 
-    const stats = await statsArray[0];
+      stats = await statsArray[0];
 
-    if (!stats)
-      return res
-        .status(200)
-        .json({ success: true, data: { total: 0, published: 0, draft: 0 } });
+      if (!stats)
+        return res
+          .status(200)
+          .json({ success: true, data: { total: 0, published: 0, draft: 0 } });
+    }
 
-    return res.status(200).json({ success: true, data: stats });
+    return res.status(200).json({ success: true, data: stats,});
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }

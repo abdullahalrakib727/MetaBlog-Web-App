@@ -1,3 +1,4 @@
+
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 export type BlogData = {
@@ -42,13 +43,13 @@ export type AllUsersData = {
   role: string;
 }[];
 
+export type RegisterFormData = {
+  name: string;
+  photo: File[];
+  email: string;
+  password: string;
+};
 
-export type FormData = {
-    name: string;
-    email: string;
-    photo: string;
-    password: string;
-  }
   
  export type UserStats = {
     total: number;

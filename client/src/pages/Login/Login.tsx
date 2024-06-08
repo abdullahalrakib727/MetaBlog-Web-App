@@ -48,7 +48,7 @@ const Login: FC = (): JSX.Element => {
                   {...register("email", { required: "Email is required" })}
                 />
                 {errors.email && (
-                  <p className="text-red-700">{errors.email.message}</p>
+                  <p className="text-red-600">{errors.email.message}</p>
                 )}
                 <div className="relative">
                   <input
@@ -73,7 +73,7 @@ const Login: FC = (): JSX.Element => {
                   )}
                 </div>
                 {errors.password && (
-                  <p className="text-red-700">{errors.password.message}</p>
+                  <p className="text-red-600">{errors.password.message}</p>
                 )}
                 <button
                   type="submit"
