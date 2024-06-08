@@ -55,6 +55,10 @@ const blogSchema = new mongoose.Schema({
     enum: ["draft", "published"],
     default: "draft",
   },
+  banner: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 blogSchema.pre("save", function (next) {

@@ -13,6 +13,7 @@ export type BlogData = {
   slug: string;
   authorId?: string;
   status: string;
+  banner? : boolean;
 };
 
 export type BlogFetchResult = {

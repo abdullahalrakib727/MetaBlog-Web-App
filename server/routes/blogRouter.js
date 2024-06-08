@@ -1,6 +1,7 @@
 const express = require("express");
 
 const verifyToken = require("../middlewares/tokenVerification");
+const verifyAdmin = require("../middlewares/verifyAdmin");
 const {
   createBlog,
   getAllBlogs,
@@ -12,11 +13,19 @@ const {
   getSearchedBlog,
   getStats,
   getTotalBlogsCount,
+  getBannerBlog,
+  createBannerBlog,
 } = require("../controllers/blogController");
 
 const blogRouter = express.Router();
 
-blogRouter.route('/count').get(getTotalBlogsCount);
+blogRouter.route("/banner").get(getBannerBlog);
+
+blogRouter
+  .route("/banner/:id")
+  .patch(verifyToken, verifyAdmin, createBannerBlog);
+
+blogRouter.route("/count").get(getTotalBlogsCount);
 blogRouter.route("/search").get(getSearchedBlog);
 blogRouter.route("/recent").get(getRecentBlogs);
 blogRouter.route("/stats").get(verifyToken, getStats);
