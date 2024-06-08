@@ -3,6 +3,44 @@ const User = require("../models/User");
 const isAdmin = require("../utils/checkAdmin");
 const isAuthor = require("../utils/checkAuthor");
 
+// ! get banner blog
+
+const getBannerBlog = async (req, res) => {
+  try {
+    const blog = await AllBlogs.findOne({ banner: true });
+    return res.status(200).json(blog);
+  } catch (error) {
+    return res.status(500).json({ error: "Server Error" });
+  }
+};
+
+//  ! create banner blog
+
+const createBannerBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const blog = await AllBlogs.findByIdAndUpdate(
+      id,
+      { banner: true },
+      { new: true }
+    );
+
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+
+    await AllBlogs.updateMany(
+      { _id: { $ne: id }, banner: true },
+      { banner: false }
+    );
+
+    return res.status(200).json({success: true, message: "Banner blog updated"});
+  } catch (error) {
+    return res.status(500).json({ error: "Server Error" });
+  }
+};
+
 // ! to get all blogs
 const getAllBlogs = async (req, res) => {
   try {
@@ -200,7 +238,7 @@ const getStats = async (req, res) => {
           .json({ success: true, data: { total: 0, published: 0, draft: 0 } });
     }
 
-    return res.status(200).json({ success: true, data: stats,});
+    return res.status(200).json({ success: true, data: stats });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -237,4 +275,6 @@ module.exports = {
   getSearchedBlog,
   getStats,
   getTotalBlogsCount,
+  getBannerBlog,
+  createBannerBlog,
 };

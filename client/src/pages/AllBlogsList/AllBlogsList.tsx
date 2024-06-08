@@ -19,6 +19,7 @@ const AllBlogsList = () => {
     isLoading,
     handleFilter,
     status,
+    refetch
   } = useAllBlogList();
 
   if (isLoading) return <LoadingSpinner />;
@@ -61,6 +62,7 @@ const AllBlogsList = () => {
       </>
       <div className="overflow-x-auto">
         <BlogTable
+          refetch={refetch}
           blogs={data}
           handleChangeStatus={handleChangeStatus}
           handleDeleteBlog={handleDeleteBlog}
