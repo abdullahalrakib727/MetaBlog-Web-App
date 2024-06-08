@@ -62,7 +62,7 @@ const AllBlogsList = () => {
       </>
       <div className="overflow-x-auto">
         <BlogTable
-          refetch={refetch}
+          reload={refetch}
           blogs={data}
           handleChangeStatus={handleChangeStatus}
           handleDeleteBlog={handleDeleteBlog}

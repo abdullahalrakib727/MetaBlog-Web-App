@@ -6,27 +6,32 @@ import { BlogData } from "../../TypeDefination/TypeDefination";
 import React from "react";
 import useAxiosSecure from "../../api/useAxiosSecure";
 import toast from "react-hot-toast";
+import useBanner from "../Banner/useBanner";
 
 type BlogTableProps = {
   blogs: BlogData[];
   handleChangeStatus: (id: string, status: string) => void;
   handleDeleteBlog: (id: string) => void;
-  refetch: () => void;
+  reload: () => void;
 };
 
 const BlogTable = ({
   blogs,
   handleChangeStatus,
   handleDeleteBlog,
-  refetch
+  reload,
 }: BlogTableProps) => {
+
+
   const axiosSecure = useAxiosSecure();
+  const { refetch } = useBanner();
 
   const setBanner = async (id: string) => {
     const response = await axiosSecure.patch(`/blogs/banner/${id}`);
 
     if (response.data.success) {
       toast.success("Banner Set Successfully");
+      reload();
       refetch();
     }
 
@@ -69,13 +74,17 @@ const BlogTable = ({
                 </button>
               </td>
               <td>
-                <button
-                  disabled={blog?.banner}
-                  onClick={() => setBanner(blog._id)}
-                  className="hover:bg-blue-500 p-2 hover:text-white transition-all duration-300 rounded-md"
-                >
-                  Set as Banner
-                </button>
+                {blog.banner ? (
+                  <>This is Banner</>
+                ) : (
+                  <button
+                    disabled={blog?.banner}
+                    onClick={() => setBanner(blog._id)}
+                    className="hover:bg-blue-500 p-2 hover:text-white transition-all duration-300 rounded-md"
+                  >
+                    Set as Banner
+                  </button>
+                )}
               </td>
               <td>
                 <button

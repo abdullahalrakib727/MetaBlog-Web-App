@@ -7,7 +7,9 @@ const isAuthor = require("../utils/checkAuthor");
 
 const getBannerBlog = async (req, res) => {
   try {
-    const blog = await AllBlogs.findOne({ banner: true });
+    const blog = await AllBlogs.findOne({ banner: true }).select(
+      "title photoUrl slug category published authorImg authorName"
+    );
     return res.status(200).json(blog);
   } catch (error) {
     return res.status(500).json({ error: "Server Error" });
@@ -35,7 +37,9 @@ const createBannerBlog = async (req, res) => {
       { banner: false }
     );
 
-    return res.status(200).json({success: true, message: "Banner blog updated"});
+    return res
+      .status(200)
+      .json({ success: true, message: "Banner blog updated" });
   } catch (error) {
     return res.status(500).json({ error: "Server Error" });
   }
