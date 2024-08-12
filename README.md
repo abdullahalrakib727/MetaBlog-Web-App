@@ -43,4 +43,4 @@ I have discontinued working on Javascript version as I will be working with Type
 
 ## Authors
 
-- [@alrakib1](https://www.github.com/abdullahalrakib727)
+- [@abdullahalrakib727](https://www.github.com/abdullahalrakib727)
