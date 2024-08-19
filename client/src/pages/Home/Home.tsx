@@ -34,7 +34,7 @@ const Home: FC = (): JSX.Element => {
         <div className="mt-8 mb-10 lg:mb-20 text-center">
           <button
             onClick={handleClick}
-            className="px-5 py-3 border dark:text-white dark:bg-[#181A2A] dark:border-[#242535] border-[#696A75] rounded-md text-[#696A75] text-base font-medium hover:bg-[#97989F] hover:text-white hover:border-[#97989F] transition-colors duration-500"
+            className="px-5 py-3 border dark:text-white dark:bg-[#181A2A] dark:border-[#242535] border-[#696A75]/30 rounded-md text-base font-medium hover:bg-[#97989F] hover:text-white hover:border-[#97989F] transition-colors duration-200 text-[#696A75]"
           >
             View All Post
           </button>

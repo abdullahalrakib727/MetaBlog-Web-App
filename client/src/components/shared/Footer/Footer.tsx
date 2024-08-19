@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-
 import { FC } from "react";
 import FooterLogoLight from "../../Svgs/FooterLogoLight";
 import FooterDarkLogo from "../../Svgs/FooterDarkLogo";
+import { MdOutlineEmail } from "react-icons/md";
 
-const Footer:FC = ():JSX.Element => {
+const Footer: FC = (): JSX.Element => {
   return (
     <footer className=" bg-[#F6F6F7] dark:bg-[#141624] p-2">
       <div className="footer py-10 px-4 lg:py-16 text-base-content max-w-[1216px] mx-auto">
@@ -37,6 +37,7 @@ const Footer:FC = ():JSX.Element => {
               </span>
             </p>
           </nav>
+
           <div className="flex gap-10">
             <nav className="flex flex-col gap-2">
               <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
@@ -103,20 +104,43 @@ const Footer:FC = ():JSX.Element => {
               </Link>
             </nav>
           </div>
+
+          <div>
+            <div className="minlg:min-w-[328px] minlg:min-h-[190px] bg-white dark:bg-[#181A2A] flex flex-col p-8 rounded-xl">
+              <div>
+                <h1 className="text-xl font-semibold text-center dark:text-white text-[#181A2A]">
+                  Weekly Newsletter
+                </h1>
+                <p className="text-[#696A75] dark:text-[#97989F] mt-2 text-center text-base sm:text-sm">
+                  Get blog articles and offers via email
+                </p>
+              </div>
+              <div className="relative mt-7">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  className="outline-none border dark:border-[#3B3C4A] px-4 py-3
+                  bg-white border-[#DCDDDF]
+                 dark:bg-[#181A2A] dark:text-white w-full rounded-md
+                  
+                  "
+                />
+
+                <div className="absolute dark:text-white right-5 top-4 text-[#696A75] ">
+                  <MdOutlineEmail />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="text-white mt-2 bg-[#4B6BFB] py-3 rounded-md"
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
         </div>
-        {/* <form>
-        //! will add newsletter functionality later
-      <header className="footer-title">Newsletter</header> 
-      <fieldset className="form-control w-80">
-        <label className="label">
-          <span className="label-text">Enter your email address</span>
-        </label> 
-        <div className="join">
-          <input type="text" placeholder="username@site.com" className="input input-bordered join-item" /> 
-          <button className="btn btn-primary join-item">Subscribe</button>
-        </div>
-      </fieldset>
-    </form> */}
       </div>
       <div className="footer  py-8 border-t dark:border-[#242535]  bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
         <aside className="items-center grid-flow-col">
@@ -136,13 +160,13 @@ const Footer:FC = ():JSX.Element => {
             </div>
           </div>
         </aside>
-        <nav className="md:place-self-center md:justify-self-end">
+        <div className="md:place-self-center md:justify-self-end">
           <div className="grid grid-flow-col gap-4 text-base font-normal text-[#3B3C4A] dark:text-[#BABABF]">
             <a className="cursor-pointer">Terms of Use</a>
             <a className="cursor-pointer">Privacy Policy</a>
             <a className="cursor-pointer">Cookie Policy</a>
           </div>
-        </nav>
+        </div>
       </div>
     </footer>
   );
