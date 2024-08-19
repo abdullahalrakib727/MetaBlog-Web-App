@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
 import { FC } from "react";
-import FooterLogoLight from "../../Svgs/FooterLogoLight";
-import FooterDarkLogo from "../../Svgs/FooterDarkLogo";
+
 import { MdOutlineEmail } from "react-icons/md";
+import FooterLogoLight from "../../../assets/Svgs/FooterLogoLight";
 
 const Footer: FC = (): JSX.Element => {
   return (
@@ -127,7 +127,7 @@ const Footer: FC = (): JSX.Element => {
                   "
                 />
 
-                <div className="absolute dark:text-white right-5 top-4 text-[#696A75] ">
+                <div className="absolute dark:text-white right-5 top-4 text-[#696A75]">
                   <MdOutlineEmail />
                 </div>
               </div>
@@ -142,25 +142,26 @@ const Footer: FC = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className="footer  py-8 border-t dark:border-[#242535]  bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
+      <div className=" flex flex-col-reverse md:flex-row  items-center justify-between  py-8 border-t dark:border-[#242535]  bg-[#F6F6F7] dark:bg-[#141624] max-w-[1216px] mx-auto text-base-content border-base-300">
         <aside className="items-center grid-flow-col">
           {/* logo */}
           <div className="flex items-center gap-2">
-            <div className="relative">
+            <div className="relative dark:filter dark:invert">
               <FooterLogoLight />
-              <div className="absolute bottom-0 hidden dark:flex">
-                <FooterDarkLogo />
-              </div>
             </div>
             <div className="dark:text-white">
-              <p className="text-xl ">
+              <p className="text-xl sm:text-lg ">
                 Meta<span className="font-extrabold">Blog</span>
               </p>
-              <p>© MetaBlog 2023. All Rights Reserved.</p>
+              <p className="text-base sm:text-sm">© MetaBlog 2023. All Rights Reserved.</p>
             </div>
           </div>
         </aside>
-        <div className="md:place-self-center md:justify-self-end">
+
+
+
+
+        <div className="md:place-self-center md:justify-self-end mb-10 md:mb-0">
           <div className="grid grid-flow-col gap-4 text-base font-normal text-[#3B3C4A] dark:text-[#BABABF]">
             <a className="cursor-pointer">Terms of Use</a>
             <a className="cursor-pointer">Privacy Policy</a>
