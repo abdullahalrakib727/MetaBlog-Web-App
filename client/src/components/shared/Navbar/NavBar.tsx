@@ -1,10 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import "./Nav.css";
-import logo from "../../../assets/Logo.png";
-import logo2 from "../../../assets/lightlogo.png";
+import logos from "../../../assets/logos.png";
 import ThemeSwitch from "../../Theme/ThemeSwitch";
-import DarkLogoSvg from "../../Svgs/DarkLogoSvg";
-import LightLogoSvg from "../../Svgs/LightLogoSvg";
+import DarkLogoSvg from "../../../assets/Svgs/DarkLogoSvg";
+import LightLogoSvg from "../../../assets/Svgs/LightLogoSvg";
 import useSearchBar from "../../../hooks/useSearchBar";
 import useAuth from "../../../hooks/useAuth";
 import SearchBar from "../../SearchBar/SearchBar";
@@ -95,12 +94,9 @@ const NavBar = () => {
             </ul>
           )}
         </div>
-        <div>
-          <Link to="/" className="md:hidden relative">
-            <img src={logo} alt="site-logo" />
-            <div className="absolute md:hidden dark:hidden top-0">
-              <img src={logo2} alt="site-logo" />
-            </div>
+        <div className="md:hidden">
+          <Link to="/">
+            <img src={logos} alt="site-logo" className="filter invert dark:filter-none dark:invert-0" />
           </Link>
         </div>
         <div className="relative w-2/4 hidden md:flex">
