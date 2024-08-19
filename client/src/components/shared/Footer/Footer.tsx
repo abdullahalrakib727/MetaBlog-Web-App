@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FC } from "react";
 
 import { MdOutlineEmail } from "react-icons/md";
-import FooterDarkLogo from "../../../assets/Svgs/FooterDarkLogo";
 import FooterLogoLight from "../../../assets/Svgs/FooterLogoLight";
 
 const Footer: FC = (): JSX.Element => {
@@ -147,11 +146,8 @@ const Footer: FC = (): JSX.Element => {
         <aside className="items-center grid-flow-col">
           {/* logo */}
           <div className="flex items-center gap-2">
-            <div className="relative">
+            <div className="relative dark:filter dark:invert">
               <FooterLogoLight />
-              <div className="absolute bottom-0 hidden dark:inline-block">
-                <FooterDarkLogo />
-              </div>
             </div>
             <div className="dark:text-white">
               <p className="text-xl sm:text-lg ">
