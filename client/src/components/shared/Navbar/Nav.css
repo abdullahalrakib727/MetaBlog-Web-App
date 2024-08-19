@@ -7,18 +7,20 @@ li>a.active{
     border-bottom: 2px solid #3B3C4A;
     border-radius: 0;
     font-weight: 500;
+    border-radius: 4px;
 }
 ul>li>a:hover{
     background: white !important;
     color: #3B3C4A !important;
     border-bottom: 2px solid #3B3C4A;
-    border-radius: 0;
+    border-radius: 4px;
+    
 }
 
 li>a.active{
     background: white !important;
     color: #3B3C4A !important;
     border-bottom: 2px solid #3B3C4A;
-    border-radius: 0;
+    border-radius: 4px;
     font-weight: 500;
 }
