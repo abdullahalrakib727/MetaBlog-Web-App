@@ -1,6 +1,4 @@
 import { Helmet } from "react-helmet";
-
-
 import { useNavigate } from "react-router-dom";
 import Adds from "../../components/Adds/Adds";
 import Banner from "../../components/Banner/Banner";

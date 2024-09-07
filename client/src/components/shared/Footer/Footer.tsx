@@ -8,13 +8,13 @@ import FooterLogoLight from "../../../assets/Svgs/FooterLogoLight";
 const Footer: FC = (): JSX.Element => {
   return (
     <footer className=" bg-[#F6F6F7] dark:bg-[#141624] p-2">
-      <div className="footer py-10 px-4 lg:py-16 text-base-content max-w-[1216px] mx-auto">
-        <div className="grid md:grid-cols-3 gap-10">
-          <nav className="flex flex-col">
+      <div className=" py-10 px-4 lg:py-16 text-base-content max-w-[1216px] mx-auto">
+        <div className="flex flex-col md:flex-row gap-10">
+          <nav className="flex flex-col flex-1">
             <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
               About
             </header>
-            <p className="mt-2 mb-6 text-[#696A75] dark:text-[#97989F]">
+            <p className="mt-2 mb-6 text-[#696A75] dark:text-[#97989F] text-left">
               MetaBlog is a platform for bloggers to explore and discuss various
               topics, promoting engaging conversations and knowledge sharing.
             </p>
@@ -38,7 +38,7 @@ const Footer: FC = (): JSX.Element => {
             </p>
           </nav>
 
-          <div className="flex gap-10">
+          <div className="flex justify-around flex-1 md:mt-3">
             <nav className="flex flex-col gap-2">
               <header className="text-[#181A2A] dark:text-white text-lg font-semibold">
                 Quick Link
@@ -105,7 +105,7 @@ const Footer: FC = (): JSX.Element => {
             </nav>
           </div>
 
-          <div>
+          <div className="flex-1">
             <div className="minlg:min-w-[328px] minlg:min-h-[190px] bg-white dark:bg-[#181A2A] flex flex-col p-8 rounded-xl">
               <div>
                 <h1 className="text-xl font-semibold text-center dark:text-white text-[#181A2A]">
