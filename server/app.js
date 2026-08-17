@@ -14,11 +14,20 @@ const app = express();
 
 connectDb();
 
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || "http://localhost:5173")
+  .split(",")
+  .map((url) => url.trim());
+
+  
+
 app.use(
   cors({
-    origin: ["https://meta-blog-app.vercel.app", "http://localhost:5173"],
+    origin: allowedOrigins,
     credentials: true,
-  })
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    maxAge: 3600,
+  }),
 );
 
 app.use(express.json());
